@@ -9,8 +9,9 @@ class Role extends Model
     protected $guarded = [];
 
     public static $roles = [
-        'Admin' => 1,
-        'Guest' => 2,
+        'Admin'     => 1,
+        'Guest'     => 2,
+        'Moderator' => 3,
     ];
 
     public function users()

@@ -24,6 +24,7 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth.admin'], function () {
         // All routes for admin users
         Route::get('/', 'UserController@index')->name('admin.index');
+
     });
 
     Route::group(['namespace' => 'Guest'], function () {
