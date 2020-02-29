@@ -14,26 +14,34 @@
     <script src="{{mix('js/app.js')}}"></script>
 </head>
 <body class="hold-transition sidebar-mini">
+
 <div class="wrapper">
-    @include('admin.layouts.partials.header')
+@include('admin.layouts.partials.header')
 
-    @include('admin.layouts.partials.sidebar')
+@include('admin.layouts.partials.sidebar')
 
-    <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <div class="content-header">
-                @yield('content-header')
-            </div>
-            <!-- /.content-header -->
-
-            <!-- Main content -->
-            <div class="content">
-                @yield('content')
-            </div>
-            <!-- /.content -->
+<!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            @yield('content-header')
         </div>
-        <!-- /.content-wrapper -->
+        <div class="container">
+            @if(Session::has('success'))
+                <p class="alert alert-default-success col-md-4 container text-center">{{Session::get('success')}}</p>
+            @elseif(Session::has('failed'))
+                <p class="alert alert-default-danger col-md-4 container text-center">{{Session::get('failed')}}</p>
+            @endif
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            @yield('content')
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
     @include('admin.layouts.partials.footer')
 </div>
 </body>

@@ -8,13 +8,19 @@ class Product extends Model
 {
     protected $guarded = [];
 
-    public function orders()
+    public function order_products()
     {
-        return $this->belongsToMany(Order::class);
+        return $this->hasMany(OrderProduct::class);
     }
 
-    public function cart()
+    public function product_images()
     {
-        return $this->hasOne(Cart::class);
+        return $this->hasMany(ProductImage::class);
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
 }
