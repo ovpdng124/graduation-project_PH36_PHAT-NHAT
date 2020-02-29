@@ -33,7 +33,7 @@
 
 <body>
 <!-- /Header -->
-@include('layouts.partials.header')
+@include('user.layouts.partials.header')
 <!-- //Header -->
 
 <!-- /Main-Contents -->
@@ -42,7 +42,7 @@
 <!-- //Main-Contents -->
 
 <!-- /Footer -->
-@include('layouts.partials.footer')
+@include('user.layouts.partials.footer')
 <!-- //Footer -->
 </body>
 

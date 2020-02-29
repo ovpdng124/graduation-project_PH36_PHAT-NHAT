@@ -1,9 +1,9 @@
 <?php
 
-use App\Entities\Cart;
+use App\Entities\Voucher;
 use Illuminate\Database\Seeder;
 
-class CartsTableSeeder extends Seeder
+class VouchersTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +12,6 @@ class CartsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Cart::class, 10)->create();
+        factory(Voucher::class, 10)->create();
     }
 }

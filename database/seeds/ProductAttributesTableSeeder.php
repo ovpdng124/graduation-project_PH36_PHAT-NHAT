@@ -1,9 +1,9 @@
 <?php
 
-use App\Entities\Discount;
+use App\Entities\ProductAttributes;
 use Illuminate\Database\Seeder;
 
-class DiscountsTableSeeder extends Seeder
+class ProductAttributesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +12,6 @@ class DiscountsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Discount::class, 10)->create();
+        factory(ProductAttributes::class, 10)->create();
     }
 }

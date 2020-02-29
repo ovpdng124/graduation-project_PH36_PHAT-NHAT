@@ -21,6 +21,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('address');
             $table->integer('phone_number');
+            $table->string('verify_token');
+            $table->timestamp('verify_at')->nullable();
             $table->unsignedBigInteger('role_id');
             $table->foreign('role_id')->references('id')->on('roles');
             $table->timestamps();

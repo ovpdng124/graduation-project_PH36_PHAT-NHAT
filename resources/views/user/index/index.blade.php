@@ -1,12 +1,12 @@
-@extends('layouts.master')
+@extends('user.layouts.master')
 @section('title', 'Homepage')
 @section('content')
-    @include('index.banner')
+    @include('user.index.banner')
     <!--/ab -->
     <section class="about py-md-5 py-5">
         <div class="container-fluid">
             <div class="feature-grids row px-3">
-                @include('index.category')
+                @include('user.index.category')
             </div>
         </div>
     </section>
@@ -17,7 +17,7 @@
         <div class="container pb-lg-3">
             <h3 class="tittle text-center">New Arrivals</h3>
             <div class="row">
-                @include('index.products')
+                @include('user.index.products')
             </div>
         </div>
     </section>
@@ -27,7 +27,7 @@
     <section class="testimonials py-5">
         <div class="container">
             <div class="test-info text-center">
-                @include('index.testimonial')
+                @include('user.index.testimonial')
             </div>
         </div>
     </section>
@@ -38,7 +38,7 @@
         <div class="container pb-lg-3">
             <h3 class="tittle text-center">Popular Products</h3>
             <div class="row">
-                @include('index.popular')
+                @include('user.index.popular')
             </div>
         </div>
     </section>
@@ -48,7 +48,7 @@
     <section class="brands py-5" id="brands">
         <div class="container py-lg-0">
             <div class="row text-center brand-items">
-                @include('index.branch')
+                @include('user.index.branch')
             </div>
         </div>
     </section>

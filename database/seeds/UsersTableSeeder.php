@@ -22,6 +22,7 @@ class UsersTableSeeder extends Seeder
                 'role_id'      => Role::$roles['Admin'],
                 'address'      => '123 Admin street',
                 'phone_number' => '090567890',
+                'verify_token' => bcrypt('admin'),
             ],
             [
                 'full_name'    => 'Ong Van Phat',
@@ -31,6 +32,7 @@ class UsersTableSeeder extends Seeder
                 'role_id'      => Role::$roles['Guest'],
                 'address'      => '324 Ha Huy Tap, Hoa Khe, Thanh Khe, Da Nang',
                 'phone_number' => '0905671240',
+                'verify_token' => bcrypt('ovpdng124'),
             ],
             [
                 'full_name'    => 'Nguyen Minh Nhat',
@@ -40,6 +42,7 @@ class UsersTableSeeder extends Seeder
                 'role_id'      => Role::$roles['Guest'],
                 'address'      => '294 Nguyen Thien Ke, Binh Hien, Son Tra, Da Nang ',
                 'phone_number' => '0902945284',
+                'verify_token' => bcrypt('nhatnm'),
             ],
         ]);
     }

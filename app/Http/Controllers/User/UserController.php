@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Guest;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 
@@ -8,7 +8,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        return view('index.index');
+        return view('user.index.index');
     }
 
 }

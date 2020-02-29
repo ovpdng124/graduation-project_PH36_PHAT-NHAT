@@ -8,9 +8,9 @@ class Product extends Model
 {
     protected $guarded = [];
 
-    public function order()
+    public function orders()
     {
-        return $this->hasOne(Order::class);
+        return $this->belongsToMany(Order::class);
     }
 
     public function cart()

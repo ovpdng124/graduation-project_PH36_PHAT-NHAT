@@ -15,4 +15,6 @@
 <li>Run: npm install</li> <br>
 <li>Run: npm run (dev/prod)</li> <br>
 <li>Run: php artisan key:generate</li> <br>
+<li>Run: composer require --dev barryvdh/laravel-ide-helper</li> <br>
+<li>Run: php artisan ide-helper:generate</li> <br>
 <li>Run: php artisan serve</li> <br>

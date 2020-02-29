@@ -16,13 +16,15 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('voucher_id');
             $table->integer('quantity');
-            $table->float('total');
-            $table->string('method');
-            $table->boolean('status');
+            $table->double('total_price');
+            $table->integer('method_type');
+            $table->integer('status');
+            $table->boolean('is_sale');
+            $table->double('sale_price');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('voucher_id')->references('id')->on('vouchers');
             $table->timestamps();
         });
     }
