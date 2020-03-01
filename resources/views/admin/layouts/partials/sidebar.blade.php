@@ -25,8 +25,9 @@
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="{{route('logout')}}" class="btn btn-danger nav-link">
-                        <i class="fa fa-sign-out-alt"></i>Logout
+                    <a href="{{route('user.list')}}" class="nav-link">
+                        <i class="fa fa-list"></i>
+                        <span>User list</span>
                     </a>
                 </li>
             </ul>

@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Create a new user</div>
+                    <div class="card-header">Edit user</div>
                     <div class="card-body">
                         <div>
                             <a href="{{url()->previous()}}">
@@ -15,35 +15,19 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-9 well well-sm col-md-offset-4 container">
-                                    <form action="{{route('user.create')}}" method="post" class="form"
+                                    <form action="{{route('user.edit', $user->id)}}" method="post" class="form"
                                           role="form">
                                         @csrf
-                                        <input type="hidden" name="role_id" value="2">
-                                        <input type="hidden" name="verify_token">
-                                        <input type="hidden" name="verify_at">
+                                        @method('put')
                                         <div class="form-group row">
                                             <div class="col-xs-3 col-md-3">
                                                 <label for="" class="float-md-right mt-2">Full Name: </label>
                                             </div>
                                             <div class="col-xs-9 col-md-9">
                                                 <input type="text" class="form-control" name="full_name"
-                                                       value="{{old('full_name')}}">
+                                                       value="{{$user->full_name}}">
                                                 @if($errors->any())
                                                     @foreach($errors->get('full_name') as $messages)
-                                                        <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-xs-3 col-md-3">
-                                                <label for="" class="float-md-right mt-2">Username: </label>
-                                            </div>
-                                            <div class="col-xs-9 col-md-9">
-                                                <input type="text" class="form-control" name="username"
-                                                        value="{{old('username')}}">
-                                                @if($errors->any())
-                                                    @foreach($errors->get('username') as $messages)
                                                         <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
                                                     @endforeach
                                                 @endif
@@ -55,40 +39,10 @@
                                             </div>
                                             <div class="col-xs-9 col-md-9">
                                                 <input type="text" class="form-control" name="email"
-                                                       value="{{old('email')}}">
+                                                       value="{{$user->email}}">
                                                 @if($errors->any())
                                                     @foreach($errors->get('email') as $messages)
                                                         <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="row form-group">
-                                            <div class="col-xs-3 col-md-3">
-                                                <label for="" class="float-md-right mt-2">Password: </label>
-                                            </div>
-                                            <div class="col-xs-3 col-md-9">
-                                                <input type="password" class="form-control mb-1" name="password">
-                                                @if($errors->any())
-                                                    @foreach($errors->get('password') as $messages)
-                                                        <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}
-                                                            <br></i>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-xs-3 col-md-3">
-                                                <label for="" class="float-md-right mt-2">Confirm Password: </label>
-                                            </div>
-                                            <div class="col-xs-6 col-md-9">
-                                                <input type="password" class="form-control"
-                                                       name="password_confirmation">
-                                                @if($errors->any())
-                                                    @foreach($errors->get('password_confirmation') as $messages)
-                                                        <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}
-                                                            <br></i>
                                                     @endforeach
                                                 @endif
                                             </div>
@@ -99,7 +53,7 @@
                                             </div>
                                             <div class="col-xs-9 col-md-9">
                                                 <input type="text" class="form-control" name="address"
-                                                       value="{{old('address')}}">
+                                                       value="{{$user->address}}">
                                                 @if($errors->any())
                                                     @foreach($errors->get('address') as $messages)
                                                         <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
@@ -113,16 +67,17 @@
                                             </div>
                                             <div class="col-xs-9 col-md-9">
                                                 <input type="tel" class="form-control" name="phone_number"
-                                                       value="{{old('phone_number')}}">
+                                                       value="{{$user->phone_number}}">
                                                 @if($errors->any())
                                                     @foreach($errors->get('phone_number') as $messages)
                                                         <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
+                                                        <br>
                                                     @endforeach
                                                 @endif
                                             </div>
                                         </div>
                                         <button type="submit"
-                                                class="btn btn-lg btn-success btn-block col-md-5 container"> Sign Up
+                                                class="btn btn-lg btn-primary btn-block col-md-5 container"> Update
                                         </button>
                                     </form>
                                 </div>
