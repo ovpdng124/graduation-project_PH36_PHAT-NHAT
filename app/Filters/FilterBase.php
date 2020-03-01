@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Filters;
-
 
 use App\Helpers\GlobalHelper;
 

@@ -25,10 +25,13 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
         // All routes for admin users
         Route::get('/', 'UserController@index')->name('admin.index');
 
-        Route::group(['prefix' => 'user'], function(){
+        Route::group(['prefix' => 'user'], function () {
             Route::get('/', 'UserController@show')->name('user.list');
             Route::get('/create', 'UserController@create')->name('user.create-form');
             Route::post('/create', 'UserController@store')->name('user.create');
+            Route::get('/edit/{id}', 'UserController@edit')->name('user.edit-form');
+            Route::put('/edit/{id}', 'UserController@update')->name('user.edit');
+            Route::delete('/delete/{id}', 'UserController@delete')->name('user.delete');
         });
 
     });

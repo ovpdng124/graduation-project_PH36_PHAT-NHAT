@@ -7,6 +7,11 @@
                 <div class="card-header">List Users</div>
                 <div class="card-body">
                     <div class="container-fluid">
+                        <div>
+                            <a href="{{route('user.create-form')}}">
+                                <button class="btn btn-primary">Create new</button>
+                            </a>
+                        </div>
                         <div class="float-right">
                             {{$users->onEachSide(1)->links()}}
                         </div>
@@ -21,6 +26,7 @@
                                     <th>Address</th>
                                     <th>Phone</th>
                                     <th>Role</th>
+                                    <th colspan="2">Action</th>
                                 </tr>
                                 @foreach($users as $key => $item)
                                     <tr>
@@ -31,15 +37,21 @@
                                         <td>{{$item['address']}}</td>
                                         <td>{{$item['phone_number']}}</td>
                                         <td>{{$item->role->name}}</td>
+                                        <td><a href="{{route('user.edit-form', $item->id)}}"><button class="btn-link">Edit</button></a></td>
+                                        <td>
+                                            <form action="{{route('user.delete', $item->id)}}" method="post">
+                                                @method('delete')
+                                                @csrf
+                                                    <button class="btn-link" type="submit">Delete</button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </table>
-
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 @endsection

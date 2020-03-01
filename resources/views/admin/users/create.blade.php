@@ -5,10 +5,14 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Dashboard</div>
+                    <div class="card-header">Create a new user</div>
                     <div class="card-body">
+                        <div>
+                            <a href="{{url()->previous()}}">
+                                <button class="btn btn-primary">Back</button>
+                            </a>
+                        </div>
                         <div class="container-fluid">
-                            <h1 class="text-center mb-4">Create a new user</h1>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-9 well well-sm col-md-offset-4 container">
                                     <form action="{{route('user.create')}}" method="post" class="form"
@@ -109,7 +113,7 @@
                                             </div>
                                             <div class="col-xs-9 col-md-9">
                                                 <input type="tel" class="form-control" name="phone_number"
-                                                       value="{{old('phone_number')}}" placeholder="Format: 090-xxx-xxxx">
+                                                       value="{{old('phone_number')}}">
                                                 @if($errors->any())
                                                     @foreach($errors->get('phone_number') as $messages)
                                                         <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
@@ -118,7 +122,7 @@
                                             </div>
                                         </div>
                                         <button type="submit"
-                                                class="btn btn-lg btn-primary btn-block col-md-5 container"> Sign Up
+                                                class="btn btn-lg btn-success btn-block col-md-5 container"> Sign Up
                                         </button>
                                     </form>
                                 </div>

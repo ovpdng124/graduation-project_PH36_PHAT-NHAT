@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Entities\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\EditUserRequest;
 use App\Services\UserService;
+use Exception;
 use Illuminate\Http\Request;
+use Log;
 
 class UserController extends Controller
 {
@@ -24,20 +27,18 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('admin.users.form.create');
+        return view('admin.users.create');
     }
 
     public function store(CreateUserRequest $request)
     {
-        $params = $request->except(['password_confirmation']);
-
+        $params                 = $request->except(['_token', 'password_confirmation']);
         $params['password']     = bcrypt($params['password']);
-        $params['verify_token'] = hash('md5', $params['email']);
-        $params['verify_at']    = now();
+        $params['verify_token'] = $this->userService->encodeToken($params);
 
         User::create($params);
 
-        return redirect(route('admin.index'))->with('success', 'Created successfully!');
+        return redirect(route('user.list'))->with('success', 'Created successfully!');
     }
 
     public function show(Request $request)
@@ -48,21 +49,37 @@ class UserController extends Controller
 
         $users = $this->userService->getUsers($limits, $search, $searchKey);
 
-        return view('admin.users.show.list', compact('users'));
+        return view('admin.users.list', compact('users'));
     }
 
-    public function edit()
+    public function edit($id)
     {
+        $user = User::find($id);
 
+        return view('admin.users.edit', compact('user'));
     }
 
-    public function update()
+    public function update(EditUserRequest $request, $id)
     {
+        $params = $request->except('_token');
 
+        User::find($id)->update($params);
+
+        return redirect(route('user.list'))->with('success', 'Updated successfully!');
     }
 
-    public function delete()
+    public function delete($id)
     {
+        $user = User::find($id);
 
+        try {
+            $user->delete();
+
+            return redirect(route('user.list'))->with('success', 'Deleted Successfully!');
+        } catch (Exception $e) {
+            Log::error($e);
+
+            return redirect(route('user.list'))->with('failed', 'Deleted failed!');
+        }
     }
 }
