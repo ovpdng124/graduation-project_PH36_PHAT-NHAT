@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Entities\User;
 use App\Filters\UserFilter;
@@ -27,5 +25,10 @@ class UserService
         $query = $query->with('role')->orderByDesc('created_at')->paginate($limits);
 
         return $query;
+    }
+
+    public function encodeToken($params)
+    {
+        return base64_encode($params['email']) . '.' . base64_encode(now());
     }
 }

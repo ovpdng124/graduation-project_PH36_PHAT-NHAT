@@ -27,16 +27,14 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('admin.users.form.create');
+        return view('admin.users.create');
     }
 
     public function store(CreateUserRequest $request)
     {
-        $params = $request->except(['password_confirmation']);
-
+        $params                 = $request->except(['_token', 'password_confirmation']);
         $params['password']     = bcrypt($params['password']);
-        $params['verify_token'] = hash('md5', $params['email']);
-        $params['verify_at']    = now();
+        $params['verify_token'] = $this->userService->encodeToken($params);
 
         User::create($params);
 
@@ -51,14 +49,14 @@ class UserController extends Controller
 
         $users = $this->userService->getUsers($limits, $search, $searchKey);
 
-        return view('admin.users.show.list', compact('users'));
+        return view('admin.users.list', compact('users'));
     }
 
     public function edit($id)
     {
         $user = User::find($id);
 
-        return view('admin.users.form.edit', compact('user'));
+        return view('admin.users.edit', compact('user'));
     }
 
     public function update(EditUserRequest $request, $id)
@@ -73,14 +71,12 @@ class UserController extends Controller
     public function delete($id)
     {
         $user = User::find($id);
-        $clearInfo = ['username' => '', 'email' => ''];
 
         try {
-            $user->update($clearInfo);
             $user->delete();
 
             return redirect(route('user.list'))->with('success', 'Deleted Successfully!');
-        }catch (Exception $e){
+        } catch (Exception $e) {
             Log::error($e);
 
             return redirect(route('user.list'))->with('failed', 'Deleted failed!');
