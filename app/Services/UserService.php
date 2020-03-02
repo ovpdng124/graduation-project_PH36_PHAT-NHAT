@@ -27,6 +27,14 @@ class UserService
         return $query;
     }
 
+    public function store($params)
+    {
+        $params['password']     = bcrypt($params['password']);
+        $params['verify_token'] = $this->encodeToken($params);
+
+        return User::create($params);
+    }
+
     public function encodeToken($params)
     {
         return base64_encode($params['email']) . '.' . base64_encode(now());

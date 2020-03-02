@@ -32,11 +32,12 @@ class UserController extends Controller
 
     public function store(CreateUserRequest $request)
     {
-        $params                 = $request->except(['_token', 'password_confirmation']);
-        $params['password']     = bcrypt($params['password']);
-        $params['verify_token'] = $this->userService->encodeToken($params);
+        $params = $request->except(['_token', 'password_confirmation']);
+        $user   = $this->userService->store($params);
 
-        User::create($params);
+        if (!$user) {
+            return redirect(route('user.list'))->with('failed', 'Create failed!');
+        }
 
         return redirect(route('user.list'))->with('success', 'Created successfully!');
     }
