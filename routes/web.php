@@ -34,6 +34,7 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
             Route::delete('/delete/{id}', 'UserController@delete')->name('user.delete');
         });
 
+        Route::resource('voucher', 'VoucherController');
     });
 
     Route::group(['namespace' => 'User'], function () {
