@@ -26,6 +26,12 @@ class AuthController extends Controller
                 return redirect(route('admin.index'));
             }
 
+            if (empty(Auth::user()->only('verify_at')['verify_at'])) {
+                Auth::logout();
+
+                return redirect(route('login'))->with('error', 'This account is not verify!');
+            }
+
             return redirect(route('index'));
         }
 

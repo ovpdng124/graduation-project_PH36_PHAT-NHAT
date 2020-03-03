@@ -33,12 +33,15 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
             Route::put('/edit/{id}', 'UserController@update')->name('user.edit');
             Route::delete('/delete/{id}', 'UserController@delete')->name('user.delete');
         });
-
     });
 
     Route::group(['namespace' => 'User'], function () {
-        // All routes for guest users
+
     });
 });
-
-
+Route::group(['namespace' => 'Auth'], function () {
+    Route::get('/register', 'RegisterController@showRegisterForm')->name('register-form');
+    Route::post('/register', 'RegisterController@store')->name('register');
+    Route::get('/verify-notification', 'RegisterController@verifyNotification')->name('verify-notification');
+    Route::get('/verify', 'RegisterController@verify')->name('verify');
+});

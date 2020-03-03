@@ -3,7 +3,8 @@
 
 @section('content')
     <!-- /Banner-header -->
-    <div class="main-banner inner" style="background: url({{asset('template/images/banner.jpg')}})no-repeat center;" id="home"></div>
+    <div class="main-banner inner" style="background: url({{asset('template/images/banner.jpg')}})no-repeat center;"
+         id="home"></div>
     <!-- //Banner-header -->
     <!--//main-content-->
     <!---->
@@ -22,13 +23,21 @@
                     <div class="col-xs-12 col-sm-12 col-md-4 well well-sm col-md-offset-4 container">
                         @if($errors->any())
                             <div class="alert alert-danger container" role="alert">
-                                    @foreach($errors->all() as $error)
-                                        <div class="text-center">
-                                            {{$error}}
-                                        </div>
-                                    @endforeach
+                                @foreach($errors->all() as $error)
+                                    <div class="text-center">
+                                        {{$error}}
+                                    </div>
+                                @endforeach
                             </div>
                         @endif
+                        @if(Session::has('error'))
+                            <div class="alert alert-danger container" role="alert">
+                                <div class="text-center">
+                                    {{Session::get('error')}}
+                                </div>
+                            </div>
+                        @endif
+
                         <form action="{{route('login')}}" method="post">
                             {{csrf_field()}}
                             <div class="form-group row">
@@ -49,7 +58,8 @@
                                            placeholder="Password">
                                 </div>
                             </div>
-                            <button type="submit" style="width: 100px" class="float-right btn btn-success">Login</button>
+                            <button type="submit" style="width: 100px" class="float-right btn btn-success">Login
+                            </button>
                         </form>
                     </div>
                 </div>
