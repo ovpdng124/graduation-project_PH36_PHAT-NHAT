@@ -2,19 +2,14 @@
 @section('title','Login')
 
 @section('content')
-    <!-- /Banner-header -->
     <div class="main-banner inner" style="background: url({{asset('template/images/banner.jpg')}})no-repeat center;"
          id="home"></div>
-    <!-- //Banner-header -->
-    <!--//main-content-->
-    <!---->
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
             <a href="{{route('index')}}">Home</a>
         </li>
         <li class="breadcrumb-item active">Login</li>
     </ol>
-    <!---->
     <section class="about py-5">
         <div class="card-body">
             <div class="container-fluid">
@@ -30,14 +25,6 @@
                                 @endforeach
                             </div>
                         @endif
-                        @if(Session::has('error'))
-                            <div class="alert alert-danger container" role="alert">
-                                <div class="text-center">
-                                    {{Session::get('error')}}
-                                </div>
-                            </div>
-                        @endif
-
                         <form action="{{route('login')}}" method="post">
                             {{csrf_field()}}
                             <div class="form-group row">
@@ -66,5 +53,4 @@
             </div>
         </div>
     </section>
-    <!--// mian-content -->
 @endsection

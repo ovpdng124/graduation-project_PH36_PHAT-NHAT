@@ -9,6 +9,6 @@ $factory->define(Voucher::class, function (Faker $faker) {
     return [
         'code'  => $faker->currencyCode,
         'value' => $faker->numberBetween(10, 50),
-        'unit'  => '%',
+        'unit'  => $faker->randomElement(['-', '%']),
     ];
 });

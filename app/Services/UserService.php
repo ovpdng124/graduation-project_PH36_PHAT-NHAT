@@ -6,6 +6,7 @@ use App\Entities\User;
 use App\Filters\UserFilter;
 use App\Mail\VerifyMail;
 use Carbon\Carbon;
+use Exception;
 use Mail;
 
 class UserService
@@ -34,21 +35,26 @@ class UserService
     {
         $params['password']     = bcrypt($params['password']);
         $params['verify_token'] = $this->encodeToken($params);
+        $user                   = User::create($params);
 
-        if (!User::create($params)) {
-            return [false, 'Create failed!'];
+        if (!$this->sendMail($user->verify_token)) {
+            return [false, 'Send mail failed'];
         }
-
-        $this->sendMail($params['verify_token']);
 
         return [true, 'Create success'];
     }
 
     public function sendMail($token)
     {
-        $user = User::where('verify_token', '=', $token)->first();
+        $user = User::where('verify_token', $token)->first();
 
-        return Mail::to($user->email)->send(new VerifyMail($user));
+        try {
+            Mail::to($user->email)->send(new VerifyMail($user));
+
+            return true;
+        } catch (Exception $exception) {
+            return false;
+        }
     }
 
     public function encodeToken($params)
@@ -62,13 +68,13 @@ class UserService
         $email        = base64_decode($tokenExplode[0]);
         $dateTime     = base64_decode($tokenExplode[1]);
 
-        $dateTimeCovert  = Carbon::parse($dateTime);
-        $expired = (now()->timestamp - $dateTimeCovert->timestamp) < 172800;
+        $dateTimeCovert = Carbon::parse($dateTime);
+        $expired        = (now()->timestamp - $dateTimeCovert->timestamp) < 172800;
+        $user           = User::where('email', $email)->first();
 
         if (!$expired) {
-            $user                   = User::where('email', '=', $email)->first();
-            $newToken               = $this->encodeToken($params);
             $params['email']        = $email;
+            $newToken               = $this->encodeToken($params);
             $params['verify_token'] = $newToken;
 
             $user->update($params);
@@ -78,8 +84,6 @@ class UserService
         }
 
         $params['verify_at'] = now();
-
-        $user = User::where('email', '=', $email)->first();
 
         $user->update($params);
 

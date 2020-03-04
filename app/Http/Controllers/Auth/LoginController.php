@@ -1,16 +1,23 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
 use App\Helpers\GlobalHelper;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use Auth;
 
-class AuthController extends Controller
+class LoginController extends Controller
 {
     public function showLoginForm()
     {
         if (Auth::check()) {
+            if (empty(Auth::user()->only('verify_at')['verify_at'])) {
+                Auth::logout();
+
+                return $this->showLoginForm();
+            }
+
             return redirect(route('index'));
         }
 
@@ -27,9 +34,7 @@ class AuthController extends Controller
             }
 
             if (empty(Auth::user()->only('verify_at')['verify_at'])) {
-                Auth::logout();
-
-                return redirect(route('login'))->with('error', 'This account is not verify!');
+                return redirect(route('verify-notification', Auth::user()->only('verify_token')))->with(['notification' => 'This account it not verify!', 'messages' => '']);
             }
 
             return redirect(route('index'));
