@@ -35,11 +35,10 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
         });
 
         Route::resource('voucher', 'VoucherController');
+        Route::resource('product', 'ProductController');
     });
 
     Route::group(['namespace' => 'User'], function () {
         // All routes for guest users
     });
 });
-
-
