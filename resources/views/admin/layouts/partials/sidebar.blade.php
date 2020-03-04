@@ -30,6 +30,12 @@
                         <span>User list</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('voucher.index')}}" class="nav-link">
+                        <i class="fa fa-list"></i>
+                        <span>Voucher list</span>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
