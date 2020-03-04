@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Filters;
-
 
 class VoucherFilter extends FilterBase
 {
@@ -20,5 +18,4 @@ class VoucherFilter extends FilterBase
     {
         return $query->where("unit", "like", "%$search%");
     }
-
 }
