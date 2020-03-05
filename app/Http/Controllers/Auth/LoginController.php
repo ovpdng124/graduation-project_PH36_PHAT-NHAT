@@ -12,7 +12,7 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         if (Auth::check()) {
-            if (empty(Auth::user()->only('verify_at')['verify_at'])) {
+            if (empty(Auth::user()->verify_at)) {
                 Auth::logout();
 
                 return $this->showLoginForm();
@@ -33,11 +33,7 @@ class LoginController extends Controller
                 return redirect(route('admin.index'));
             }
 
-            if (empty(Auth::user()->only('verify_at')['verify_at'])) {
-                return redirect(route('verify-notification', Auth::user()->only('verify_token')))->with(['notification' => 'This account it not verify!', 'messages' => '']);
-            }
-
-            return redirect(route('index'));
+            return redirect(route('profile'));
         }
 
         return back()->withErrors('Wrong username or password')->withInput();

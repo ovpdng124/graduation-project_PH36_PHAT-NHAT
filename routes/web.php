@@ -45,6 +45,6 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
     });
 
     Route::group(['namespace' => 'User'], function () {
-        // All routes for guest users
+        Route::get('/profile', 'UserController@profile')->name('profile');
     });
 });

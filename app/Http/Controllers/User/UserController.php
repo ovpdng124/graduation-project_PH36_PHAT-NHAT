@@ -11,4 +11,8 @@ class UserController extends Controller
         return view('user.index.index');
     }
 
+    public function profile(){
+        echo "Hello user";
+    }
+
 }

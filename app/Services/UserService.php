@@ -47,7 +47,7 @@ class UserService
     public function sendMail($token)
     {
         $user = User::where('verify_token', $token)->first();
-
+//        dd($user);
         try {
             Mail::to($user->email)->send(new VerifyMail($user));
 
@@ -68,15 +68,13 @@ class UserService
         $email        = base64_decode($tokenExplode[0]);
         $dateTime     = base64_decode($tokenExplode[1]);
 
-        $dateTimeCovert = Carbon::parse($dateTime);
-        $expired        = (now()->timestamp - $dateTimeCovert->timestamp) < 172800;
+        $expired        = (Carbon::now()->diffInDays(Carbon::parse($dateTime)))<2 ;
         $user           = User::where('email', $email)->first();
 
         if (!$expired) {
             $params['email']        = $email;
             $newToken               = $this->encodeToken($params);
             $params['verify_token'] = $newToken;
-
             $user->update($params);
             $this->sendMail($newToken);
 
@@ -84,6 +82,7 @@ class UserService
         }
 
         $params['verify_at'] = now();
+        dd($expired);
 
         $user->update($params);
 

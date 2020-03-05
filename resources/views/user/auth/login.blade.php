@@ -45,6 +45,7 @@
                                            placeholder="Password">
                                 </div>
                             </div>
+                            <a href="{{route('reset-form')}}">Forgot Password</a>
                             <button type="submit" style="width: 100px" class="float-right btn btn-success">Login
                             </button>
                         </form>

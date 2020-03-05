@@ -47,6 +47,7 @@ class RegisterController extends Controller
 
         $this->userService->sendMail($token['verify_token']);
 
+
         return redirect(route('verify-notification', $token))->with(['notification' => 'Success', 'messages' => 'Check your email to verify!']);
     }
 
@@ -55,6 +56,7 @@ class RegisterController extends Controller
         $params = $request->all();
 
         if (!$this->userService->decodeToken($params)) {
+
             return abort(403, 'Please check mail again!');
         }
 
