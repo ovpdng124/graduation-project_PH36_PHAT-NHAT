@@ -47,7 +47,6 @@ class UserService
     public function sendMail($token)
     {
         $user = User::where('verify_token', $token)->first();
-//        dd($user);
         try {
             Mail::to($user->email)->send(new VerifyMail($user));
 

@@ -20,6 +20,9 @@ Route::group(['namespace' => 'Auth'], function () {
     Route::get('/login', 'LoginController@showLoginForm')->name('login-form');
     Route::post('/login', 'LoginController@login')->name('login');
     Route::get('/logout', 'LoginController@logout')->name('logout');
+    Route::get('/password', 'ResetPasswordController@passwordReset')->name('password-reset');
+    Route::post('/sendPasswordMail', 'ResetPasswordController@sendPasswordMail')->name('send-password-mail');
+    Route::get('/passwordReset', 'ResetPasswordController@passwordResetForm')->name('password-reset-form');
 });
 
 Route::group(['namespace' => 'User'], function () {

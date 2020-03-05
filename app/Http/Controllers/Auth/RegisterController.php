@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
+    /**
+     * @var UserService
+     */
     protected $userService;
 
     public function __construct()
