@@ -16,6 +16,18 @@ class ProductFilter extends FilterBase
 
     public function searchByCategory($query, $search)
     {
-        return $query->select('products.*')->join('categories', 'products.category_id', '=', 'categories.id')->where('categories.name', 'like', "%$search%");
+        return $query->whereHas('category', function ($query) use ($search) {
+            $query->where('name', 'like', "%$search%");
+        });
+    }
+
+    public function searchBySize($query, $search)
+    {
+        return $query->where("size", "like", "%$search%");
+    }
+
+    public function searchByColor($query, $search)
+    {
+        return $query->where("color", "like", "%$search%");
     }
 }
