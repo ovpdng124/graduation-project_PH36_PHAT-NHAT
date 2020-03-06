@@ -2,9 +2,6 @@
 
 namespace App\Filters;
 
-
-use Illuminate\Database\Eloquent\Builder;
-
 class ProductFilter extends FilterBase
 {
     public function searchByName($query, $search)
@@ -19,8 +16,18 @@ class ProductFilter extends FilterBase
 
     public function searchByCategory($query, $search)
     {
-        return $query->whereHas('category', function (Builder $query) use ($search) {
+        return $query->whereHas('category', function ($query) use ($search) {
             $query->where('name', 'like', "%$search%");
         });
+    }
+
+    public function searchBySize($query, $search)
+    {
+        return $query->where("size", "like", "%$search%");
+    }
+
+    public function searchByColor($query, $search)
+    {
+        return $query->where("color", "like", "%$search%");
     }
 }
