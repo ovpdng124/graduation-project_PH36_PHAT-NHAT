@@ -2,6 +2,9 @@
 
 namespace App\Filters;
 
+
+use Illuminate\Database\Eloquent\Builder;
+
 class ProductFilter extends FilterBase
 {
     public function searchByName($query, $search)
@@ -16,6 +19,8 @@ class ProductFilter extends FilterBase
 
     public function searchByCategory($query, $search)
     {
-        return $query->select('products.*')->join('categories', 'products.category_id', '=', 'categories.id')->where('categories.name', 'like', "%$search%");
+        return $query->whereHas('category', function (Builder $query) use ($search) {
+            $query->where('name', 'like', "%$search%");
+        });
     }
 }

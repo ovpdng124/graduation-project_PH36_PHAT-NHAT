@@ -8,6 +8,11 @@ class ProductImage extends Model
 {
     protected $guarded = [];
 
+    public static $types = [
+        'Avatar'    => 1,
+        'Thumbnail' => 2,
+    ];
+
     public function product()
     {
         return $this->belongsTo(Product::class);

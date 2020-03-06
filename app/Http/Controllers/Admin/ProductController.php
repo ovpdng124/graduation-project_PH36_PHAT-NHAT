@@ -8,10 +8,17 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\EditProductRequest;
 use App\Services\ProductService;
+use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 
 class ProductController extends Controller
 {
+    /**
+     * @var ProductService
+     *
+     */
     protected $productService;
 
     public function __construct()
@@ -39,9 +46,10 @@ class ProductController extends Controller
 
     public function store(CreateProductRequest $request)
     {
-        $params = $request->except('_token');
+        $params = $request->except('_token', 'avatar');
+        $avatar = $request->file('avatar');
 
-        Product::create($params);
+        $this->productService->store($params, $avatar);
 
         return redirect(route('product.index'))->with('success', 'Created successfully!');
     }
@@ -63,6 +71,11 @@ class ProductController extends Controller
         return redirect(route('product.index'))->with('success', 'Updated Successfully!');
     }
 
+    /**
+     * @param $id
+     * @return RedirectResponse|Redirector
+     * @throws Exception
+     */
     public function destroy($id)
     {
         Product::find($id)->delete();
