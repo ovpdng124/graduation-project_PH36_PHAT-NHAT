@@ -47,6 +47,7 @@ class UserService
     public function sendMail($token)
     {
         $user = User::where('verify_token', $token)->first();
+
         try {
             Mail::to($user->email)->send(new VerifyMail($user));
 
@@ -81,7 +82,6 @@ class UserService
         }
 
         $params['verify_at'] = now();
-        dd($expired);
 
         $user->update($params);
 

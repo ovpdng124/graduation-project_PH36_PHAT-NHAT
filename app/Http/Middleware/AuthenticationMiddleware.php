@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Auth;
 use Closure;
+use App\Helpers\GlobalHelper;
 
 class AuthenticationMiddleware
 {
@@ -19,7 +20,9 @@ class AuthenticationMiddleware
     {
         if (Auth::check()) {
             if (empty(Auth::user()->verify_at)) {
-                return redirect(route('verify-notification', Auth::user()->verify_token))->with(['notification' => 'This account it not verify!', 'messages' => '']);
+                $errorMessages = GlobalHelper::getErrorMessages();
+
+                return redirect(route('verify-notification', Auth::user()->only('verify_token')))->with($errorMessages['not_verify']);
             }
 
             return $next($request);

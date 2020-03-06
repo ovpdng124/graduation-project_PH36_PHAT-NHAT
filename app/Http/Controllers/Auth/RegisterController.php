@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\GlobalHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
 use App\Services\UserService;
@@ -13,10 +14,12 @@ class RegisterController extends Controller
      * @var UserService
      */
     protected $userService;
+    protected $errorMessages;
 
     public function __construct()
     {
-        $this->userService = app(UserService::class);
+        $this->userService   = app(UserService::class);
+        $this->errorMessages = GlobalHelper::getErrorMessages();
     }
 
     public function showRegisterForm()
@@ -28,13 +31,13 @@ class RegisterController extends Controller
     {
         $params = $request->except(['_token', 'password_confirmation']);
 
-        list($status, $message) = $this->userService->store($params);
+        list($status) = $this->userService->store($params);
 
         if (!$status) {
-            return redirect(route('verify-notification'))->with(['notification' => $message, 'messages' => 'Please login to send mail again!']);
+            return redirect(route('verify-notification'))->with($this->errorMessages['send_mail_failed']);
         }
 
-        return redirect(route('verify-notification'))->with(['notification' => $message, 'messages' => 'Please check mail to verify account!']);
+        return redirect(route('verify-notification'))->with($this->errorMessages['create_success']);
     }
 
     public function verifyNotification(Request $request)
@@ -50,8 +53,7 @@ class RegisterController extends Controller
 
         $this->userService->sendMail($token['verify_token']);
 
-
-        return redirect(route('verify-notification', $token))->with(['notification' => 'Success', 'messages' => 'Check your email to verify!']);
+        return redirect(route('verify-notification', $token))->with($this->errorMessages['send_mail']);
     }
 
     public function verify(Request $request)
@@ -59,10 +61,9 @@ class RegisterController extends Controller
         $params = $request->all();
 
         if (!$this->userService->decodeToken($params)) {
-
             return abort(403, 'Please check mail again!');
         }
 
-        return redirect(route('verify-notification'))->with(['notification' => 'Verify success', 'messages' => 'You can login your account!']);
+        return redirect(route('verify-notification'))->with($this->errorMessages['verify_success']);
     }
 }
