@@ -35,4 +35,14 @@ class ProductFilter extends FilterBase
     {
         return $query->where("color", "like", "%$search%");
     }
+
+    public function searchBySubName($query, $search)
+    {
+        return $query->where('sub_name', 'like', "%$search%");
+    }
+
+    public function searchBySubPrice($query, $search)
+    {
+        return $query->where('sub_price', 'like', "%$search%");
+    }
 }

@@ -23,7 +23,7 @@ class ProductAttributeController extends Controller
 
         $productAttributes = $this->productAttributeService->getProducts($limits, $search, $searchKey);
 
-        return view('admin.products.product_attributes.list', compact('productAttributes'));
+        return view('admin.products.product_attributes.list', compact('productAttributes', 'search', 'searchKey'));
     }
 
     /**
