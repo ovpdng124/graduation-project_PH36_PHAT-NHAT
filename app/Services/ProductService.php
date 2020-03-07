@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Entities\Product;
 use App\Entities\ProductImage;
 use App\Filters\ProductFilter;
-use Illuminate\Database\Eloquent\Builder;
 
 class ProductService
 {
@@ -32,20 +31,28 @@ class ProductService
         return $query;
     }
 
-    public function store($params, $avatar)
+    public function store($request)
     {
-        $product = Product::create($params);
+        $params = $request->except('_token', 'avatar');
 
-        return $this->storeAvatar($avatar, $product->id);
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+
+            $product = Product::create($params);
+
+            return $this->storeAvatar($avatar, $product->id);
+        }
+
+        return false;
     }
 
     public function storeAvatar($avatar, $id)
     {
         $avatarName = $avatar->getClientOriginalName();
-        $path       = ProductImage::$paths['Avatar'];
+        $path       = ProductImage::$paths['Avatar'] . $id . '/';
         $type       = ProductImage::$types['Avatar'];
 
-        $avatar->move($path, $avatarName);
+        $avatar->move(public_path($path), $avatarName);
 
         $productAvatar = [
             'product_id' => $id,
@@ -56,13 +63,26 @@ class ProductService
         return ProductImage::create($productAvatar);
     }
 
+    public function update($request, $id)
+    {
+        $params = $request->except('_token', 'avatar');
+
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+
+            $this->updateAvatar($avatar, $id);
+        }
+
+        return Product::find($id)->update($params);
+    }
+
     public function updateAvatar($avatar, $id)
     {
         $avatarName         = $avatar->getClientOriginalName();
-        $path               = ProductImage::$paths['Avatar'];
+        $path               = ProductImage::$paths['Avatar'] . $id . '/';
         $data['image_path'] = $path . $avatarName;
 
-        $avatar->move($path, $avatarName);
+        $avatar->move(public_path($path), $avatarName);
 
         $product_image = ProductImage::where('product_id', $id)->first();
 

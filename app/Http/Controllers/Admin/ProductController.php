@@ -46,10 +46,9 @@ class ProductController extends Controller
 
     public function store(CreateProductRequest $request)
     {
-        $params = $request->except('_token', 'avatar');
-        $avatar = $request->file('avatar');
-
-        $this->productService->store($params, $avatar);
+        if (!$this->productService->store($request)) {
+            return redirect(route('product.index'))->with('failed', 'Create failed!');
+        }
 
         return redirect(route('product.index'))->with('success', 'Created successfully!');
     }
@@ -64,15 +63,7 @@ class ProductController extends Controller
 
     public function update(EditProductRequest $request, $id)
     {
-        $params = $request->except('_token', 'avatar');
-
-        if ($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar');
-
-            $this->productService->updateAvatar($avatar, $id);
-        }
-
-        Product::find($id)->update($params);
+        $this->productService->update($request, $id);
 
         return redirect(route('product.index'))->with('success', 'Updated Successfully!');
     }
