@@ -67,9 +67,11 @@
                                         <td>{{$item['address']}}</td>
                                         <td>{{$item['phone_number']}}</td>
                                         <td>{{$item->role->name}}</td>
-                                        <td><a href="{{route('user.edit-form', $item->id)}}">
+                                        <td>
+                                            <a href="{{route('user.edit-form', $item->id)}}">
                                                 <button class="btn-link">Edit</button>
-                                            </a></td>
+                                            </a>
+                                        </td>
                                         <td {{$item->role->id === \App\Entities\Role::$roles['Admin'] ? 'hidden' : ''}}>
                                             <form action="{{route('user.delete', $item->id)}}" method="post">
                                                 @method('delete')

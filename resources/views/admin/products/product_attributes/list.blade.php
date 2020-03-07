@@ -64,7 +64,9 @@
                                         <td width="10%">{{$item->size}}</td>
                                         <td width="5%">{{$item->color}}</td>
                                         <td width="5%">
-                                            <a href="{{route('product.edit', $item->id)}}"><button class="btn-link">Edit</button></a>
+                                            <a href="{{route('product.edit', $item->id)}}">
+                                                <button class="btn-link">Edit</button>
+                                            </a>
                                         </td>
                                         <td width="5%">
                                             <form action="{{route('product.destroy', $item->id)}}" method="post">
