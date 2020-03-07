@@ -64,7 +64,13 @@ class ProductController extends Controller
 
     public function update(EditProductRequest $request, $id)
     {
-        $params = $request->except('_token');
+        $params = $request->except('_token', 'avatar');
+
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+
+            $this->productService->updateAvatar($avatar, $id);
+        }
 
         Product::find($id)->update($params);
 

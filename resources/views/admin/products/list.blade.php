@@ -47,7 +47,7 @@
                                         <td width="10%">$ {{number_format($item->price)}}</td>
                                         <td width="20%">{{$item->category->name}}</td>
                                         @foreach($item->product_images as $image)
-                                            <td width="20%"><img src="{{$image->image_path}}" width="150" height="150"></td>
+                                            <td width="20%"><img src="/{{$image->image_path}}" width="150" height="150"></td>
                                         @endforeach
                                         <td width="10%">
                                             <a href="{{route('product.edit', $item->id)}}">

@@ -36,21 +36,36 @@ class ProductService
     {
         $product = Product::create($params);
 
-        return $this->saveAvatar($avatar, $product->id);
+        return $this->storeAvatar($avatar, $product->id);
     }
 
-    public function saveAvatar($avatar, $id)
+    public function storeAvatar($avatar, $id)
     {
         $avatarName = $avatar->getClientOriginalName();
+        $path       = ProductImage::$paths['Avatar'];
+        $type       = ProductImage::$types['Avatar'];
 
-        $avatar->move('images/avatar', $avatarName);
+        $avatar->move($path, $avatarName);
 
         $productAvatar = [
             'product_id' => $id,
-            'image_path' => ("/images/avatar/$avatarName"),
-            'image_type' => ProductImage::$types['Avatar'],
+            'image_path' => $path . $avatarName,
+            'image_type' => $type,
         ];
 
         return ProductImage::create($productAvatar);
+    }
+
+    public function updateAvatar($avatar, $id)
+    {
+        $avatarName         = $avatar->getClientOriginalName();
+        $path               = ProductImage::$paths['Avatar'];
+        $data['image_path'] = $path . $avatarName;
+
+        $avatar->move($path, $avatarName);
+
+        $product_image = ProductImage::where('product_id', $id)->first();
+
+        return $product_image->update($data);
     }
 }

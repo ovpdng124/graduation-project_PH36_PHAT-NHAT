@@ -8,6 +8,11 @@ class ProductImage extends Model
 {
     protected $guarded = [];
 
+    public static $paths = [
+        'Avatar'    => 'images/avatar/',
+        'Thumbnail' => 'images/thumbnails',
+    ];
+
     public static $types = [
         'Avatar'    => 1,
         'Thumbnail' => 2,
