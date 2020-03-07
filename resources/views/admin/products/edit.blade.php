@@ -15,7 +15,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-9 well well-sm col-md-offset-4 container">
-                                    <form action="{{route('product.update', $product->id)}}" method="post" class="form" role="form">
+                                    <form action="{{route('product.update', $product->id)}}" enctype="multipart/form-data" method="post" class="form" role="form">
                                         @csrf
                                         @method('put')
                                         <div class="form-group row">
@@ -56,6 +56,19 @@
                                                 </select>
                                                 @if($errors->any())
                                                     @foreach($errors->get('category_id') as $messages)
+                                                        <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-xs-3 col-md-3">
+                                                <label for="" class="float-md-right mt-2">Avatar: </label>
+                                            </div>
+                                            <div class="col-xs-9 col-md-9">
+                                                <input type="file" class="form-control" name="avatar">
+                                                @if($errors->any())
+                                                    @foreach($errors->get('avatar') as $messages)
                                                         <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
                                                     @endforeach
                                                 @endif

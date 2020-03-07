@@ -36,6 +36,7 @@
                                     <th>Description</th>
                                     <th>Price</th>
                                     <th>Category</th>
+                                    <th class="text-center">Image</th>
                                     <th class="text-center" colspan="2">Action</th>
                                 </tr>
                                 @foreach($products as $key => $item)
@@ -45,8 +46,13 @@
                                         <td width="50%">{{$item->description}}</td>
                                         <td width="10%">$ {{number_format($item->price)}}</td>
                                         <td width="20%">{{$item->category->name}}</td>
+                                        @foreach($item->product_images as $image)
+                                            <td width="20%"><img src="/{{$image->image_path}}" width="150" height="150"></td>
+                                        @endforeach
                                         <td width="10%">
-                                            <a href="{{route('product.edit', $item->id)}}"><button class="btn-link">Edit</button></a>
+                                            <a href="{{route('product.edit', $item->id)}}">
+                                                <button class="btn-link">Edit</button>
+                                            </a>
                                         </td>
                                         <td width="10%">
                                             <form action="{{route('product.destroy', $item->id)}}" method="post">
