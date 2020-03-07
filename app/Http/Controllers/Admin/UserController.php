@@ -50,7 +50,7 @@ class UserController extends Controller
 
         $users = $this->userService->getUsers($limits, $search, $searchKey);
 
-        return view('admin.users.list', compact('users'));
+        return view('admin.users.list', compact('users', 'search', 'searchKey'));
     }
 
     public function edit($id)

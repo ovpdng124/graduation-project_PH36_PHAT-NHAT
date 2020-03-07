@@ -14,6 +14,11 @@ class ProductFilter extends FilterBase
         return $query->where("price", "like", "%$search%");
     }
 
+    public function searchByDescription($query, $search)
+    {
+        return $query->where("description", "like", "%$search%");
+    }
+
     public function searchByCategory($query, $search)
     {
         return $query->whereHas('category', function ($query) use ($search) {

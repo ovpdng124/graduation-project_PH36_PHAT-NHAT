@@ -3,16 +3,33 @@
 @section('content')
     <div class="container-fluid">
         <div class="container-fluid row justify-content-center">
-            <div class="card">
+            <div class="card container-fluid">
                 <div class="card-header">
                     <div class="card-title">
-                        <form action="" method="get">
+                        <form action="{{route('user.list')}}" method="get">
                             <div class="input-group">
-                                <input type="hidden" name="searchBy" value="code">
-                                <input type="text" class="form-control" name="search">
+                                <input type="text" class="form-control" name="search" value="{{$search}}">
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-info" type="submit"><i class="fas fa-search"></i>
                                     </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5">
+                                    <input type="radio" name="searchBy" id="full_name" value="full_name" {{$searchKey == 'full_name' ? 'checked' : ''}}>
+                                    <label for="full_name">Name</label>
+                                </div>
+                                <div class="col-5">
+                                    <input type="radio" name="searchBy" id="username" value="username" {{$searchKey == 'username' ? 'checked' : ''}}>
+                                    <label for="username">Username</label>
+                                </div>
+                                <div class="col-5">
+                                    <input type="radio" name="searchBy" id="email" value="email" {{$searchKey == 'email' ? 'checked' : ''}}>
+                                    <label for="email">Email</label>
+                                </div>
+                                <div class="col-5">
+                                    <input type="radio" name="searchBy" id="phone_number" value="phone_number" {{$searchKey == 'phone_number' ? 'checked' : ''}}>
+                                    <label for="phone_number">Phone</label>
                                 </div>
                             </div>
                         </form>
@@ -50,12 +67,14 @@
                                         <td>{{$item['address']}}</td>
                                         <td>{{$item['phone_number']}}</td>
                                         <td>{{$item->role->name}}</td>
-                                        <td><a href="{{route('user.edit-form', $item->id)}}"><button class="btn-link">Edit</button></a></td>
+                                        <td><a href="{{route('user.edit-form', $item->id)}}">
+                                                <button class="btn-link">Edit</button>
+                                            </a></td>
                                         <td {{$item->role->id === \App\Entities\Role::$roles['Admin'] ? 'hidden' : ''}}>
                                             <form action="{{route('user.delete', $item->id)}}" method="post">
                                                 @method('delete')
                                                 @csrf
-                                                    <button onclick="return confirm('Do you want remove this user?')" class="btn-link" type="submit">Delete</button>
+                                                <button onclick="return confirm('Do you want remove this user?')" class="btn-link" type="submit">Delete</button>
                                             </form>
                                         </td>
                                     </tr>

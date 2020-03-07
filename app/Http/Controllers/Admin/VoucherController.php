@@ -26,7 +26,7 @@ class VoucherController extends Controller
 
         $vouchers = $this->voucherService->getVouchers($limits, $search, $searchKey);
 
-        return view('admin.vouchers.list', compact('vouchers'));
+        return view('admin.vouchers.list', compact('vouchers', 'search', 'searchKey'));
     }
 
     public function create()

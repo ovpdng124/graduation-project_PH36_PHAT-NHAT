@@ -34,7 +34,7 @@ class ProductController extends Controller
 
         $products = $this->productService->getProducts($limits, $search, $searchKey);
 
-        return view('admin.products.list', compact('products'));
+        return view('admin.products.list', compact('products', 'search', 'searchKey'));
     }
 
     public function create()
