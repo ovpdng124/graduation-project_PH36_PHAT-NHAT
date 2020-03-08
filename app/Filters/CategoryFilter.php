@@ -2,7 +2,7 @@
 
 namespace App\Filters;
 
-class CategoryFilter
+class CategoryFilter extends FilterBase
 {
     public function searchByName($query, $search)
     {

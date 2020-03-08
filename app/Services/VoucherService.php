@@ -21,7 +21,7 @@ class VoucherService
         $query = Voucher::query();
 
         if (!empty($search) && !empty($searchKey)) {
-            $query = $query->voucherFilter->search($query, $search, $searchKey);
+            $query = $this->voucherFilter->search($query, $search, $searchKey);
         }
 
         return $query->paginate($limits);
