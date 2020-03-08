@@ -48,6 +48,7 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
         Route::resource('voucher', 'VoucherController');
         Route::resource('product', 'ProductController');
         Route::resource('product-attribute', 'ProductAttributeController');
+        Route::resource('category', 'CategoryController');
     });
 
     Route::group(['namespace' => 'User'], function () {

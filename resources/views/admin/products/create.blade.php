@@ -15,7 +15,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-9 well well-sm col-md-offset-4 container">
-                                    <form action="{{route('product.store')}}" method="post" class="form" role="form">
+                                    <form action="{{route('product.store')}}" enctype="multipart/form-data" method="post" class="form" role="form">
                                         @csrf
                                         <div class="form-group row">
                                             <div class="col-xs-3 col-md-3">
@@ -62,10 +62,28 @@
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-xs-3 col-md-3">
+                                                    <label for="" class="float-md-right mt-2">Avatar: </label>
+                                            </div>
+                                            <div class="col-xs-9 col-md-9">
+                                                <input type="file" name="avatar" class="form-control">
+                                                @if($errors->any())
+                                                    @foreach($errors->get('avatar') as $messages)
+                                                        <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-xs-3 col-md-3">
                                                 <label for="" class="float-md-right mt-2">Description: </label>
                                             </div>
                                             <div class="col-xs-9 col-md-9">
                                                 <textarea class="form-control" name="description" id="" cols="30" rows="10"></textarea>
+                                                @if($errors->any())
+                                                    @foreach($errors->get('description') as $messages)
+                                                        <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
+                                                    @endforeach
+                                                @endif
                                             </div>
                                         </div>
                                         <button type="submit" class="btn btn-lg btn-success btn-block col-md-5 container">Create</button>
