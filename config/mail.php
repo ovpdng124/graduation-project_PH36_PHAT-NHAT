@@ -133,6 +133,6 @@ return [
 
     'log_channel' => env('MAIL_LOG_CHANNEL'),
 
-    'mail_sender' => env('MAIL_SYSTEM', '{default_value}'),
+    'mail_sender' => env('MAIL_SYSTEM', 'admin@gmail.com'),
 
 ];

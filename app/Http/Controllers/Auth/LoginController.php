@@ -15,7 +15,7 @@ class LoginController extends Controller
             if (empty(Auth::user()->verify_at)) {
                 Auth::logout();
 
-                return $this->showLoginForm();
+                return $this->showLoginForm()->withErrors('Please login again!');
             }
 
             return redirect(route('index'));
