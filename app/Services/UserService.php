@@ -68,8 +68,8 @@ class UserService
         $email        = base64_decode($tokenExplode[0]);
         $dateTime     = base64_decode($tokenExplode[1]);
 
-        $expired        = (Carbon::now()->diffInDays(Carbon::parse($dateTime)))<2 ;
-        $user           = User::where('email', $email)->first();
+        $expired = Carbon::now()->diffInDays(Carbon::parse($dateTime)) < 2;
+        $user    = User::where('email', $email)->first();
 
         if (!$expired) {
             $params['email']        = $email;

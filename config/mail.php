@@ -57,7 +57,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'name'    => env('MAIL_FROM_NAME', 'Example'),
     ],
 
     /*
@@ -133,6 +133,6 @@ return [
 
     'log_channel' => env('MAIL_LOG_CHANNEL'),
 
-    'mail_sender' => env('MAIL_SYSTEM'),
+    'mail_sender' => env('MAIL_SYSTEM', '{default_value}'),
 
 ];

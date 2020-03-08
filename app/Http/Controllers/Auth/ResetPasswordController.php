@@ -45,7 +45,7 @@ class ResetPasswordController extends Controller
         try {
             Mail::to($user->email)->send(new ResetPasswordMail($user));
 
-            return redirect(route('login-form'));
+            return redirect(route('login-form'))->withErrors('Please check mail');
         } catch (Exception $exception) {
             Log::error($exception);
 

@@ -1,5 +1,5 @@
 @extends('user.layouts.master')
-@section('title','Register')
+@section('title','Verify')
 
 @section('content')
     <div class="main-banner inner" style="background: url({{asset('template/images/banner.jpg')}})no-repeat center;"
