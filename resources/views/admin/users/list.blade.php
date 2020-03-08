@@ -8,7 +8,7 @@
                     <div class="card-title">
                         <form action="{{route('user.list')}}" method="get">
                             <div class="input-group">
-                                <input type="text" class="form-control" name="search" value="{{$search}}">
+                                <input type="text" class="form-control" name="search" value="{{request()->query('search')}}">
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-info" type="submit"><i class="fas fa-search"></i>
                                     </button>
@@ -16,19 +16,19 @@
                             </div>
                             <div class="row">
                                 <div class="col-5">
-                                    <input type="radio" name="searchBy" id="full_name" value="full_name" {{$searchKey == 'full_name' ? 'checked' : ''}}>
+                                    <input type="radio" name="searchBy" id="full_name" value="full_name" {{request()->query('searchBy') == 'full_name' ? 'checked' : ''}}>
                                     <label for="full_name">Name</label>
                                 </div>
                                 <div class="col-5">
-                                    <input type="radio" name="searchBy" id="username" value="username" {{$searchKey == 'username' ? 'checked' : ''}}>
+                                    <input type="radio" name="searchBy" id="username" value="username" {{request()->query('searchBy') == 'username' ? 'checked' : ''}}>
                                     <label for="username">Username</label>
                                 </div>
                                 <div class="col-5">
-                                    <input type="radio" name="searchBy" id="email" value="email" {{$searchKey == 'email' ? 'checked' : ''}}>
+                                    <input type="radio" name="searchBy" id="email" value="email" {{request()->query('searchBy') == 'email' ? 'checked' : ''}}>
                                     <label for="email">Email</label>
                                 </div>
                                 <div class="col-5">
-                                    <input type="radio" name="searchBy" id="phone_number" value="phone_number" {{$searchKey == 'phone_number' ? 'checked' : ''}}>
+                                    <input type="radio" name="searchBy" id="phone_number" value="phone_number" {{request()->query('searchBy') == 'phone_number' ? 'checked' : ''}}>
                                     <label for="phone_number">Phone</label>
                                 </div>
                             </div>

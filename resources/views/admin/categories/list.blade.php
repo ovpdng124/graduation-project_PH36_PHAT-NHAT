@@ -9,7 +9,7 @@
                         <form action="{{route('category.index')}}" method="get">
                             <div class="input-group">
                                 <input type="hidden" name="searchBy" value="name">
-                                <input type="text" class="form-control" name="search">
+                                <input type="text" class="form-control" name="search" value="{{request()->query('search')}}">
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-info" type="submit"><i class="fas fa-search"></i></button>
                                 </div>
