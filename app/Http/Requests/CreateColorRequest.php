@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateProductAttributeRequest extends FormRequest
+class CreateColorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class CreateProductAttributeRequest extends FormRequest
     public function rules()
     {
         return [
-            'sub_price' => 'numeric',
-            'size'      => 'required|numeric',
+            'hex_color' => ['required','regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/'],
             'color'     => 'required',
         ];
     }

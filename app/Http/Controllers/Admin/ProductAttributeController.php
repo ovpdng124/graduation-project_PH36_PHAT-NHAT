@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Entities\ProductAttributes;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateColorRequest;
 use App\Http\Requests\CreateProductAttributeRequest;
 use App\Http\Requests\EditProductAttributeRequest;
 use App\Services\ProductAttributeService;
 use Illuminate\Http\Request;
+use LVR\Colour\Hex;
 
 class ProductAttributeController extends Controller
 {
@@ -31,7 +33,9 @@ class ProductAttributeController extends Controller
 
     public function create()
     {
-        return view('admin.products.product_attributes.create');
+        $productAttributes = ProductAttributes::all();
+
+        return view('admin.products.product_attributes.create', compact('productAttributes'));
     }
 
     public function store(CreateProductAttributeRequest $request)
@@ -40,7 +44,7 @@ class ProductAttributeController extends Controller
 
         ProductAttributes::create($params);
 
-        return redirect(route('product-attribute.index'))->with('success','Create Successfully!');
+        return redirect(route('product-attribute.index'))->with('success', 'Create Successfully!');
     }
 
     public function show($id)
@@ -52,7 +56,7 @@ class ProductAttributeController extends Controller
     {
         $productAttribute = ProductAttributes::find($id);
 
-        return view('admin.products.product_attributes.edit',compact('productAttribute'));
+        return view('admin.products.product_attributes.edit', compact('productAttribute'));
     }
 
     public function update(EditProductAttributeRequest $request, $id)
@@ -61,15 +65,26 @@ class ProductAttributeController extends Controller
 
         ProductAttributes::find($id)->update($params);
 
-        return redirect(route('product-attribute.index'))->with('success','Updated Successfully!');
-
+        return redirect(route('product-attribute.index'))->with('success', 'Updated Successfully!');
     }
 
     public function destroy($id)
     {
-        ProductAttributes::destroy($id);
+        ProductAttributes::find($id)->delete($id);
 
 
         return redirect(route('product-attribute.index'))->with('success', 'Deleted Successfully');
+    }
+
+    public function createColorForm()
+    {
+        return view('admin.products.product_attributes.createColor');
+    }
+
+    public function createColor(CreateColorRequest $request)
+    {
+        $params = $request->except('_token');
+        dd($params);
+//        return redirect(route('product-attribute.create'));
     }
 }

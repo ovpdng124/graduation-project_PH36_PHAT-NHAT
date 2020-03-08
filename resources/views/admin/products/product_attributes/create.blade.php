@@ -61,12 +61,17 @@
                                                 <label for="" class="float-md-right mt-2">Color: </label>
                                             </div>
                                             <div class="col-xs-9 col-md-9">
-                                                <input type="text" class="form-control" name="color" value="{{old('color')}}">
+                                                <select name="color" class="form-control">
+                                                    @foreach($productAttributes as $item)
+                                                        <option value="{{$item->color}}">{{$item->color}}</option>
+                                                    @endforeach
+                                                </select>
                                                 @if($errors->any())
                                                     @foreach($errors->get('color') as $messages)
                                                         <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
                                                     @endforeach
                                                 @endif
+                                                <a href="{{route('create-color-form')}}">Create new color</a>
                                             </div>
                                         </div>
                                         <button type="submit" class="btn btn-lg btn-success btn-block col-md-5 container">Create</button>
