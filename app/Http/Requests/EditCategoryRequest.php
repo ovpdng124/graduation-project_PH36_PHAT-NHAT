@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class CreateProductRequest extends FormRequest
+class EditCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +25,7 @@ class CreateProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'        => 'required|unique:products',
-            'price'       => 'required|numeric',
-            'description' => 'required',
-            'avatar'      => 'required',
+            'name' => ['required', Rule::unique('categories')->ignore($this->category)]
         ];
     }
 }
