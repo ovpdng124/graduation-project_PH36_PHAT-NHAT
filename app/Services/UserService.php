@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Entities\User;
 use App\Filters\UserFilter;
+use Auth;
+use Hash;
 
 class UserService
 {
@@ -38,5 +40,23 @@ class UserService
     public function encodeToken($params)
     {
         return base64_encode($params['email']) . '.' . base64_encode(now());
+    }
+
+    public function updatePasswordProfile($params)
+    {
+        $checkPassword = false;
+        $newPassword   = [
+            'password' => bcrypt($params['new_password']),
+        ];
+
+        if (!empty($params['current_password'])) {
+            if (Hash::check($params['current_password'], Auth::user()->getAuthPassword())) {
+                Auth::user()->update($newPassword);
+
+                return $checkPassword = true;
+            }
+        }
+
+        return $checkPassword;
     }
 }

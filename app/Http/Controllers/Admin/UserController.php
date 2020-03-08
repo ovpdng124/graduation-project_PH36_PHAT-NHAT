@@ -4,15 +4,20 @@ namespace App\Http\Controllers\Admin;
 
 use App\Entities\User;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ChangePasswordProfileRequest;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\EditUserRequest;
 use App\Services\UserService;
+use Auth;
 use Exception;
 use Illuminate\Http\Request;
 use Log;
 
 class UserController extends Controller
 {
+    /**
+     * @var UserService
+     */
     protected $userService;
 
     public function __construct()
@@ -82,5 +87,42 @@ class UserController extends Controller
 
             return redirect(route('user.list'))->with('failed', 'Deleted failed!');
         }
+    }
+
+    public function profile()
+    {
+        $userProfile = Auth::user();
+
+        return view('admin.users.profile', compact('userProfile'));
+    }
+
+    public function editProfile()
+    {
+        $userProfile = Auth::user();
+
+        return view('admin.users.edit_profile', compact('userProfile'));
+    }
+
+    public function updateProfile()
+    {
+        dd('Missing feature send verify mail from authenticate.');
+    }
+
+    public function changePasswordProfile()
+    {
+        $userProfile = Auth::user();
+
+        return view('admin.users.profile_edit_password', compact('userProfile'));
+    }
+
+    public function updatePasswordProfile(ChangePasswordProfileRequest $request)
+    {
+        $params = $request->except('_token', 'password_confirmation');
+
+        if (!$this->userService->updatePasswordProfile($params)) {
+            return redirect()->back()->withErrors(['current_password' => 'Wrong password!']);
+        }
+
+        return redirect(route('admin.profile'))->with('success', 'Changed password successfully!');
     }
 }

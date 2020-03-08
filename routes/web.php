@@ -24,6 +24,13 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth.admin'], function () {
         // All routes for admin users
         Route::get('/', 'UserController@index')->name('admin.index');
+        Route::group(['prefix' => 'profile'], function (){
+            Route::get('/', 'UserController@profile')->name('admin.profile');
+            Route::get('/edit', 'UserController@editProfile')->name('admin.edit.profile-form');
+            Route::put('/edit', 'UserController@updateProfile')->name('admin.edit.profile');
+            Route::get('/change-password', 'UserController@changePasswordProfile')->name('admin.profile.change-password-form');
+            Route::put('/change-password', 'UserController@updatePasswordProfile')->name('admin.profile.change-password');
+        });
 
         Route::group(['prefix' => 'user'], function () {
             Route::get('/', 'UserController@show')->name('user.list');
