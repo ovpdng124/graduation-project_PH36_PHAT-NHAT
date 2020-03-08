@@ -27,7 +27,7 @@ class ResetPasswordController extends Controller
 
     public function passwordReset(CreatePasswordRequest $request)
     {
-        $params = $request->except('_token', 'password_confirmation');
+        $params             = $request->except('_token', 'password_confirmation');
         $params['password'] = bcrypt($params['password']);
         User::find($params['id'])->update($params);
 
