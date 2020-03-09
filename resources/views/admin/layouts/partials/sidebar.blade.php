@@ -42,10 +42,15 @@
                         <span>Product list</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('category.index')}}" class="nav-link">
+                        <i class="fa fa-list"></i>
+                        <span>Category list</span>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
-
 </aside>

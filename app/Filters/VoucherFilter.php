@@ -16,6 +16,6 @@ class VoucherFilter extends FilterBase
 
     public function searchByUnit($query, $search)
     {
-        return $query->where("unit", "like", "%$search%");
+        return $query->where("unit", "$search");
     }
 }

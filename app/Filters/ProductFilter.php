@@ -14,6 +14,11 @@ class ProductFilter extends FilterBase
         return $query->where("price", "like", "%$search%");
     }
 
+    public function searchByDescription($query, $search)
+    {
+        return $query->where("description", "like", "%$search%");
+    }
+
     public function searchByCategory($query, $search)
     {
         return $query->whereHas('category', function ($query) use ($search) {
@@ -29,5 +34,15 @@ class ProductFilter extends FilterBase
     public function searchByColor($query, $search)
     {
         return $query->where("color", "like", "%$search%");
+    }
+
+    public function searchBySubName($query, $search)
+    {
+        return $query->where('sub_name', 'like', "%$search%");
+    }
+
+    public function searchBySubPrice($query, $search)
+    {
+        return $query->where('sub_price', 'like', "%$search%");
     }
 }
