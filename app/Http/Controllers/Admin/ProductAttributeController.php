@@ -5,12 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Entities\ProductAttributes;
 use App\Helpers\GlobalHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateColorRequest;
 use App\Http\Requests\CreateProductAttributeRequest;
 use App\Http\Requests\EditProductAttributeRequest;
 use App\Services\ProductAttributeService;
 use Illuminate\Http\Request;
-use LVR\Colour\Hex;
 
 class ProductAttributeController extends Controller
 {
@@ -20,7 +18,7 @@ class ProductAttributeController extends Controller
     public function __construct()
     {
         $this->productAttributeService = app(ProductAttributeService::class);
-        $this->colorDefaults = GlobalHelper::colorDefaults();
+        $this->colorDefaults = GlobalHelper::$colorDefaults;
     }
 
     public function index(Request $request)
@@ -48,11 +46,6 @@ class ProductAttributeController extends Controller
         ProductAttributes::create($params);
 
         return redirect(route('product-attribute.index'))->with('success', 'Create Successfully!');
-    }
-
-    public function show($id)
-    {
-        //
     }
 
     public function edit($id)

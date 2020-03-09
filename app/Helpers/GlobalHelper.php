@@ -7,6 +7,14 @@ use Auth;
 
 class GlobalHelper
 {
+    public static $colorDefaults = [
+        'White' => "#ffffff",
+        'Black' => '#000000',
+        'Blue'  => '#000066',
+        'Red'   => '#ff0000',
+        'Green' => '#33ff33',
+    ];
+
     public static function getErrorMessages()
     {
         return [
@@ -15,17 +23,6 @@ class GlobalHelper
             'send_mail'        => ['notification' => 'Send mail success', 'messages' => 'Check your email to verify!'],
             'verify_success'   => ['notification' => 'Verify success', 'messages' => 'You can login your account!'],
             'not_verify'       => ['notification' => 'Not verify.', 'messages' => 'This account it not verify!'],
-        ];
-    }
-
-    public static function colorDefaults()
-    {
-        return [
-            'White' => "#ffffff",
-            'Black' => '#000000',
-            'Blue'  => '#000066',
-            'Red'   => '#ff0000',
-            'Green' => '#33ff33',
         ];
     }
 
