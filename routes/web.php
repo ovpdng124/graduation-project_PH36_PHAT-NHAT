@@ -48,8 +48,6 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
         Route::resource('voucher', 'VoucherController');
         Route::resource('product', 'ProductController');
         Route::resource('product-attribute', 'ProductAttributeController');
-        Route::get('/create-color','ProductAttributeController@createColorForm')->name('create-color-form');
-        Route::post('/create-color','ProductAttributeController@createColor')->name('create-color');
         Route::resource('category', 'CategoryController');
     });
 

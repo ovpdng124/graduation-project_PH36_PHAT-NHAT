@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Entities\ProductAttributes;
+use App\Helpers\GlobalHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateColorRequest;
 use App\Http\Requests\CreateProductAttributeRequest;
@@ -14,10 +15,12 @@ use LVR\Colour\Hex;
 class ProductAttributeController extends Controller
 {
     protected $productAttributeService;
+    protected $colorDefaults;
 
     public function __construct()
     {
         $this->productAttributeService = app(ProductAttributeService::class);
+        $this->colorDefaults = GlobalHelper::colorDefaults();
     }
 
     public function index(Request $request)
@@ -33,9 +36,9 @@ class ProductAttributeController extends Controller
 
     public function create()
     {
-        $productAttributes = ProductAttributes::all();
+        $colorDefault = $this->colorDefaults;
 
-        return view('admin.products.product_attributes.create', compact('productAttributes'));
+        return view('admin.products.product_attributes.create', compact('colorDefault'));
     }
 
     public function store(CreateProductAttributeRequest $request)
@@ -55,8 +58,9 @@ class ProductAttributeController extends Controller
     public function edit($id)
     {
         $productAttribute = ProductAttributes::find($id);
+        $colorDefault = $this->colorDefaults;
 
-        return view('admin.products.product_attributes.edit', compact('productAttribute'));
+        return view('admin.products.product_attributes.edit', compact('productAttribute','colorDefault'));
     }
 
     public function update(EditProductAttributeRequest $request, $id)
@@ -70,21 +74,8 @@ class ProductAttributeController extends Controller
 
     public function destroy($id)
     {
-        ProductAttributes::find($id)->delete($id);
-
+        ProductAttributes::find($id)->delete();
 
         return redirect(route('product-attribute.index'))->with('success', 'Deleted Successfully');
-    }
-
-    public function createColorForm()
-    {
-        return view('admin.products.product_attributes.createColor');
-    }
-
-    public function createColor(CreateColorRequest $request)
-    {
-        $params = $request->except('_token');
-        dd($params);
-//        return redirect(route('product-attribute.create'));
     }
 }

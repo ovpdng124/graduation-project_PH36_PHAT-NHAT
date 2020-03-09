@@ -62,8 +62,12 @@
                                                 <label for="" class="float-md-right mt-2">Color: </label>
                                             </div>
                                             <div class="col-xs-9 col-md-9">
-                                                <input type="text" class="form-control" name="color" value="{{$productAttribute->color}}">
-                                                @if($errors->any())
+                                                <select name="color" class="form-control">
+                                                    @foreach($colorDefault as $key => $item)
+                                                        <option value="{{$item}}">{{$key}}</option>
+                                                    @endforeach
+                                                </select>
+                                            @if($errors->any())
                                                     @foreach($errors->get('color') as $messages)
                                                         <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
                                                     @endforeach

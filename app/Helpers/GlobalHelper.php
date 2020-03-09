@@ -18,6 +18,17 @@ class GlobalHelper
         ];
     }
 
+    public static function colorDefaults()
+    {
+        return [
+            'White' => "#ffffff",
+            'Black' => '#000000',
+            'Blue'  => '#000066',
+            'Red'   => '#ff0000',
+            'Green' => '#33ff33',
+        ];
+    }
+
     public static function checkAdminRole()
     {
         $user = Auth::user();
