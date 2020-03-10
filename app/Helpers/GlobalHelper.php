@@ -6,6 +6,7 @@ namespace App\Helpers;
 
 use App\Entities\Role;
 use Auth;
+use Carbon\Carbon;
 
 class GlobalHelper
 {
@@ -30,5 +31,10 @@ class GlobalHelper
     public static function snakeCaseToPascalCase($string)
     {
         return str_replace('_', '', ucwords($string, '_'));
+    }
+
+    public static function checkExpiredDate($dateTime, $timeLimit)
+    {
+        return now()->diffInDays(Carbon::parse($dateTime)) > $timeLimit;
     }
 }

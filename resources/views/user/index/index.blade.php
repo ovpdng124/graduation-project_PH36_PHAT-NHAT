@@ -17,7 +17,12 @@
         <div class="container pb-lg-3">
             <h3 class="tittle text-center">New Arrivals</h3>
             <div class="row">
-                @include('user.index.products')
+                @foreach($newArrivals as $product)
+                    @if(is_null($product->is_new) || $product->is_new)
+                        @component('user.index.products', ['product' => $product])
+                        @endcomponent
+                    @endif
+                @endforeach
             </div>
         </div>
     </section>

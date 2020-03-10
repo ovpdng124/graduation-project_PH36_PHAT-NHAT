@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Entities\Product;
 use App\Entities\ProductImage;
 use App\Filters\ProductFilter;
+use App\Helpers\GlobalHelper;
+use Illuminate\Database\Eloquent\Collection;
 
 class ProductService
 {
@@ -87,5 +89,20 @@ class ProductService
         $product_image = ProductImage::where('product_id', $id)->first();
 
         return $product_image->update($data);
+    }
+
+    public function getNewArrivals($products)
+    {
+        $chunk = $products->splice(0, 9);
+
+        foreach ($products as $product) {
+            $product->is_new = true;
+
+            if (GlobalHelper::checkExpiredDate($product->created_at, 7)) {
+                $product->is_new = false;
+            }
+        }
+
+        return $products->merge($chunk);
     }
 }
