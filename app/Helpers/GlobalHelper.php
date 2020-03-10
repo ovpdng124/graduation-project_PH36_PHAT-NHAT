@@ -1,14 +1,20 @@
 <?php
 
-
 namespace App\Helpers;
-
 
 use App\Entities\Role;
 use Auth;
 
 class GlobalHelper
 {
+    public static $colorDefaults = [
+        'White' => "#ffffff",
+        'Black' => '#000000',
+        'Blue'  => '#000066',
+        'Red'   => '#ff0000',
+        'Green' => '#33ff33',
+    ];
+
     public static function getErrorMessages()
     {
         return [
