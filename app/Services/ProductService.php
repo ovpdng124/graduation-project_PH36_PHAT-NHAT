@@ -6,7 +6,6 @@ use App\Entities\Product;
 use App\Entities\ProductImage;
 use App\Filters\ProductFilter;
 use App\Helpers\GlobalHelper;
-use Illuminate\Database\Eloquent\Collection;
 
 class ProductService
 {
@@ -104,5 +103,21 @@ class ProductService
         }
 
         return $products->merge($chunk);
+    }
+
+    public function getPopularProducts($products)
+    {
+        $popularProducts = [];
+
+        foreach ($products as $item) {
+            foreach ($item->product_images as $image) {
+                $popularProducts[] = [
+                    'product_id' => $item->id,
+                    'image_path' => $image->image_path,
+                ];
+            }
+        }
+
+        return $popularProducts;
     }
 }

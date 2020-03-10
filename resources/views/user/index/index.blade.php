@@ -17,7 +17,7 @@
         <div class="container pb-lg-3">
             <h3 class="tittle text-center">New Arrivals</h3>
             <div class="row">
-                @foreach($newArrivals as $product)
+                @foreach($productData['new_arrivals'] as $product)
                     @if(is_null($product->is_new) || $product->is_new)
                         @component('user.index.products', ['product' => $product])
                         @endcomponent
@@ -43,7 +43,8 @@
         <div class="container pb-lg-3">
             <h3 class="tittle text-center">Popular Products</h3>
             <div class="row">
-                @include('user.index.popular')
+                    @component('user.index.popular', ['product' => $productData['popular_products']])
+                    @endcomponent
             </div>
         </div>
     </section>

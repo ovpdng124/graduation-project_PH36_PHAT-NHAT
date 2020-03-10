@@ -20,11 +20,32 @@ class UserController extends Controller
 
     public function index()
     {
+        $newArrivals     = $this->showNewArrivals();
+        $popularProducts = $this->showPopularProduct();
+        $productData     = [
+            'new_arrivals'     => $newArrivals,
+            'popular_products' => $popularProducts,
+        ];
+
+        return view('user.index.index', compact('productData'));
+    }
+
+    public function showNewArrivals()
+    {
         $products = Product::orderByDesc('created_at')->get();
 
-        $newArrivals = $this->productService->getNewArrivals($products);
+        return $this->productService->getNewArrivals($products);
+    }
 
-        return view('user.index.index', compact('newArrivals'));
+    public function showPopularProduct()
+    {
+        $products = Product::withCount('order_products')
+            ->orderByRaw("order_products_count DESC, updated_at DESC")
+            ->with('product_images')
+            ->take(3)
+            ->get();
+
+        return $this->productService->getPopularProducts($products);
     }
 
     public function profile()
