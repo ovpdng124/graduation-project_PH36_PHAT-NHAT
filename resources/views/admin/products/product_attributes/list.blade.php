@@ -45,7 +45,7 @@
                 </div>
                 <div class="card-body">
                     <div class="container-fluid">
-                        <h1 class="text-center">List Products</h1>
+                        <h1 class="text-center">List Product Attributes</h1>
                         <div class="row">
                             <table class="table-striped table">
                                 <tr>
@@ -62,17 +62,15 @@
                                         <td width="40%">{{$item->sub_name}}</td>
                                         <td width="20%">$ {{number_format($item->sub_price)}}</td>
                                         <td width="10%">{{$item->size}}</td>
-                                        <td width="5%">{{$item->color}}</td>
+                                        <td width="5%" style="width: 30px; background-color: {{$item->color}}"></td>
                                         <td width="5%">
-                                            <a href="{{route('product.edit', $item->id)}}">
-                                                <button class="btn-link">Edit</button>
-                                            </a>
+                                            <a href="{{route('product-attribute.edit', $item->id)}}"><button class="btn-link">Edit</button></a>
                                         </td>
                                         <td width="5%">
-                                            <form action="{{route('product.destroy', $item->id)}}" method="post">
+                                            <form action="{{route('product-attribute.destroy', $item->id)}}" method="post">
                                                 @method('delete')
                                                 @csrf
-                                                <button onclick="return confirm('Do you want remove this product?')" class="btn-link" type="submit">Delete</button>
+                                                <button onclick="return confirm('Do you want remove this product attribute?')" class="btn-link" type="submit">Delete</button>
                                             </form>
                                         </td>
                                     </tr>

@@ -22,7 +22,7 @@ class ProductAttributeService
             $query = $this->productFilter->search($query, $search, $searchKey);
         }
 
-        $query = $query->paginate($limits);
+        $query = $query->orderByDesc('created_at')->paginate($limits);
 
         return $query;
     }
