@@ -26,7 +26,7 @@ class UpdateProductAttributesTable extends Migration
     public function down()
     {
         Schema::table('product_attributes', function (Blueprint $table) {
-            $table->integer('color');
+            $table->integer('color')->change();
         });
     }
 }
