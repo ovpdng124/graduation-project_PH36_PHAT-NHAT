@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateProductAttributesTable extends Migration
+class UpdateTableProductAttributesAddColumnProductId extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,8 @@ class UpdateProductAttributesTable extends Migration
     public function up()
     {
         Schema::table('product_attributes', function (Blueprint $table) {
-            $table->string('color')->change();
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products');
         });
     }
 

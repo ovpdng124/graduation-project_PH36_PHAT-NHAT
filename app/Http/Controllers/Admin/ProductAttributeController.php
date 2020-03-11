@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Entities\Product;
 use App\Entities\ProductAttributes;
 use App\Helpers\GlobalHelper;
 use App\Http\Controllers\Controller;
@@ -12,13 +13,16 @@ use Illuminate\Http\Request;
 
 class ProductAttributeController extends Controller
 {
+    /**
+     * @var ProductAttributeService
+     */
     protected $productAttributeService;
     protected $colorDefaults;
 
     public function __construct()
     {
         $this->productAttributeService = app(ProductAttributeService::class);
-        $this->colorDefaults = GlobalHelper::$colorDefaults;
+        $this->colorDefaults           = GlobalHelper::$colorDefaults;
     }
 
     public function index(Request $request)
@@ -36,31 +40,33 @@ class ProductAttributeController extends Controller
     {
         $colorDefault = $this->colorDefaults;
 
-        return view('admin.products.product_attributes.create', compact('colorDefault'));
+        $products     = Product::all();
+
+        return view('admin.products.product_attributes.create', compact('colorDefault', 'products'));
     }
 
     public function store(CreateProductAttributeRequest $request)
     {
-        $params = $request->except('_token');
+        if (!$this->productAttributeService->store($request)) {
 
-        ProductAttributes::create($params);
+            return redirect(route('product-attribute.create'))->with('failed', 'Create Failed!');
+        }
 
         return redirect(route('product-attribute.index'))->with('success', 'Create Successfully!');
     }
 
     public function edit($id)
     {
-        $productAttribute = ProductAttributes::find($id);
-        $colorDefault = $this->colorDefaults;
+        $colorDefault     = $this->colorDefaults;
 
-        return view('admin.products.product_attributes.edit', compact('productAttribute','colorDefault'));
+        $productAttribute = ProductAttributes::find($id);
+
+        return view('admin.products.product_attributes.edit', compact('productAttribute', 'colorDefault'));
     }
 
     public function update(EditProductAttributeRequest $request, $id)
     {
-        $params = $request->except('_token');
-
-        ProductAttributes::find($id)->update($params);
+        $this->productAttributeService->update($request, $id);
 
         return redirect(route('product-attribute.index'))->with('success', 'Updated Successfully!');
     }

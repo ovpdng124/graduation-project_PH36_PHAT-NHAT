@@ -29,6 +29,8 @@ class EditProductAttributeRequest extends FormRequest
             'sub_price' => 'numeric',
             'size'      => 'required|numeric',
             'color'     => 'required',
+            'avatar'    => 'mimes:jpeg,png',
+            'thumbnail' => 'mimes:jpeg,png',
         ];
     }
 }

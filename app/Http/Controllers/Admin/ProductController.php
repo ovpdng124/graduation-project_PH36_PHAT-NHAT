@@ -70,6 +70,7 @@ class ProductController extends Controller
 
     /**
      * @param $id
+     *
      * @return RedirectResponse|Redirector
      * @throws Exception
      */
