@@ -97,27 +97,29 @@ class ProductService
         foreach ($products as $product) {
             $product->is_new = true;
 
-            if (GlobalHelper::checkExpiredDate($product->created_at, 7)) {
+            if (GlobalHelper::checkExpiredDate($product->updated_at, 7)) {
                 $product->is_new = false;
             }
         }
 
-        return $products->merge($chunk);
+        return $chunk->merge($products);
     }
 
     public function getPopularProducts($products)
     {
-        $popularProducts = [];
+        $products       = $products->sortByDesc('order_products_count')->take(3);
+        $popularProduct = [];
+        $count          = 1;
 
-        foreach ($products as $item) {
-            foreach ($item->product_images as $image) {
-                $popularProducts[] = [
-                    'product_id' => $item->id,
-                    'image_path' => $image->image_path,
-                ];
+        foreach ($products as $key => $product) {
+            foreach ($product->product_images as $image) {
+                $popularProduct["product" . $count] = $product->id;
+                $popularProduct["image" . $count]   = $image->image_path;
             }
+
+            $count++;
         }
 
-        return $popularProducts;
+        return $popularProduct;
     }
 }
