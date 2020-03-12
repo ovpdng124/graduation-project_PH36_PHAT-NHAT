@@ -6,7 +6,7 @@
         <p>Trending of the week</p>
         <h3 class="mb-4">Casual Shoes for Men</h3>
         <div class="ban-buttons">
-            <a href="#" class="btn">Shop Now</a>
+            <a href="#new-arrivals" class="btn">Shop Now</a>
             <a href="#" class="btn active">Read More</a>
         </div>
     </div>

@@ -13,8 +13,13 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function products()
+    public function order_products()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->hasMany(OrderProduct::class);
+    }
+
+    public function voucher()
+    {
+        return $this->belongsTo(Voucher::class);
     }
 }

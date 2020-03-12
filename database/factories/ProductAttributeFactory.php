@@ -9,7 +9,7 @@ $factory->define(ProductAttributes::class, function (Faker $faker) {
     return [
         'sub_name'  => $faker->name,
         'sub_price' => $faker->randomFloat(null, 0, 1000000),
-        'size'      => $faker->numberBetween(26 - 36),
-        'color'     => $faker->numberBetween(1,3),
+        'size'      => $faker->numberBetween(26, 36),
+        'color'     => $faker->hexColor,
     ];
 });
