@@ -4,14 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Entities\Category;
 use App\Entities\Product;
+use App\Entities\ProductAttributes;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\EditProductRequest;
 use App\Services\ProductService;
-use Exception;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
 
 class ProductController extends Controller
 {
@@ -39,7 +37,9 @@ class ProductController extends Controller
 
     public function show($id)
     {
+        $productAttributes = ProductAttributes::where('product_id', $id)->orderByDesc('updated_at')->paginate(10);
 
+        return view('admin.products.product_attributes.list', compact('productAttributes'));
     }
 
     public function create()
@@ -73,11 +73,6 @@ class ProductController extends Controller
         return redirect(route('product.index'))->with('success', 'Updated Successfully!');
     }
 
-    /**
-     * @param $id
-     * @return RedirectResponse|Redirector
-     * @throws Exception
-     */
     public function destroy($id)
     {
         Product::find($id)->delete();

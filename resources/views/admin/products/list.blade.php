@@ -55,7 +55,7 @@
                                     <th>Price</th>
                                     <th>Category</th>
                                     <th class="text-center">Image</th>
-                                    <th class="text-center" colspan="2">Action</th>
+                                    <th class="text-center" colspan="3">Action</th>
                                 </tr>
                                 @foreach($products as $key => $item)
                                     <tr>
@@ -63,10 +63,15 @@
                                         <td width="20%">{{$item->name}}</td>
                                         <td width="50%">{{$item->description}}</td>
                                         <td width="10%">$ {{number_format($item->price)}}</td>
-                                        <td width="20%">{{$item->category->name}}</td>
+                                        <td width="20%"><a class="text-decoration-none link-muted" href="{{route('category.index')}}">{{$item->category->name}}</a></td>
                                         @foreach($item->product_images as $image)
                                             <td width="20%"><img src="/{{$image->image_path}}" width="150" height="150"></td>
                                         @endforeach
+                                        <td width="10%">
+                                            <a href="{{route('product.show', $item->id)}}">
+                                                <button class="btn-link">Details</button>
+                                            </a>
+                                        </td>
                                         <td width="10%">
                                             <a href="{{route('product.edit', $item->id)}}">
                                                 <button class="btn-link">Edit</button>
@@ -82,6 +87,12 @@
                                     </tr>
                                 @endforeach
                             </table>
+                            @if(empty($products) == 0)
+                                <div class="text-center container-fluid">
+                                    <p><i>There are no products to list</i></p>
+                                    <a href="{{url()->previous()}}">Back</a>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

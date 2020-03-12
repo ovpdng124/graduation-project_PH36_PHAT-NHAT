@@ -35,7 +35,7 @@ class CategoryController extends Controller
 
     public function show($id)
     {
-        $products = Product::where('category_id', $id)->paginate(10);
+        $products = Product::where('category_id', $id)->orderByDesc('updated_at')->paginate(10);
 
         return view('admin.products.list', compact('products'));
     }
