@@ -6,6 +6,7 @@ use App\Entities\Product;
 use App\Entities\ProductImage;
 use App\Filters\ProductFilter;
 use App\Helpers\GlobalHelper;
+use Illuminate\Support\Arr;
 
 class ProductService
 {
@@ -112,10 +113,9 @@ class ProductService
         $count          = 1;
 
         foreach ($products as $key => $product) {
-            foreach ($product->product_images as $image) {
-                $popularProduct["product" . $count] = $product->id;
-                $popularProduct["image" . $count]   = $image->image_path;
-            }
+            $image_path                         = $product->product_images->first()->image_path;
+            $popularProduct["product" . $count] = $product->id;
+            $popularProduct["image" . $count]   = $image_path;
 
             $count++;
         }
