@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Entities\Category;
+use App\Entities\Product;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\EditCategoryRequest;
@@ -30,6 +31,13 @@ class CategoryController extends Controller
         $categories = $this->categoryService->getCategories($limits, $search, $searchKey);
 
         return view('admin.categories.list', compact('categories'));
+    }
+
+    public function show($id)
+    {
+        $products = Product::where('category_id', $id)->paginate(10);
+
+        return view('admin.products.list', compact('products'));
     }
 
     public function create()
