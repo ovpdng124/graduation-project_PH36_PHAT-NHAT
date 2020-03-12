@@ -103,7 +103,7 @@ class ProductService
             }
         }
 
-        return $chunk->merge($products);
+        return $chunk->merge($products)->forPage(1, 9);
     }
 
     public function getPopularProducts($products)
