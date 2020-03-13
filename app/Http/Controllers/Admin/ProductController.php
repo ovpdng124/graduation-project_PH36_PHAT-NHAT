@@ -37,9 +37,14 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $productAttributes = ProductAttributes::where('product_id', $id)->orderByDesc('updated_at')->paginate(10);
+        $products          = Product::with(['product_attributes', 'product_images'])->find($id);
+        $productAttributes = $products->product_attributes->sortByDesc('updated_at');
+        $productData       = [
+            'product'           => $products,
+            'productAttributes' => $productAttributes,
+        ];
 
-        return view('admin.products.product_attributes.list', compact('productAttributes'));
+        return view('admin.products.detail', compact('productData'));
     }
 
     public function create()
