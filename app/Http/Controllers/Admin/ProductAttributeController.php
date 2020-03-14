@@ -46,10 +46,7 @@ class ProductAttributeController extends Controller
 
     public function store(CreateProductAttributeRequest $request)
     {
-        if (!$this->productAttributeService->store($request)) {
-
-            return redirect(route('product-attribute.create'))->with('failed', 'Create Failed!');
-        }
+        $this->productAttributeService->store($request);
 
         return redirect(route('product-attribute.index'))->with('success', 'Create Successfully!');
     }

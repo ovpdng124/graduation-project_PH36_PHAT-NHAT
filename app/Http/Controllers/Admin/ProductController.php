@@ -55,9 +55,7 @@ class ProductController extends Controller
 
     public function store(CreateProductRequest $request)
     {
-        if (!$this->productService->store($request)) {
-            return redirect(route('product.index'))->with('failed', 'Create failed!');
-        }
+        $this->productService->store($request);
 
         return redirect(route('product.index'))->with('success', 'Created successfully!');
     }

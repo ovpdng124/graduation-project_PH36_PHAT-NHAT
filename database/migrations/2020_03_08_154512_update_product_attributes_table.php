@@ -25,6 +25,6 @@ class UpdateProductAttributesTable extends Migration
      */
     public function down()
     {
-
+        //
     }
 }
