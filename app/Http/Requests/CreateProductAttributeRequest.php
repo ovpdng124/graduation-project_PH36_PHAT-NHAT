@@ -24,11 +24,11 @@ class CreateProductAttributeRequest extends FormRequest
     public function rules()
     {
         return [
-            'sub_price' => 'numeric',
-            'size'      => 'required|numeric',
-            'color'     => 'required',
-            'avatar'    => 'required|mimes:jpeg,png',
-            'thumbnail' => 'mimes:jpeg,png',
+            'sub_price'    => 'numeric',
+            'size'         => 'required|numeric',
+            'color'        => 'required',
+            'avatar'       => 'required|mimes:jpeg,png',
+            'thumbnails.*' => 'required|mimes:jpeg,png',
         ];
     }
 }

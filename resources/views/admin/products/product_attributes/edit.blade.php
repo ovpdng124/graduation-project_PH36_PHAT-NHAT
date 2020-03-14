@@ -92,10 +92,10 @@
                                                 <label for="" class="float-md-right mt-2">Thumbnail: </label>
                                             </div>
                                             <div class="col-xs-9 col-md-9">
-                                                <input type="file" name="thumbnail" class="form-control" multiple>
+                                                <input type="file" name="thumbnails[]" class="form-control" multiple>
                                                 @if($errors->any())
-                                                    @foreach($errors->get('thumbnail') as $messages)
-                                                        <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
+                                                    @foreach($errors->get('thumbnails.*') as $messages)
+                                                        <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages[0]}}</i>
                                                     @endforeach
                                                 @endif
                                             </div>

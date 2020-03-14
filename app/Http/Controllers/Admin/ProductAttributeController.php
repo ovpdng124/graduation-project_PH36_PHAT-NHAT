@@ -39,7 +39,6 @@ class ProductAttributeController extends Controller
     public function create()
     {
         $colorDefault = $this->colorDefaults;
-
         $products     = Product::all();
 
         return view('admin.products.product_attributes.create', compact('colorDefault', 'products'));
@@ -58,7 +57,6 @@ class ProductAttributeController extends Controller
     public function edit($id)
     {
         $colorDefault     = $this->colorDefaults;
-
         $productAttribute = ProductAttributes::find($id);
 
         return view('admin.products.product_attributes.edit', compact('productAttribute', 'colorDefault'));

@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="container-fluid row justify-content-center">
-            <div class="card container">
+            <div class="card container-fluid">
                 <div class="card-header">
                     <div class="card-title">
                         <form action="{{route('category.index')}}" method="get">
@@ -27,18 +27,23 @@
                 </div>
                 <div class="card-body">
                     <div class="container-fluid">
-                        <h1 class="text-center">List Products</h1>
+                        <h1 class="text-center">List Categories</h1>
                         <div class="row">
                             <table class="table-striped table">
                                 <tr>
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th class="text-center" colspan="2">Action</th>
+                                    <th class="text-center" colspan="3">Action</th>
                                 </tr>
                                 @foreach($categories as $key => $item)
                                     <tr>
                                         <td width="2%">{{$key + $categories->firstItem()}}</td>
                                         <td>{{$item->name}}</td>
+                                        <td width="10%" class="text-center">
+                                            <a href="{{route('category.show', $item->id)}}">
+                                                <button class="btn-link">Details</button>
+                                            </a>
+                                        </td>
                                         <td width="10%" class="text-center">
                                             <a href="{{route('category.edit', $item->id)}}">
                                                 <button class="btn-link">Edit</button>
@@ -54,6 +59,12 @@
                                     </tr>
                                 @endforeach
                             </table>
+                            @if(count($categories) == 0)
+                                <div class="text-center container-fluid">
+                                    <p><i>There are no products to list</i></p>
+                                    <a href="{{url()->previous()}}">Back</a>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
