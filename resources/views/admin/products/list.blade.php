@@ -6,12 +6,30 @@
             <div class="card container-fluid">
                 <div class="card-header">
                     <div class="card-title">
-                        <form action="" method="get">
+                        <form action="{{route('product.index')}}" method="get">
                             <div class="input-group">
-                                <input type="hidden" name="searchBy" value="code">
-                                <input type="text" class="form-control" name="search">
+                                <input type="text" class="form-control" name="search" value="{{request()->query('search')}}">
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-info" type="submit"><i class="fas fa-search"></i></button>
+                                    <button class="btn btn-outline-info" type="submit"><i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5">
+                                    <input type="radio" name="searchBy" id="name" value="name" {{request()->query('searchBy') == 'name' ? 'checked' : ''}}>
+                                    <label for="name">Name</label>
+                                </div>
+                                <div class="col-5">
+                                    <input type="radio" name="searchBy" id="description" value="description" {{request()->query('searchBy') == 'description' ? 'checked' : ''}}>
+                                    <label for="description">Description</label>
+                                </div>
+                                <div class="col-5">
+                                    <input type="radio" name="searchBy" id="price" value="price" {{request()->query('searchBy') == 'price' ? 'checked' : ''}}>
+                                    <label for="price">Price</label>
+                                </div>
+                                <div class="col-5">
+                                    <input type="radio" name="searchBy" id="category" value="category" {{request()->query('searchBy') == 'category' ? 'checked' : ''}}>
+                                    <label for="category">Category</label>
                                 </div>
                             </div>
                         </form>
@@ -33,22 +51,19 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Price</th>
-                                    <th>Category</th>
                                     <th class="text-center">Image</th>
-                                    <th class="text-center" colspan="2">Action</th>
+                                    <th class="text-center" colspan="3">Action</th>
                                 </tr>
                                 @foreach($products as $key => $item)
                                     <tr>
                                         <td width="2%">{{$key + $products->firstItem()}}</td>
-                                        <td width="20%">{{$item->name}}</td>
-                                        <td width="50%">{{$item->description}}</td>
-                                        <td width="10%">$ {{number_format($item->price)}}</td>
-                                        <td width="20%">{{$item->category->name}}</td>
-                                        @foreach($item->product_images as $image)
-                                            <td width="20%"><img src="/{{$image->image_path}}" width="150" height="150"></td>
-                                        @endforeach
+                                        <td width="70%">{{$item->name}}</td>
+                                        <td width="20%"><img src="/{{$item->product_images->first()->image_path}}" width="150" height="150"></td>
+                                        <td width="10%">
+                                            <a href="{{route('product.show', $item->id)}}">
+                                                <button class="btn-link">Details</button>
+                                            </a>
+                                        </td>
                                         <td width="10%">
                                             <a href="{{route('product.edit', $item->id)}}">
                                                 <button class="btn-link">Edit</button>
@@ -64,6 +79,12 @@
                                     </tr>
                                 @endforeach
                             </table>
+                            @if(count($products) == 0)
+                                <div class="text-center container-fluid">
+                                    <p><i>There are no products to list</i></p>
+                                    <a href="{{url()->previous()}}">Back</a>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

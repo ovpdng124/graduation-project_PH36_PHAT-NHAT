@@ -30,4 +30,9 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function product_attributes()
+    {
+        return $this->hasMany(ProductAttributes::class);
+    }
 }

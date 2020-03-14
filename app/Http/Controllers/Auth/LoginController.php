@@ -1,16 +1,23 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
 use App\Helpers\GlobalHelper;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use Auth;
 
-class AuthController extends Controller
+class LoginController extends Controller
 {
     public function showLoginForm()
     {
         if (Auth::check()) {
+            if (empty(Auth::user()->verify_at)) {
+                Auth::logout();
+
+                return $this->showLoginForm()->withErrors('Please login again!');
+            }
+
             return redirect(route('index'));
         }
 
@@ -26,7 +33,7 @@ class AuthController extends Controller
                 return redirect(route('admin.index'));
             }
 
-            return redirect(route('index'));
+            return redirect(route('profile'));
         }
 
         return back()->withErrors('Wrong username or password')->withInput();

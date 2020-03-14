@@ -4,14 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Entities\Category;
 use App\Entities\Product;
+use App\Entities\ProductAttributes;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\EditProductRequest;
 use App\Services\ProductService;
-use Exception;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
 
 class ProductController extends Controller
 {
@@ -35,6 +33,18 @@ class ProductController extends Controller
         $products = $this->productService->getProducts($limits, $search, $searchKey);
 
         return view('admin.products.list', compact('products'));
+    }
+
+    public function show($id)
+    {
+        $products          = Product::with(['product_attributes', 'product_images'])->find($id);
+        $productAttributes = $products->product_attributes->sortByDesc('updated_at');
+        $productData       = [
+            'product'           => $products,
+            'productAttributes' => $productAttributes,
+        ];
+
+        return view('admin.products.detail', compact('productData'));
     }
 
     public function create()
@@ -68,11 +78,6 @@ class ProductController extends Controller
         return redirect(route('product.index'))->with('success', 'Updated Successfully!');
     }
 
-    /**
-     * @param $id
-     * @return RedirectResponse|Redirector
-     * @throws Exception
-     */
     public function destroy($id)
     {
         Product::find($id)->delete();

@@ -43,6 +43,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{route('product-attribute.index')}}" class="nav-link">
+                        <i class="fa fa-list"></i>
+                        <span>Product attributes list</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{route('category.index')}}" class="nav-link">
                         <i class="fa fa-list"></i>
                         <span>Category list</span>
@@ -53,5 +59,4 @@
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
-
 </aside>

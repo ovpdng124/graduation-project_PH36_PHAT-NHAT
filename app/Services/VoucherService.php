@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Entities\Voucher;
 use App\Filters\VoucherFilter;
@@ -21,9 +19,9 @@ class VoucherService
         $query = Voucher::query();
 
         if (!empty($search) && !empty($searchKey)) {
-            $query = $query->voucherFilter->search($query, $search, $searchKey);
+            $query = $this->voucherFilter->search($query, $search, $searchKey);
         }
 
-        return $query->paginate($limits);
+        return $query->orderByDesc('updated_at')->paginate($limits);
     }
 }

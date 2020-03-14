@@ -11,9 +11,20 @@
 |
 */
 
-Route::get('/login', 'AuthController@showLoginForm')->name('login-form');
-Route::post('/login', 'AuthController@login')->name('login');
-Route::get('/logout', 'AuthController@logout')->name('logout');
+Route::group(['namespace' => 'Auth'], function () {
+    Route::get('/register', 'RegisterController@showRegisterForm')->name('register-form');
+    Route::post('/register', 'RegisterController@store')->name('register');
+    Route::get('/verify-notification', 'RegisterController@verifyNotification')->name('verify-notification');
+    Route::get('/verify', 'RegisterController@verify')->name('verify');
+    Route::get('/sendMail', 'RegisterController@sendMail')->name('send-mail');
+    Route::get('/login', 'LoginController@showLoginForm')->name('login-form');
+    Route::post('/login', 'LoginController@login')->name('login');
+    Route::get('/logout', 'LoginController@logout')->name('logout');
+    Route::get('/forgot-password', 'ResetPasswordController@passwordForgot')->name('password-forgot-form');
+    Route::post('/forgot-password', 'ResetPasswordController@sendPasswordMail')->name('send-password-mail');
+    Route::get('/password-reset', 'ResetPasswordController@passwordResetForm')->name('password-reset-form');
+    Route::post('/password-reset', 'ResetPasswordController@passwordReset')->name('password-reset');
+});
 
 Route::group(['namespace' => 'User'], function () {
     Route::get('/', 'UserController@index')->name('index');
@@ -48,6 +59,6 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
     });
 
     Route::group(['namespace' => 'User'], function () {
-        // All routes for guest users
+        Route::get('/profile', 'UserController@profile')->name('profile');
     });
 });
