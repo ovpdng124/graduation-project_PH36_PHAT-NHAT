@@ -22,7 +22,7 @@ class AuthenticationMiddleware
             if (empty(Auth::user()->verify_at)) {
                 $errorMessages = GlobalHelper::getErrorMessages();
 
-                return redirect(route('verify-notification', Auth::user()->only('verify_token')))->with($errorMessages['not_verify']);
+                return redirect(route('notification', Auth::user()->only('verify_token')))->with($errorMessages['not_verify']);
             }
 
             return $next($request);

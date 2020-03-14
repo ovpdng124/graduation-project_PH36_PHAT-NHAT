@@ -4,8 +4,8 @@ namespace App\Services;
 
 use App\Entities\User;
 use App\Filters\UserFilter;
+use App\Helpers\GlobalHelper;
 use App\Mail\VerifyMail;
-use Carbon\Carbon;
 use Exception;
 use Mail;
 
@@ -38,10 +38,10 @@ class UserService
         $user                   = User::create($params);
 
         if (!$this->sendMail($user->verify_token)) {
-            return [false, 'Send mail failed'];
+            return [false, $user->verify_token];
         }
 
-        return [true, 'Create success'];
+        return [true, $user->verify_token];
     }
 
     public function sendMail($token)
@@ -67,11 +67,10 @@ class UserService
         $tokenExplode = explode('.', $params['verify_token']);
         $email        = base64_decode($tokenExplode[0]);
         $dateTime     = base64_decode($tokenExplode[1]);
+        $expired      = GlobalHelper::checkExpiredDate($dateTime, 2);
+        $user         = User::where('email', $email)->first();
 
-        $expired = Carbon::now()->diffInDays(Carbon::parse($dateTime)) < 2;
-        $user    = User::where('email', $email)->first();
-
-        if (!$expired) {
+        if ($expired) {
             $params['email']        = $email;
             $newToken               = $this->encodeToken($params);
             $params['verify_token'] = $newToken;

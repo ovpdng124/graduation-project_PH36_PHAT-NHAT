@@ -19,11 +19,12 @@ class GlobalHelper
     public static function getErrorMessages()
     {
         return [
-            'send_mail_failed' => ['notification' => 'Send mail failed.', 'messages' => 'Please login to send mail again'],
-            'create_success'   => ['notification' => 'Create success.', 'messages' => 'Please check mail to verify account!'],
-            'send_mail'        => ['notification' => 'Send mail success', 'messages' => 'Check your email to verify!'],
-            'verify_success'   => ['notification' => 'Verify success', 'messages' => 'You can login your account!'],
-            'not_verify'       => ['notification' => 'Not verify.', 'messages' => 'This account it not verify!'],
+            'send_mail_failed'       => ['notification' => 'Send mail failed.', 'messages' => 'Please send email again!'],
+            'register_success'       => ['notification' => 'Register success', 'messages' => 'Please check your email to verify account!'],
+            'send_mail_success'      => ['notification' => 'Send mail success', 'messages' => 'Please check your email!'],
+            'verify_success'         => ['notification' => 'Verified success', 'messages' => 'The account has been verified!'],
+            'not_verify'             => ['notification' => 'Not verified.', 'messages' => 'This account is not verified, please check your email to verify your account!'],
+            'reset_password_success' => ['notification' => 'Reset password success', 'messages' => 'You can sign in your account with new password'],
         ];
     }
 

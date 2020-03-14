@@ -31,29 +31,31 @@ class RegisterController extends Controller
     {
         $params = $request->except(['_token', 'password_confirmation']);
 
-        list($status) = $this->userService->store($params);
+        list($status, $token) = $this->userService->store($params);
 
         if (!$status) {
-            return redirect(route('verify-notification'))->with($this->errorMessages['send_mail_failed']);
+            return redirect(route('notification', ['verify_token' => $token]))->with($this->errorMessages['send_mail_failed']);
         }
 
-        return redirect(route('verify-notification'))->with($this->errorMessages['create_success']);
+        return redirect(route('notification'))->with($this->errorMessages['register_success']);
     }
 
-    public function verifyNotification(Request $request)
+    public function showNotification(Request $request)
     {
         $verify_token = $request->all();
 
-        return view('user.auth.verify', compact('verify_token'));
+        return view('user.auth.notification', compact('verify_token'));
     }
 
     public function sendMail(Request $request)
     {
         $token = $request->all();
 
-        $this->userService->sendMail($token['verify_token']);
+        if (!$this->userService->sendMail($token['verify_token'])) {
+            return redirect(route('notification', $token))->with($this->errorMessages['send_mail_failed']);
+        }
 
-        return redirect(route('verify-notification', $token))->with($this->errorMessages['send_mail']);
+        return redirect(route('notification', $token))->with($this->errorMessages['send_mail_success']);
     }
 
     public function verify(Request $request)
@@ -61,9 +63,9 @@ class RegisterController extends Controller
         $params = $request->all();
 
         if (!$this->userService->decodeToken($params)) {
-            return abort(403, 'Please check mail again!');
+            return abort(403, 'Expired link: Please check mail again!');
         }
 
-        return redirect(route('verify-notification'))->with($this->errorMessages['verify_success']);
+        return redirect(route('notification'))->with($this->errorMessages['verify_success']);
     }
 }

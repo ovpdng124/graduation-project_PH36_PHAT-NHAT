@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Entities\User;
+use App\Helpers\GlobalHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreatePasswordRequest;
 use App\Mail\ResetPasswordMail;
@@ -12,6 +13,13 @@ use Log;
 
 class ResetPasswordController extends Controller
 {
+    protected $message;
+
+    public function __construct()
+    {
+        $this->message = GlobalHelper::getErrorMessages();
+    }
+
     public function passwordResetForm(Request $request)
     {
         $email  = $request->all();
@@ -29,27 +37,32 @@ class ResetPasswordController extends Controller
     {
         $params             = $request->except('_token', 'password_confirmation');
         $params['password'] = bcrypt($params['password']);
+
         User::find($params['id'])->update($params);
 
-        return redirect(route('login-form'));
+        return redirect(route('notification'))->with($this->message['reset_password_success']);
     }
 
     public function sendPasswordMail(Request $request)
     {
         $user = User::where('email', $request->email)->first();
 
-        if (is_null($user->verify_at)) {
-            return redirect(route('password-forgot-form'))->withErrors('This account it not verify!');
+        if (!empty($user)) {
+            if (is_null($user->verify_at)) {
+                return redirect(route('password-forgot-form'))->withErrors('This account is not verified!');
+            }
+
+            try {
+                Mail::to($user->email)->send(new ResetPasswordMail($user));
+
+                return redirect(route('notification'))->with($this->message['send_mail_success']);
+            } catch (Exception $exception) {
+                Log::error($exception);
+
+                return redirect(route('notification', ['verify_token' => $user->verify_token]))->with($this->message['send_mail_failed']);
+            }
         }
 
-        try {
-            Mail::to($user->email)->send(new ResetPasswordMail($user));
-
-            return redirect(route('login-form'))->withErrors('Please check mail');
-        } catch (Exception $exception) {
-            Log::error($exception);
-
-            return abort(500);
-        }
+        return redirect(route('password-forgot-form'))->withErrors('This email has not been registered');
     }
 }

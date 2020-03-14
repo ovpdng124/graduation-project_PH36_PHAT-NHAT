@@ -41,13 +41,11 @@
                                     <label for="password" class="float-right">Password: </label>
                                 </div>
                                 <div class="col-md-9">
-                                    <input type="password" id="password" class="form-control" name="password"
-                                           placeholder="Password">
+                                    <input type="password" id="password" class="form-control" name="password" placeholder="Password">
+                                    <a class="float-right" href="{{route('password-forgot-form')}}">Forgot Password</a><br>
                                 </div>
                             </div>
-                            <a href="{{route('password-forgot-form')}}">Forgot Password</a>
-                            <button type="submit" style="width: 100px" class="float-right btn btn-success">Login
-                            </button>
+                            <button type="submit" style="width: 100px" class="float-right btn btn-success">Login</button>
                         </form>
                     </div>
                 </div>
