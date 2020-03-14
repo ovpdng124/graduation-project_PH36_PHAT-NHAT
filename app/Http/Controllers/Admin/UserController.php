@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Entities\User;
+use App\Helpers\GlobalHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ChangePasswordProfileRequest;
 use App\Http\Requests\CreateUserRequest;
@@ -38,13 +39,14 @@ class UserController extends Controller
     public function store(CreateUserRequest $request)
     {
         $params = $request->except(['_token', 'password_confirmation']);
-        $user   = $this->userService->store($params);
 
-        if (!$user) {
-            return redirect(route('user.list'))->with('failed', 'Create failed!');
+        list($status, $message) = $this->userService->store($params);
+
+        if (!$status) {
+            return redirect(route('user.list'))->with('failed', $message);
         }
 
-        return redirect(route('user.list'))->with('success', 'Created successfully!');
+        return redirect(route('user.list'))->with('success', $message);
     }
 
     public function show(Request $request)
@@ -67,11 +69,16 @@ class UserController extends Controller
 
     public function update(EditUserRequest $request, $id)
     {
-        $params = $request->except('_token');
+        $params = $request->except('_token', 'url');
+        $user   = User::find($id);
 
-        User::find($id)->update($params);
+        list($status, $message) = $this->userService->update($params, $user);
 
-        return redirect(route('user.list'))->with('success', 'Updated successfully!');
+        if (!$status) {
+            return redirect(route('verify-notification'))->with($message);
+        }
+
+        return redirect($request->get('url'))->with('success', $message);
     }
 
     public function delete($id)
@@ -103,9 +110,9 @@ class UserController extends Controller
         return view('admin.users.edit_profile', compact('userProfile'));
     }
 
-    public function updateProfile()
+    public function updateProfile(EditUserRequest $request)
     {
-        dd('Missing feature send verify mail from authenticate.');
+        $params = $request->except('_token');
     }
 
     public function changePasswordProfile()
