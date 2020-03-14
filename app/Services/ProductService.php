@@ -6,7 +6,6 @@ use App\Entities\Product;
 use App\Entities\ProductImage;
 use App\Filters\ProductFilter;
 use App\Helpers\GlobalHelper;
-use Illuminate\Support\Arr;
 
 class ProductService
 {
@@ -28,7 +27,7 @@ class ProductService
             $query = $this->productFilter->search($query, $search, $searchKey);
         }
 
-        $query = $query->with('category', 'product_images')->paginate($limits);
+        $query = $query->with('category', 'product_images')->orderByDesc('updated_at')->paginate($limits);
 
         return $query;
     }
@@ -103,7 +102,7 @@ class ProductService
             }
         }
 
-        return $chunk->merge($products);
+        return $chunk->merge($products)->forPage(1, 9);
     }
 
     public function getPopularProducts($products)
