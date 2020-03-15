@@ -8,6 +8,8 @@ use App\Helpers\GlobalHelper;
 use App\Mail\VerifyMail;
 use Exception;
 use Mail;
+use Auth;
+use Hash;
 
 class UserService
 {
@@ -41,7 +43,25 @@ class UserService
             return [false, $user->verify_token];
         }
 
-        return [true, $user->verify_token];
+        return [true, 'Created successfully!'];
+    }
+
+    public function update($params, $user)
+    {
+        if ($params['email'] === $user->email) {
+            return [$user->update($params), 'Updated successfully'];
+        }
+
+        $params['verify_at']    = null;
+        $params['verify_token'] = $this->encodeToken($params);
+
+        $user->update($params);
+
+        if (!$this->sendMail($params['verify_token'])) {
+            return [false, $user->verify_token];
+        }
+
+        return [true, 'Updated successfully'];
     }
 
     public function sendMail($token)
@@ -85,5 +105,20 @@ class UserService
         $user->update($params);
 
         return true;
+    }
+
+    public function updatePasswordProfile($params)
+    {
+        $user = Auth::user();
+
+        if (Hash::check($params['current_password'], $user->getAuthPassword())) {
+            $newPassword = [
+                'password' => bcrypt($params['new_password']),
+            ];
+
+            return $user->update($newPassword);
+        }
+
+        return false;
     }
 }

@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class EditProductRequest extends FormRequest
+class ChangePasswordProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +24,9 @@ class EditProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'   => ['required', Rule::unique('products')->ignore($this->product)],
-            'price'  => 'required|numeric',
-            'avatar' => 'mimes:jpeg,png',
+            'current_password'      => 'required',
+            'new_password'          => 'required|different:current_password',
+            'password_confirmation' => 'required|same:new_password',
         ];
     }
 }

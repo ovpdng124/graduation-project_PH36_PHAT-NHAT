@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Entities\Category;
 use App\Entities\Product;
-use App\Entities\ProductAttributes;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\EditProductRequest;
@@ -56,9 +55,7 @@ class ProductController extends Controller
 
     public function store(CreateProductRequest $request)
     {
-        if (!$this->productService->store($request)) {
-            return redirect(route('product.index'))->with('failed', 'Create failed!');
-        }
+        $this->productService->store($request);
 
         return redirect(route('product.index'))->with('success', 'Created successfully!');
     }
