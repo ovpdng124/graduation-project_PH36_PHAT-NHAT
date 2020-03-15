@@ -15,7 +15,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-9 well well-sm col-md-offset-4 container">
-                                    <form action="{{route('product-attribute.update', $productAttribute->id)}}" method="post" class="form" role="form">
+                                    <form action="{{route('product-attribute.update', $productAttribute->id)}}" method="post" class="form" role="form" enctype="multipart/form-data">
                                         @csrf
                                         @method('put')
                                         <div class="form-group row">
@@ -67,14 +67,27 @@
                                                         <option value="{{$item}}">{{$key}}</option>
                                                     @endforeach
                                                 </select>
-                                            @if($errors->any())
+                                                @if($errors->any())
                                                     @foreach($errors->get('color') as $messages)
                                                         <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
                                                     @endforeach
                                                 @endif
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-lg btn-success btn-block col-md-5 container">Edit</button>
+                                        <div class="form-group row">
+                                            <div class="col-xs-3 col-md-3">
+                                                <label for="" class="float-md-right mt-2">Thumbnail: </label>
+                                            </div>
+                                            <div class="col-xs-9 col-md-9">
+                                                <input type="file" name="thumbnails[]" class="form-control" multiple>
+                                                @if($errors->any())
+                                                    @foreach($errors->get('thumbnails.*') as $messages)
+                                                        <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages[0]}}</i>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-lg btn-success btn-block col-md-5 container">Update</button>
                                     </form>
                                 </div>
                             </div>
