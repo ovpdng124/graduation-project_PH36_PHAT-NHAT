@@ -116,9 +116,7 @@ class UserService
                 'password' => bcrypt($params['new_password']),
             ];
 
-            $user->update($newPassword);
-
-            return true;
+            return $user->update($newPassword);
         }
 
         return false;
