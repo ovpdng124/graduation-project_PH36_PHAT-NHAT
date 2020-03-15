@@ -10,7 +10,7 @@ class ProductImage extends Model
 
     public static $paths = [
         'Avatar'    => 'images/avatars/',
-        'Thumbnail' => 'images/thumbnails',
+        'Thumbnail' => 'images/thumbnails/',
     ];
 
     public static $types = [

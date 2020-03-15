@@ -25,8 +25,9 @@ class EditProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', Rule::unique('products')->ignore($this->product)],
-            'price' => 'required|numeric',
+            'name'   => ['required', Rule::unique('products')->ignore($this->product)],
+            'price'  => 'required|numeric',
+            'avatar' => 'mimes:jpeg,png',
         ];
     }
 }

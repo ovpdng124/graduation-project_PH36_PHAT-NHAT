@@ -25,10 +25,11 @@ class EditProductAttributeRequest extends FormRequest
     public function rules()
     {
         return [
-            'sub_name'  => ['required', Rule::unique('product_attributes')->ignore($this->product_attribute)],
-            'sub_price' => 'numeric',
-            'size'      => 'required|numeric',
-            'color'     => 'required',
+            'sub_name'     => ['required', Rule::unique('product_attributes')->ignore($this->product_attribute)],
+            'sub_price'    => 'numeric',
+            'size'         => 'required|numeric',
+            'color'        => 'required',
+            'thumbnails.*' => 'mimes:jpeg,png',
         ];
     }
 }

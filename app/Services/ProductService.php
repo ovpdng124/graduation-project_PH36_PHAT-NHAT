@@ -34,17 +34,11 @@ class ProductService
 
     public function store($request)
     {
-        $params = $request->except('_token', 'avatar');
+        $params  = $request->except('_token', 'avatar');
+        $avatar  = $request->file('avatar');
+        $product = Product::create($params);
 
-        if ($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar');
-
-            $product = Product::create($params);
-
-            return $this->storeAvatar($avatar, $product->id);
-        }
-
-        return false;
+        return $this->storeAvatar($avatar, $product->id);
     }
 
     public function storeAvatar($avatar, $id)
