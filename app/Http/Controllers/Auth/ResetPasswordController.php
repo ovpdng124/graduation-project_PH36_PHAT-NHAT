@@ -6,18 +6,22 @@ use App\Entities\User;
 use App\Helpers\GlobalHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreatePasswordRequest;
-use App\Mail\ResetPasswordMail;
+use App\Http\Requests\ForgotPasswordRequest;
 use Illuminate\Http\Request;
-use Mail;
-use Log;
+use App\Services\ResetPasswordService;
 
 class ResetPasswordController extends Controller
 {
-    protected $message;
+    /**
+     * @var ResetPasswordService
+     */
+    protected $resetPasswordService;
+    protected $messages;
 
     public function __construct()
     {
-        $this->message = GlobalHelper::getErrorMessages();
+        $this->resetPasswordService = app(ResetPasswordService::class);
+        $this->messages             = GlobalHelper::getErrorMessages();
     }
 
     public function passwordResetForm(Request $request)
@@ -40,29 +44,20 @@ class ResetPasswordController extends Controller
 
         User::find($params['id'])->update($params);
 
-        return redirect(route('notification'))->with($this->message['reset_password_success']);
+        return redirect(route('notification'))->with($this->messages['reset_password_success']);
     }
 
-    public function sendPasswordMail(Request $request)
+    public function sendPasswordMail(ForgotPasswordRequest $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $params = $request->except('_token');
 
-        if (!empty($user)) {
-            if (is_null($user->verify_at)) {
-                return redirect(route('password-forgot-form'))->withErrors('This account is not verified!');
-            }
+        list($status, $messages) = $this->resetPasswordService->sendPasswordMail($params['email']);
 
-            try {
-                Mail::to($user->email)->send(new ResetPasswordMail($user));
-
-                return redirect(route('notification'))->with($this->message['send_mail_success']);
-            } catch (Exception $exception) {
-                Log::error($exception);
-
-                return redirect(route('notification', ['verify_token' => $user->verify_token]))->with($this->message['send_mail_failed']);
-            }
+        if (!$status) {
+            return redirect(route('notification'))->with($messages);
         }
 
-        return redirect(route('password-forgot-form'))->withErrors('This email has not been registered');
+        return redirect(route('notification'))->with($messages);
+
     }
 }
