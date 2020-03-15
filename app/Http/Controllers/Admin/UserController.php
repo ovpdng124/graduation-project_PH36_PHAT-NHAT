@@ -3,16 +3,22 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Entities\User;
+use App\Helpers\GlobalHelper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ChangePasswordProfileRequest;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\EditUserRequest;
 use App\Services\UserService;
+use Auth;
 use Exception;
 use Illuminate\Http\Request;
 use Log;
 
 class UserController extends Controller
 {
+    /**
+     * @var UserService
+     */
     protected $userService;
 
     public function __construct()
@@ -33,13 +39,14 @@ class UserController extends Controller
     public function store(CreateUserRequest $request)
     {
         $params = $request->except(['_token', 'password_confirmation']);
-        $user   = $this->userService->store($params);
 
-        if (!$user) {
-            return redirect(route('user.list'))->with('failed', 'Create failed!');
+        list($status, $message) = $this->userService->store($params);
+
+        if (!$status) {
+            return redirect(route('user.list'))->with('failed', $message);
         }
 
-        return redirect(route('user.list'))->with('success', 'Created successfully!');
+        return redirect(route('user.list'))->with('success', $message);
     }
 
     public function show(Request $request)
@@ -62,11 +69,16 @@ class UserController extends Controller
 
     public function update(EditUserRequest $request, $id)
     {
-        $params = $request->except('_token');
+        $params = $request->except('_token', 'url');
+        $user   = User::find($id);
 
-        User::find($id)->update($params);
+        list($status, $message) = $this->userService->update($params, $user);
 
-        return redirect(route('user.list'))->with('success', 'Updated successfully!');
+        if (!$status) {
+            return redirect(route('verify-notification'))->with($message);
+        }
+
+        return redirect($request->get('url'))->with('success', $message);
     }
 
     public function delete($id)
@@ -82,5 +94,31 @@ class UserController extends Controller
 
             return redirect(route('user.list'))->with('failed', 'Deleted failed!');
         }
+    }
+
+    public function profile()
+    {
+        $userProfile = Auth::user();
+
+        return view('admin.users.profile', compact('userProfile'));
+    }
+
+    public function changePasswordProfile()
+    {
+        $userProfile = Auth::user();
+
+        return view('admin.users.profile_edit_password', compact('userProfile'));
+    }
+
+    public function updatePasswordProfile(ChangePasswordProfileRequest $request)
+    {
+        $params = $request->except('_token', 'password_confirmation');
+        $status = $this->userService->updatePasswordProfile($params);
+
+        if (!$status) {
+            return redirect()->back()->withErrors(['current_password' => 'Wrong password!']);
+        }
+
+        return redirect(route('admin.profile'))->with('success', 'Changed password successfully!');
     }
 }

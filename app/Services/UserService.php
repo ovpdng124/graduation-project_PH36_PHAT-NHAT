@@ -4,10 +4,12 @@ namespace App\Services;
 
 use App\Entities\User;
 use App\Filters\UserFilter;
+use App\Helpers\GlobalHelper;
 use App\Mail\VerifyMail;
-use Carbon\Carbon;
 use Exception;
 use Mail;
+use Auth;
+use Hash;
 
 class UserService
 {
@@ -41,7 +43,25 @@ class UserService
             return [false, 'Send mail failed'];
         }
 
-        return [true, 'Create success'];
+        return [true, 'Created successfully'];
+    }
+
+    public function update($params, $user)
+    {
+        if ($params['email'] === $user->email) {
+            return [$user->update($params), 'Updated successfully'];
+        }
+
+        $params['verify_at']    = null;
+        $params['verify_token'] = $this->encodeToken($params);
+
+        $user->update($params);
+
+        if (!$this->sendMail($params['verify_token'])) {
+            return [false, GlobalHelper::getErrorMessages()['send_mail_failed']];
+        }
+
+        return [true, 'Updated successfully'];
     }
 
     public function sendMail($token)
@@ -67,11 +87,10 @@ class UserService
         $tokenExplode = explode('.', $params['verify_token']);
         $email        = base64_decode($tokenExplode[0]);
         $dateTime     = base64_decode($tokenExplode[1]);
+        $expired      = GlobalHelper::checkExpiredDate($dateTime, 2);
+        $user         = User::where('email', $email)->first();
 
-        $expired = Carbon::now()->diffInDays(Carbon::parse($dateTime)) < 2;
-        $user    = User::where('email', $email)->first();
-
-        if (!$expired) {
+        if ($expired) {
             $params['email']        = $email;
             $newToken               = $this->encodeToken($params);
             $params['verify_token'] = $newToken;
@@ -86,5 +105,20 @@ class UserService
         $user->update($params);
 
         return true;
+    }
+
+    public function updatePasswordProfile($params)
+    {
+        $user = Auth::user();
+
+        if (Hash::check($params['current_password'], $user->getAuthPassword())) {
+            $newPassword = [
+                'password' => bcrypt($params['new_password']),
+            ];
+
+            return $user->update($newPassword);
+        }
+
+        return false;
     }
 }
