@@ -20,8 +20,6 @@
                                         @csrf
                                         @method('put')
                                         <input type="hidden" name="url" value="{{url()->previous()}}">
-                                        <input type="hidden" name="verify_token" value="{{$user->verify_token}}">
-                                        <input type="hidden" name="verify_at" value="{{$user->verify_at}}">
                                         <div class="form-group row">
                                             <div class="col-xs-3 col-md-3">
                                                 <label for="" class="float-md-right mt-2">Full Name: </label>

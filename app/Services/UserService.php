@@ -109,19 +109,18 @@ class UserService
 
     public function updatePasswordProfile($params)
     {
-        $checkPassword = false;
-        $newPassword   = [
-            'password' => bcrypt($params['new_password']),
-        ];
+        $user = Auth::user();
 
-        if (!empty($params['current_password'])) {
-            if (Hash::check($params['current_password'], Auth::user()->getAuthPassword())) {
-                Auth::user()->update($newPassword);
+        if (Hash::check($params['current_password'], $user->getAuthPassword())) {
+            $newPassword = [
+                'password' => bcrypt($params['new_password']),
+            ];
 
-                return $checkPassword = true;
-            }
+            $user->update($newPassword);
+
+            return true;
         }
 
-        return $checkPassword;
+        return false;
     }
 }

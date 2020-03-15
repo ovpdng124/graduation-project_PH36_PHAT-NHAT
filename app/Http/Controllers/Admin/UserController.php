@@ -103,18 +103,6 @@ class UserController extends Controller
         return view('admin.users.profile', compact('userProfile'));
     }
 
-    public function editProfile()
-    {
-        $userProfile = Auth::user();
-
-        return view('admin.users.edit_profile', compact('userProfile'));
-    }
-
-    public function updateProfile(EditUserRequest $request)
-    {
-        $params = $request->except('_token');
-    }
-
     public function changePasswordProfile()
     {
         $userProfile = Auth::user();
@@ -125,8 +113,9 @@ class UserController extends Controller
     public function updatePasswordProfile(ChangePasswordProfileRequest $request)
     {
         $params = $request->except('_token', 'password_confirmation');
+        $status = $this->userService->updatePasswordProfile($params);
 
-        if (!$this->userService->updatePasswordProfile($params)) {
+        if (!$status) {
             return redirect()->back()->withErrors(['current_password' => 'Wrong password!']);
         }
 
