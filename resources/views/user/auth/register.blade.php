@@ -16,15 +16,6 @@
                 <h1 class="text-center mb-4">Register</h1>
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-4 well well-sm col-md-offset-4 container">
-                        @if($errors->any())
-                            <div class="alert alert-danger container" role="alert">
-                                @foreach($errors->all() as $error)
-                                    <div class="text-center">
-                                        {{$error}}
-                                    </div>
-                                @endforeach
-                            </div>
-                        @endif
                         <form action="{{route('register')}}" method="post" class="form" role="form">
                             @csrf
                             <input type="hidden" name="role_id" value="2">

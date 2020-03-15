@@ -40,10 +40,10 @@ class UserService
         $user                   = User::create($params);
 
         if (!$this->sendMail($user->verify_token)) {
-            return [false, 'Send mail failed'];
+            return [false, $user->verify_token];
         }
 
-        return [true, 'Created successfully'];
+        return [true, 'Created successfully!'];
     }
 
     public function update($params, $user)
@@ -58,7 +58,7 @@ class UserService
         $user->update($params);
 
         if (!$this->sendMail($params['verify_token'])) {
-            return [false, GlobalHelper::getErrorMessages()['send_mail_failed']];
+            return [false, $user->verify_token];
         }
 
         return [true, 'Updated successfully'];

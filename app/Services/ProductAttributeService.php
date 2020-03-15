@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Entities\Product;
 use App\Entities\ProductAttributes;
 use App\Entities\ProductImage;
 use App\Filters\ProductFilter;

@@ -20,10 +20,12 @@ class UserController extends Controller
      * @var UserService
      */
     protected $userService;
+    protected $message;
 
     public function __construct()
     {
         $this->userService = app(UserService::class);
+        $this->message     = GlobalHelper::getErrorMessages();
     }
 
     public function index()
@@ -40,13 +42,13 @@ class UserController extends Controller
     {
         $params = $request->except(['_token', 'password_confirmation']);
 
-        list($status, $message) = $this->userService->store($params);
+        list($status, $string) = $this->userService->store($params);
 
         if (!$status) {
-            return redirect(route('user.list'))->with('failed', $message);
+            return redirect(route('notification', ['verify_token' => $string]))->with($this->message['send_mail_failed']);
         }
 
-        return redirect(route('user.list'))->with('success', $message);
+        return redirect(route('user.list'))->with('success', $string);
     }
 
     public function show(Request $request)
@@ -72,13 +74,13 @@ class UserController extends Controller
         $params = $request->except('_token', 'url');
         $user   = User::find($id);
 
-        list($status, $message) = $this->userService->update($params, $user);
+        list($status, $string) = $this->userService->update($params, $user);
 
         if (!$status) {
-            return redirect(route('verify-notification'))->with($message);
+            return redirect(route('notification', ['verify_token' => $string]))->with($this->message['send_mail_failed']);
         }
 
-        return redirect($request->get('url'))->with('success', $message);
+        return redirect($request->get('url'))->with('success', $string);
     }
 
     public function delete($id)
