@@ -17,6 +17,7 @@
                                 <div class="col-xs-12 col-sm-12 col-md-9 well well-sm col-md-offset-4 container">
                                     <form action="{{route('product-attribute.store')}}" method="post" class="form" role="form" enctype="multipart/form-data">
                                         @csrf
+                                        <input type="hidden" name="url" value="{{url()->previous()}}">
                                         <div class="form-group row">
                                             <div class="col-xs-3 col-md-3">
                                                 <label for="" class="float-md-right mt-2">Product ID: </label>
@@ -24,14 +25,9 @@
                                             <div class="col-xs-9 col-md-9">
                                                 <select name="product_id" class="form-control">
                                                     @foreach($products as $item)
-                                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                                        <option value="{{$item->id}}" {{$item->id == old('product_id')? 'selected' : ''}}>{{$item->name}}</option>
                                                     @endforeach
                                                 </select>
-                                                @if($errors->any())
-                                                    @foreach($errors->get('product_id') as $messages)
-                                                        <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
-                                                    @endforeach
-                                                @endif
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -84,15 +80,10 @@
                                             </div>
                                             <div class="col-xs-9 col-md-9">
                                                 <select name="color" class="form-control">
-                                                    @foreach($colorDefault as $key => $item)
-                                                        <option value="{{$item}}">{{$key}}</option>
+                                                    @foreach($colors as $key => $item)
+                                                        <option value="{{$item}}" {{$item == old('color') ? 'selected' : ''}}>{{$key}}</option>
                                                     @endforeach
                                                 </select>
-                                                @if($errors->any())
-                                                    @foreach($errors->get('color') as $messages)
-                                                        <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
-                                                    @endforeach
-                                                @endif
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -104,6 +95,10 @@
                                                 @if($errors->any())
                                                     @foreach($errors->get('thumbnails.*') as $messages)
                                                         <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages[0]}}</i>
+                                                        @break
+                                                    @endforeach
+                                                    @foreach($errors->get('thumbnails') as $messages)
+                                                        <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
                                                     @endforeach
                                                 @endif
                                             </div>

@@ -18,7 +18,7 @@
                                     <form action="{{route('admin.profile.change-password')}}" method="post" class="form" role="form">
                                         @method('PUT')
                                         @csrf
-                                        <input type="hidden" name="id" value="{{$userProfile->id}}">
+                                        <input type="hidden" name="id" value="{{$userId}}">
                                         <div class="row form-group">
                                             <div class="col-xs-3 col-md-3">
                                                 <label for="" class="float-md-right mt-2">Old password: </label>
@@ -30,9 +30,6 @@
                                                         <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}
                                                             <br></i>
                                                     @endforeach
-                                                @endif
-                                                @if(Session::has('failed'))
-                                                    <i style="color: red; font-size: 90%; font-family: sans-serif">*{{Session::get('failed')}}</i>
                                                 @endif
                                             </div>
                                         </div>

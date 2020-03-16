@@ -39,11 +39,11 @@ class ProductController extends Controller
         $products          = Product::with(['product_attributes', 'product_images'])->find($id);
         $productAttributes = $products->product_attributes->sortByDesc('updated_at');
         $productData       = [
-            'product'           => $products,
-            'productAttributes' => $productAttributes,
+            'product'            => $products,
+            'product_attributes' => $productAttributes,
         ];
 
-        return view('admin.products.detail', compact('productData'));
+        return view('admin.products.detail', $productData);
     }
 
     public function create()
@@ -55,30 +55,40 @@ class ProductController extends Controller
 
     public function store(CreateProductRequest $request)
     {
-        $this->productService->store($request);
+        $params = $request->except('_token', 'url', 'avatar');
+        $avatar = $request->file('avatar');
 
-        return redirect(route('product.index'))->with('success', 'Created successfully!');
+        $this->productService->store($params, $avatar);
+
+        return redirect($request->get('url'))->with('success', 'Created successfully!');
     }
 
     public function edit($id)
     {
         $product    = Product::find($id);
         $categories = Category::all();
+        $data       = [
+            'product'    => $product,
+            'categories' => $categories,
+        ];
 
-        return view('admin.products.edit', compact('product', 'categories'));
+        return view('admin.products.edit', $data);
     }
 
     public function update(EditProductRequest $request, $id)
     {
-        $this->productService->update($request, $id);
+        $params = $request->except('_token', 'url', 'avatar');
+        $avatar = $request->file('avatar');
 
-        return redirect(route('product.index'))->with('success', 'Updated Successfully!');
+        $this->productService->update($params, $id, $avatar);
+
+        return redirect($request->get('url'))->with('success', 'Updated Successfully!');
     }
 
     public function destroy($id)
     {
         Product::find($id)->delete();
 
-        return redirect(route('product.index'))->with('success', 'Deleted Successfully');
+        return redirect()->back()->with('success', 'Deleted Successfully');
     }
 }

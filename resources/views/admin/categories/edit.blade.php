@@ -18,6 +18,7 @@
                                     <form action="{{route('category.update', $category->id)}}" method="post" class="form" role="form">
                                         @csrf
                                         @method('put')
+                                        <input type="hidden" name="url" value="{{url()->previous()}}">
                                         <div class="form-group row">
                                             <div class="col-xs-3 col-md-3">
                                                 <label for="" class="float-md-right mt-2">Name: </label>

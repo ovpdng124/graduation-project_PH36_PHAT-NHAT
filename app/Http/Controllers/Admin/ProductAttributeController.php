@@ -40,36 +40,50 @@ class ProductAttributeController extends Controller
     {
         $colorDefault = $this->colorDefaults;
         $products     = Product::all();
+        $data         = [
+            'colors'   => $colorDefault,
+            'products' => $products,
+        ];
 
-        return view('admin.products.product_attributes.create', compact('colorDefault', 'products'));
+        return view('admin.products.product_attributes.create', $data);
     }
 
     public function store(CreateProductAttributeRequest $request)
     {
-        $this->productAttributeService->store($request);
+        $params     = $request->except('_token', 'url', 'thumbnails');
+        $thumbnails = $request->file('thumbnails');
 
-        return redirect(route('product-attribute.index'))->with('success', 'Create Successfully!');
+        $this->productAttributeService->store($params, $thumbnails);
+
+        return redirect($request->get('url'))->with('success', 'Create Successfully!');
     }
 
     public function edit($id)
     {
         $colorDefault     = $this->colorDefaults;
         $productAttribute = ProductAttributes::find($id);
+        $data             = [
+            'colors'            => $colorDefault,
+            'product_attribute' => $productAttribute,
+        ];
 
-        return view('admin.products.product_attributes.edit', compact('productAttribute', 'colorDefault'));
+        return view('admin.products.product_attributes.edit', $data);
     }
 
     public function update(EditProductAttributeRequest $request, $id)
     {
-        $this->productAttributeService->update($request, $id);
+        $params     = $request->except('_token', 'url', 'thumbnails');
+        $thumbnails = $request->file('thumbnails');
 
-        return redirect(route('product-attribute.index'))->with('success', 'Updated Successfully!');
+        $this->productAttributeService->update($params, $id, $thumbnails);
+
+        return redirect($request->get('url'))->with('success', 'Updated Successfully!');
     }
 
     public function destroy($id)
     {
         ProductAttributes::find($id)->delete();
 
-        return redirect(route('product-attribute.index'))->with('success', 'Deleted Successfully');
+        return redirect()->back()->with('success', 'Deleted Successfully');
     }
 }

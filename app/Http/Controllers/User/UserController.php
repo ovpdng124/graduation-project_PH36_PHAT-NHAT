@@ -28,7 +28,7 @@ class UserController extends Controller
             'popular_products' => $popularProducts,
         ];
 
-        return view('user.index.index', compact('productData'));
+        return view('user.index.index', $productData);
     }
 
     public function profile()

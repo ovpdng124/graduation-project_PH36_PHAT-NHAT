@@ -39,7 +39,9 @@ class UserService
         $params['verify_token'] = $this->encodeToken($params);
         $user                   = User::create($params);
 
-        if (!$this->sendMail($user->verify_token)) {
+        $status = $this->sendMail($user->verify_token);
+
+        if (!$status) {
             return [false, $user->verify_token];
         }
 
@@ -57,7 +59,9 @@ class UserService
 
         $user->update($params);
 
-        if (!$this->sendMail($params['verify_token'])) {
+        $status = $this->sendMail($params['verify_token']);
+
+        if (!$status) {
             return [false, $user->verify_token];
         }
 
@@ -82,9 +86,9 @@ class UserService
         return base64_encode($params['email']) . '.' . base64_encode(now());
     }
 
-    public function decodeToken($params)
+    public function decodeToken($verify_token)
     {
-        $tokenExplode = explode('.', $params['verify_token']);
+        $tokenExplode = explode('.', $verify_token);
         $email        = base64_decode($tokenExplode[0]);
         $dateTime     = base64_decode($tokenExplode[1]);
         $expired      = GlobalHelper::checkExpiredDate($dateTime, 2);
@@ -94,6 +98,7 @@ class UserService
             $params['email']        = $email;
             $newToken               = $this->encodeToken($params);
             $params['verify_token'] = $newToken;
+
             $user->update($params);
             $this->sendMail($newToken);
 

@@ -63,6 +63,6 @@ class VoucherController extends Controller
     {
         Voucher::find($id)->delete();
 
-        return redirect(route('voucher.index'))->with('success', 'Deleted Successfully!');
+        return redirect()->back()->with('success', 'Deleted Successfully!');
     }
 }

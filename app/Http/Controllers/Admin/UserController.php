@@ -85,17 +85,9 @@ class UserController extends Controller
 
     public function delete($id)
     {
-        $user = User::find($id);
+        User::find($id)->delete();
 
-        try {
-            $user->delete();
-
-            return redirect(route('user.list'))->with('success', 'Deleted Successfully!');
-        } catch (Exception $e) {
-            Log::error($e);
-
-            return redirect(route('user.list'))->with('failed', 'Deleted failed!');
-        }
+        return redirect()->back()->with('failed', 'Deleted successfully!');
     }
 
     public function profile()
@@ -105,16 +97,17 @@ class UserController extends Controller
         return view('admin.users.profile', compact('userProfile'));
     }
 
-    public function changePasswordProfile()
+    public function changePasswordProfile(Request $request)
     {
-        $userProfile = Auth::user();
+        $userId = $request->get('id');
 
-        return view('admin.users.profile_edit_password', compact('userProfile'));
+        return view('admin.users.profile_edit_password', compact('userId'));
     }
 
     public function updatePasswordProfile(ChangePasswordProfileRequest $request)
     {
         $params = $request->except('_token', 'password_confirmation');
+
         $status = $this->userService->updatePasswordProfile($params);
 
         if (!$status) {

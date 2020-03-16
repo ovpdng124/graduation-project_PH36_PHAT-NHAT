@@ -29,7 +29,7 @@ class RegisterController extends Controller
 
     public function store(CreateUserRequest $request)
     {
-        $params = $request->except(['_token', 'password_confirmation']);
+        $params = $request->except('_token', 'password_confirmation');
 
         list($status, $token) = $this->userService->store($params);
 
@@ -42,27 +42,31 @@ class RegisterController extends Controller
 
     public function showNotification(Request $request)
     {
-        $verify_token = $request->all();
+        $verify_token = $request->get('verify_token');
 
         return view('user.auth.notification', compact('verify_token'));
     }
 
     public function sendMail(Request $request)
     {
-        $token = $request->all();
+        $verify_token = $request->get('verify_token');
 
-        if (!$this->userService->sendMail($token['verify_token'])) {
-            return redirect(route('notification', $token))->with($this->errorMessages['send_mail_failed']);
+        $status = $this->userService->sendMail($verify_token);
+
+        if (!$status) {
+            return redirect(route('notification', ['verify_token' => $verify_token]))->with($this->errorMessages['send_mail_failed']);
         }
 
-        return redirect(route('notification', $token))->with($this->errorMessages['send_mail_success']);
+        return redirect(route('notification', ['verify_token' => $verify_token]))->with($this->errorMessages['send_mail_success']);
     }
 
     public function verify(Request $request)
     {
-        $params = $request->all();
+        $verify_token = $request->get('verify_token');
 
-        if (!$this->userService->decodeToken($params)) {
+        $status = $this->userService->decodeToken($verify_token);
+
+        if (!$status) {
             return abort(403, 'Expired link: Please check mail again!');
         }
 

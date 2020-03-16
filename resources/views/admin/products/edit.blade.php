@@ -18,6 +18,7 @@
                                     <form action="{{route('product.update', $product->id)}}" enctype="multipart/form-data" method="post" class="form" role="form">
                                         @csrf
                                         @method('put')
+                                        <input type="hidden" name="url" value="{{url()->previous()}}">
                                         <div class="form-group row">
                                             <div class="col-xs-3 col-md-3">
                                                 <label for="" class="float-md-right mt-2">Name: </label>
@@ -54,11 +55,6 @@
                                                         <option {{$product->category_id == $item->id ? 'selected' : ''}} value="{{$item->id}}">{{$item->name}}</option>
                                                     @endforeach
                                                 </select>
-                                                @if($errors->any())
-                                                    @foreach($errors->get('category_id') as $messages)
-                                                        <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
-                                                    @endforeach
-                                                @endif
                                             </div>
                                         </div>
                                         <div class="form-group row">

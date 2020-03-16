@@ -55,7 +55,7 @@
                             <a class="btn btn-info col-md-12" href="{{route('user.edit-form', $userProfile->id)}}">Edit information</a>
                         </div>
                         <div class="col-md-6">
-                            <a class="btn btn-info col-md-12" href="{{route('admin.profile.change-password-form')}}">Change password</a>
+                            <a class="btn btn-info col-md-12" href="{{route('admin.profile.change-password-form', ['id' => $userProfile->id])}}">Change password</a>
                         </div>
                     </div>
                 </div>

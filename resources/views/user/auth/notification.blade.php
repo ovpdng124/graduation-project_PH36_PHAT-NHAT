@@ -19,7 +19,7 @@
                         <div class="container">
                             <p class="alert alert-default-success container text-center">{{Session::get('messages')}}</p>
                             @if(!empty($verify_token))
-                                <p class="text-center"><a href="{{route('send-mail', $verify_token)}}"><i> Click here to send mail again</i></a></p>
+                                <p class="text-center"><a href="{{route('send-mail', ['verify_token' => $verify_token])}}"><i> Click here to send mail again</i></a></p>
                             @endif
                             @if(!Auth::check())
                                 <p class="text-center"><a class="text-center container" href="{{route('login-form')}}">Login</a></p>

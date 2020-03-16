@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Entities\Category;
-use App\Entities\Product;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\EditCategoryRequest;
@@ -42,7 +41,7 @@ class CategoryController extends Controller
             'category' => $category,
         ];
 
-        return view('admin.categories.detail', compact('categoryData'));
+        return view('admin.categories.detail', $categoryData);
     }
 
     public function create()
@@ -68,17 +67,17 @@ class CategoryController extends Controller
 
     public function update(EditCategoryRequest $request, $id)
     {
-        $params = $request->except('_token');
+        $params = $request->except('_token', 'url');
 
         Category::find($id)->update($params);
 
-        return redirect(route('category.index'))->with('success', 'Updated Successfully!');
+        return redirect($request->get('url'))->with('success', 'Updated Successfully!');
     }
 
     public function destroy($id)
     {
         Category::find($id)->delete();
 
-        return redirect(route('category.index'))->with('success', 'Deleted Successfully');
+        return redirect()->back()->with('success', 'Deleted Successfully');
     }
 }

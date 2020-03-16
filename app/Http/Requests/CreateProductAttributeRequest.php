@@ -24,10 +24,18 @@ class CreateProductAttributeRequest extends FormRequest
     public function rules()
     {
         return [
-            'sub_price'    => 'numeric',
+            'sub_name'     => 'required|unique:product_attributes',
+            'sub_price'    => 'required|numeric',
             'size'         => 'required|numeric',
-            'color'        => 'required',
-            'thumbnails.*' => 'required|mimes:jpeg,png',
+            'thumbnails'   => 'required',
+            'thumbnails.*' => 'image',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+          'thumbnails.*.image' => 'The thumbnails must be an image.'
         ];
     }
 }
