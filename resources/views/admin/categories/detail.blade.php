@@ -22,7 +22,7 @@
                                 <a href="{{route('category.index')}}" class="btn btn-primary">Back</a>
                             </div>
                             <div class="col-6">
-                                <a href="{{route('category.edit', $category->id)}}" class="btn btn-primary">Update information </a>
+                                <a href="{{route('category.detail.edit', $category->id)}}" class="btn btn-primary">Update information </a>
                             </div>
                         </div>
                     </div>
@@ -54,11 +54,6 @@
                                                 </a>
                                             </td>
                                             <td width="10%">
-                                                <a href="{{route('category.product.edit-form', $item->id)}}">
-                                                    <button class="btn-link">Edit</button>
-                                                </a>
-                                            </td>
-                                            <td width="10%">
                                                 <form action="{{route('product.destroy', $item->id)}}" method="post">
                                                     @method('delete')
                                                     @csrf
@@ -73,7 +68,7 @@
                                         <p><i>There are no products to list</i></p>
                                     </div>
                                 @endif
-                                <a class="btn btn-primary float-right" href="{{route('product.create')}}">Create new</a>
+                                <a class="btn btn-primary float-right" href="{{route('category.product.create')}}">Create new</a>
                             </div>
                         </div>
                     </div>

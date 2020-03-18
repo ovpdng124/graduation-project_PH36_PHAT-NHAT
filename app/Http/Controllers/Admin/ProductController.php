@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Entities\Category;
 use App\Entities\Product;
+use App\Helpers\GlobalHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\EditProductRequest;
@@ -17,10 +18,12 @@ class ProductController extends Controller
      *
      */
     protected $productService;
+    protected $messages;
 
     public function __construct()
     {
         $this->productService = app(ProductService::class);
+        $this->messages       = GlobalHelper::getErrorMessages();
     }
 
     public function index(Request $request)
@@ -60,18 +63,20 @@ class ProductController extends Controller
 
         $this->productService->store($params, $avatar);
 
-        return redirect($request->get('url'))->with('success', 'Created successfully!');
+        if (strpos($request->url(), 'category')) {
+            return redirect(route('category.show', $params['category_id']))->with($this->messages['create_success']);
+        }
+
+        return redirect(route('product.index'))->with($this->messages['create_success']);
     }
 
     public function edit($id)
     {
         $product    = Product::find($id);
         $categories = Category::all();
-        $route      = route('product.update', $product->id);
         $data       = [
             'product'    => $product,
             'categories' => $categories,
-            'route'      => $route,
         ];
 
         return view('admin.products.edit', $data);
@@ -79,23 +84,22 @@ class ProductController extends Controller
 
     public function update(EditProductRequest $request, $id)
     {
-        $params      = $request->except('_token', 'url', 'avatar');
-        $avatar      = $request->file('avatar');
-        $category_id = $request->get('category_id');
+        $params = $request->except('_token', 'url', 'avatar');
+        $avatar = $request->file('avatar');
 
         $this->productService->update($params, $id, $avatar);
 
-        if (strpos($request->url(), 'category')) {
-            return redirect(route('category.show', $category_id))->with('success', 'Updated Successfully!');
+        if (strpos($request->url(), 'detail')) {
+            return redirect(route('product.show', $id))->with($this->messages['update_success']);
         }
 
-        return redirect(route('product.index'))->with('success', 'Updated Successfully!');
+        return redirect(route('product.index'))->with($this->messages['update_success']);
     }
 
     public function destroy($id)
     {
         Product::find($id)->delete();
 
-        return redirect()->back()->with('success', 'Deleted Successfully');
+        return redirect()->back()->with($this->messages['delete_success']);
     }
 }

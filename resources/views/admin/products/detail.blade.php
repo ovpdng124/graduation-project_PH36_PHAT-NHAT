@@ -48,7 +48,7 @@
                                 <a href="{{route('product.index')}}" class="btn btn-primary">Back</a>
                             </div>
                             <div class="col-6">
-                                <a href="{{route('product.edit', $product->id)}}" class="btn btn-primary">Update information </a>
+                                <a href="{{route('product.detail.edit', $product->id)}}" class="btn btn-primary">Update information </a>
                             </div>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                                         <td width="10%">{{$item->size}}</td>
                                         <td width="5%" style="width: 30px; background-color: {{$item->color}}"></td>
                                         <td width="5%">
-                                            <a href="{{route('product-attribute.edit', $item->id)}}">
+                                            <a href="{{route('product.product-attribute.edit', $item->id)}}">
                                                 <button class="btn-link">Edit</button>
                                             </a>
                                         </td>
@@ -100,7 +100,7 @@
                                     <p><i>There are no products to list</i></p>
                                 </div>
                             @endif
-                            <a class="btn btn-primary float-right" href="{{route('product-attribute.create')}}">Create new</a>
+                            <a class="btn btn-primary float-right" href="{{route('product.product-attribute.create')}}">Create new</a>
                         </div>
                     </div>
                 </div>

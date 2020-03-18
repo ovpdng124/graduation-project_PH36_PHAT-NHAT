@@ -45,13 +45,13 @@ class UserService
             return [false, $user->verify_token];
         }
 
-        return [true, 'Created successfully!'];
+        return [true, ''];
     }
 
     public function update($params, $user)
     {
         if ($params['email'] === $user->email) {
-            return [$user->update($params), 'Updated successfully'];
+            return [$user->update($params), ''];
         }
 
         $params['verify_at']    = null;
@@ -65,7 +65,7 @@ class UserService
             return [false, $user->verify_token];
         }
 
-        return [true, 'Updated successfully'];
+        return [true, ''];
     }
 
     public function sendMail($token)
@@ -121,7 +121,9 @@ class UserService
                 'password' => bcrypt($params['new_password']),
             ];
 
-            return $user->update($newPassword);
+            $user->update($newPassword);
+
+            return true;
         }
 
         return false;

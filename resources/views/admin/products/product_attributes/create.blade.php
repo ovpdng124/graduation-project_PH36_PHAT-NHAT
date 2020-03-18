@@ -15,9 +15,9 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-9 well well-sm col-md-offset-4 container">
-                                    <form action="{{route('product-attribute.store')}}" method="post" class="form" role="form" enctype="multipart/form-data">
+                                    <form action="{{route(strpos(url()->current(),'product/') ? 'product.product-attribute.store' : 'product-attribute.store')}}" method="post" class="form" role="form"
+                                          enctype="multipart/form-data">
                                         @csrf
-                                        <input type="hidden" name="url" value="{{url()->previous()}}">
                                         <div class="form-group row">
                                             <div class="col-xs-3 col-md-3">
                                                 <label for="" class="float-md-right mt-2">Product ID: </label>

@@ -14,12 +14,12 @@ class RegisterController extends Controller
      * @var UserService
      */
     protected $userService;
-    protected $errorMessages;
+    protected $messages;
 
     public function __construct()
     {
-        $this->userService   = app(UserService::class);
-        $this->errorMessages = GlobalHelper::getErrorMessages();
+        $this->userService = app(UserService::class);
+        $this->messages    = GlobalHelper::getErrorMessages();
     }
 
     public function showRegisterForm()
@@ -34,10 +34,10 @@ class RegisterController extends Controller
         list($status, $token) = $this->userService->store($params);
 
         if (!$status) {
-            return redirect(route('notification', ['verify_token' => $token]))->with($this->errorMessages['send_mail_failed']);
+            return redirect(route('notification', ['verify_token' => $token]))->with($this->messages['send_mail_failed']);
         }
 
-        return redirect(route('notification'))->with($this->errorMessages['register_success']);
+        return redirect(route('notification'))->with($this->messages['register_success']);
     }
 
     public function showNotification(Request $request)
@@ -54,10 +54,10 @@ class RegisterController extends Controller
         $status = $this->userService->sendMail($verify_token);
 
         if (!$status) {
-            return redirect(route('notification', ['verify_token' => $verify_token]))->with($this->errorMessages['send_mail_failed']);
+            return redirect(route('notification', ['verify_token' => $verify_token]))->with($this->messages['send_mail_failed']);
         }
 
-        return redirect(route('notification', ['verify_token' => $verify_token]))->with($this->errorMessages['send_mail_success']);
+        return redirect(route('notification', ['verify_token' => $verify_token]))->with($this->messages['send_mail_success']);
     }
 
     public function verify(Request $request)
@@ -70,6 +70,6 @@ class RegisterController extends Controller
             return abort(403, 'Expired link: Please check mail again!');
         }
 
-        return redirect(route('notification'))->with($this->errorMessages['verify_success']);
+        return redirect(route('notification'))->with($this->messages['verify_success']);
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Entities\Category;
-use App\Entities\Product;
+use App\Helpers\GlobalHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\EditCategoryRequest;
@@ -16,10 +16,12 @@ class CategoryController extends Controller
      * @var CategoryService
      */
     protected $categoryService;
+    protected $messages;
 
     public function __construct()
     {
         $this->categoryService = app(CategoryService::class);
+        $this->messages        = GlobalHelper::getErrorMessages();
     }
 
     public function index(Request $request)
@@ -56,7 +58,7 @@ class CategoryController extends Controller
 
         Category::create($params);
 
-        return redirect(route('category.index'))->with('success', 'Created Successfully!');
+        return redirect(route('category.index'))->with($this->messages['create_success']);
     }
 
     public function edit($id)
@@ -72,27 +74,17 @@ class CategoryController extends Controller
 
         Category::find($id)->update($params);
 
-        return redirect($request->get('url'))->with('success', 'Updated Successfully!');
+        if (strpos($request->url(), 'detail')) {
+            return redirect(route('category.show', $id))->with($this->messages['update_success']);
+        }
+
+        return redirect(route('category.index'))->with($this->messages['update_success']);
     }
 
     public function destroy($id)
     {
         Category::find($id)->delete();
 
-        return redirect()->back()->with('success', 'Deleted Successfully');
-    }
-
-    public function editProduct($id)
-    {
-        $product    = Product::find($id);
-        $categories = Category::all();
-        $route      = route('category.product.update', $product->id);
-        $data       = [
-            'product'    => $product,
-            'categories' => $categories,
-            'route'      => $route,
-        ];
-
-        return view('admin.products.edit', $data);
+        return redirect()->back()->with($this->messages['delete_success']);
     }
 }

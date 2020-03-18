@@ -15,10 +15,22 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-9 well well-sm col-md-offset-4 container">
-                                    <form action="{{route('product-attribute.update', $product_attribute->id)}}" method="post" class="form" role="form" enctype="multipart/form-data">
+                                    <form action="{{route(strpos(url()->current(),'product/') ? 'product.product-attribute.update' : 'product-attribute.update', $product_attribute->id)}}" method="post"
+                                          class="form" role="form" enctype="multipart/form-data">
                                         @csrf
                                         @method('put')
-                                        <input type="hidden" name="url" value="{{url()->previous()}}">
+                                        <div class="form-group row">
+                                            <div class="col-xs-3 col-md-3">
+                                                <label for="" class="float-md-right mt-2">Product: </label>
+                                            </div>
+                                            <div class="col-xs-9 col-md-9">
+                                                <select name="product_id" class="form-control">
+                                                    @foreach($products as $key => $item)
+                                                        <option value="{{$item->id}}" {{$item->id == $product_attribute->product_id ? 'selected' : ''}}>{{$item->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="form-group row">
                                             <div class="col-xs-3 col-md-3">
                                                 <label for="" class="float-md-right mt-2">Sub Name: </label>
@@ -68,11 +80,6 @@
                                                         <option value="{{$item}}" {{$item == $product_attribute->color ? 'selected' : ''}}>{{$key}}</option>
                                                     @endforeach
                                                 </select>
-                                                @if($errors->any())
-                                                    @foreach($errors->get('color') as $messages)
-                                                        <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
-                                                    @endforeach
-                                                @endif
                                             </div>
                                         </div>
                                         <div class="form-group row">

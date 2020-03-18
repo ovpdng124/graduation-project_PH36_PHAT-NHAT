@@ -18,11 +18,13 @@ class ProductAttributeController extends Controller
      */
     protected $productAttributeService;
     protected $colorDefaults;
+    protected $messages;
 
     public function __construct()
     {
         $this->productAttributeService = app(ProductAttributeService::class);
         $this->colorDefaults           = GlobalHelper::$colorDefaults;
+        $this->messages                = GlobalHelper::getErrorMessages();
     }
 
     public function index(Request $request)
@@ -55,16 +57,22 @@ class ProductAttributeController extends Controller
 
         $this->productAttributeService->store($params, $thumbnails);
 
-        return redirect($request->get('url'))->with('success', 'Create Successfully!');
+        if (strpos($request->url(), 'product/')) {
+            return redirect(route('product.show', $params['product_id']))->with($this->messages['create_success']);
+        }
+
+        return redirect(route('product-attribute.index'))->with($this->messages['create_success']);
     }
 
     public function edit($id)
     {
         $colorDefault     = $this->colorDefaults;
         $productAttribute = ProductAttributes::find($id);
+        $products         = Product::all();
         $data             = [
             'colors'            => $colorDefault,
             'product_attribute' => $productAttribute,
+            'products'          => $products,
         ];
 
         return view('admin.products.product_attributes.edit', $data);
@@ -77,13 +85,17 @@ class ProductAttributeController extends Controller
 
         $this->productAttributeService->update($params, $id, $thumbnails);
 
-        return redirect($request->get('url'))->with('success', 'Updated Successfully!');
+        if (strpos($request->url(), 'product/')) {
+            return redirect(route('product.show', $params['product_id']))->with($this->messages['update_success']);
+        }
+
+        return redirect(route('product-attribute.index'))->with($this->messages['update_success']);
     }
 
     public function destroy($id)
     {
         ProductAttributes::find($id)->delete();
 
-        return redirect()->back()->with('success', 'Deleted Successfully');
+        return redirect()->back()->with($this->messages['delete_success']);
     }
 }

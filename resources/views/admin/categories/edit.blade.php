@@ -15,10 +15,9 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-9 well well-sm col-md-offset-4 container">
-                                    <form action="{{route('category.update', $category->id)}}" method="post" class="form" role="form">
+                                    <form action="{{route(strpos(url()->current(),'detail') ? 'category.detail.update' : 'category.update', $category->id)}}" method="post" class="form" role="form">
                                         @csrf
                                         @method('put')
-                                        <input type="hidden" name="url" value="{{url()->previous()}}">
                                         <div class="form-group row">
                                             <div class="col-xs-3 col-md-3">
                                                 <label for="" class="float-md-right mt-2">Name: </label>
@@ -32,7 +31,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-lg btn-success btn-block col-md-5 container">Create</button>
+                                        <button type="submit" class="btn btn-lg btn-success btn-block col-md-5 container">Update</button>
                                     </form>
                                 </div>
                             </div>

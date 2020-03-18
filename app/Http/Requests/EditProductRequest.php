@@ -28,7 +28,7 @@ class EditProductRequest extends FormRequest
             'name'        => ['required', Rule::unique('products')->ignore($this->product)],
             'price'       => 'required|numeric',
             'description' => 'required',
-            'avatar'      => 'image',
+            'avatar'      => 'image|dimensions:min_width=300,min_height=300',
         ];
     }
 }

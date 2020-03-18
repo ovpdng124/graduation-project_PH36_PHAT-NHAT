@@ -28,7 +28,7 @@ class CreateProductAttributeRequest extends FormRequest
             'sub_price'    => 'required|numeric',
             'size'         => 'required|numeric',
             'thumbnails'   => 'required',
-            'thumbnails.*' => 'image',
+            'thumbnails.*' => 'image|dimensions:min_width=300,min_height=300',
         ];
     }
 

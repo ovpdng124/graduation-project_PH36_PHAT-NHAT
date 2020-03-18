@@ -15,7 +15,8 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-9 well well-sm col-md-offset-4 container">
-                                    <form action="{{$route}}" enctype="multipart/form-data" method="post" class="form" role="form">
+                                    <form action="{{route(strpos(url()->current(),'detail')? 'product.detail.update' : 'product.update', $product->id)}}" enctype="multipart/form-data" method="post"
+                                          class="form" role="form">
                                         @csrf
                                         @method('put')
                                         <div class="form-group row">

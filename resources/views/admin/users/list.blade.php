@@ -35,7 +35,7 @@
                         </form>
                     </div>
                     <div class="float-left ml-3">
-                        <a href="{{route('user.create-form')}}" class="btn btn-info float-right mb-1">
+                        <a href="{{route('user.create')}}" class="btn btn-info float-right mb-1">
                             <i class="fa fa-plus"></i> <span class="d-none d-sm-inline-block">Create new</span>
                         </a>
                     </div>
@@ -68,7 +68,7 @@
                                         <td>{{$item['phone_number']}}</td>
                                         <td>{{$item->role->name}}</td>
                                         <td>
-                                            <a href="{{route('user.edit-form', $item->id)}}">
+                                            <a href="{{route('user.edit', $item->id)}}">
                                                 <button class="btn-link">Edit</button>
                                             </a>
                                         </td>
