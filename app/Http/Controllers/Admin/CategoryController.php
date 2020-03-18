@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Entities\Category;
+use App\Entities\Product;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\EditCategoryRequest;
@@ -79,5 +80,19 @@ class CategoryController extends Controller
         Category::find($id)->delete();
 
         return redirect()->back()->with('success', 'Deleted Successfully');
+    }
+
+    public function editProduct($id)
+    {
+        $product    = Product::find($id);
+        $categories = Category::all();
+        $route      = route('category.product.update', $product->id);
+        $data       = [
+            'product'    => $product,
+            'categories' => $categories,
+            'route'      => $route,
+        ];
+
+        return view('admin.products.edit', $data);
     }
 }

@@ -54,6 +54,8 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
         Route::resource('product', 'ProductController');
         Route::resource('product-attribute', 'ProductAttributeController');
         Route::resource('category', 'CategoryController');
+        Route::get('category/product/{product}/edit', 'CategoryController@editProduct')->name('category.product.edit-form');
+        Route::put('category/product/{product}/edit', 'ProductController@update')->name('category.product.update');
     });
 
     Route::group(['namespace' => 'User'], function () {

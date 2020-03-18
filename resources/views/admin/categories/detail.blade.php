@@ -54,7 +54,7 @@
                                                 </a>
                                             </td>
                                             <td width="10%">
-                                                <a href="{{route('product.edit', $item->id)}}">
+                                                <a href="{{route('category.product.edit-form', $item->id)}}">
                                                     <button class="btn-link">Edit</button>
                                                 </a>
                                             </td>

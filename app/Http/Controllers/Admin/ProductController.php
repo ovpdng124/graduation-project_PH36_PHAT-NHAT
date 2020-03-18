@@ -67,9 +67,11 @@ class ProductController extends Controller
     {
         $product    = Product::find($id);
         $categories = Category::all();
+        $route      = route('product.update', $product->id);
         $data       = [
             'product'    => $product,
             'categories' => $categories,
+            'route'      => $route,
         ];
 
         return view('admin.products.edit', $data);
@@ -77,12 +79,17 @@ class ProductController extends Controller
 
     public function update(EditProductRequest $request, $id)
     {
-        $params = $request->except('_token', 'url', 'avatar');
-        $avatar = $request->file('avatar');
+        $params      = $request->except('_token', 'url', 'avatar');
+        $avatar      = $request->file('avatar');
+        $category_id = $request->get('category_id');
 
         $this->productService->update($params, $id, $avatar);
 
-        return redirect($request->get('url'))->with('success', 'Updated Successfully!');
+        if (strpos($request->url(), 'category')) {
+            return redirect(route('category.show', $category_id))->with('success', 'Updated Successfully!');
+        }
+
+        return redirect(route('product.index'))->with('success', 'Updated Successfully!');
     }
 
     public function destroy($id)
