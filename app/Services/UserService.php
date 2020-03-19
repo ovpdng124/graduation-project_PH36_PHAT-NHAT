@@ -37,46 +37,29 @@ class UserService
     {
         $params['password']     = bcrypt($params['password']);
         $params['verify_token'] = $this->encodeToken($params);
-        $user                   = User::create($params);
 
-        $status = $this->sendMail($user->verify_token);
-
-        if (!$status) {
-            return [false, $user->verify_token];
-        }
-
-        return [true, ''];
+        return User::create($params);
     }
 
-    public function update($params, $user)
+    public function updateIfChangedMail($params, $user)
     {
-        if ($params['email'] === $user->email) {
-            return [$user->update($params), ''];
-        }
-
         $params['verify_at']    = null;
         $params['verify_token'] = $this->encodeToken($params);
 
-        $user->update($params);
-
-        $status = $this->sendMail($params['verify_token']);
-
-        if (!$status) {
-            return [false, $user->verify_token];
-        }
-
-        return [true, ''];
+        return $user->update($params);
     }
 
-    public function sendMail($token)
+    public function sendMail($email)
     {
-        $user = User::where('verify_token', $token)->first();
+        $user = User::where('email', $email)->first();
 
         try {
             Mail::to($user->email)->send(new VerifyMail($user));
 
             return true;
         } catch (Exception $exception) {
+            Log::error($exception);
+
             return false;
         }
     }
@@ -100,7 +83,7 @@ class UserService
             $params['verify_token'] = $newToken;
 
             $user->update($params);
-            $this->sendMail($newToken);
+            $this->sendMail($email);
 
             return false;
         }

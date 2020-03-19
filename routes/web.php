@@ -16,7 +16,7 @@ Route::group(['namespace' => 'Auth'], function () {
     Route::post('/register', 'RegisterController@store')->name('register');
     Route::get('/notification', 'RegisterController@showNotification')->name('notification');
     Route::get('/verify', 'RegisterController@verify')->name('verify');
-    Route::get('/sendMail', 'RegisterController@sendMail')->name('send-mail');
+    Route::get('/sendMail', 'RegisterController@sendMailAgain')->name('send-mail-again');
     Route::get('/login', 'LoginController@showLoginForm')->name('login-form');
     Route::post('/login', 'LoginController@login')->name('login');
     Route::get('/logout', 'LoginController@logout')->name('logout');

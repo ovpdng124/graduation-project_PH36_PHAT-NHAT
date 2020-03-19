@@ -18,8 +18,8 @@
                     <div class="col-xs-12 col-sm-12 col-md-4 well well-sm col-md-offset-4 container">
                         <div class="container">
                             <p class="alert alert-default-success container text-center">{{Session::get('messages')}}</p>
-                            @if(!empty($verify_token))
-                                <p class="text-center"><a href="{{route('send-mail', ['verify_token' => $verify_token])}}"><i> Click here to send mail again</i></a></p>
+                            @if(!empty($email))
+                                <p class="text-center"><a href="{{route('send-mail-again', ['email' => $email])}}"><i> Click here to send mail again</i></a></p>
                             @endif
                             @if(!Auth::check())
                                 <p class="text-center"><a class="text-center container" href="{{route('login-form')}}">Login</a></p>

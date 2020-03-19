@@ -40,13 +40,11 @@ class UserController extends Controller
     {
         $params = $request->except(['_token', 'password_confirmation']);
 
-        list($status, $token) = $this->userService->store($params);
+        $user = $this->userService->store($params);
 
-        if (!$status) {
-            return redirect(route('notification', ['verify_token' => $token]))->with($this->messages['send_mail_failed']);
-        }
+        $this->userService->sendMail($user->email);
 
-        return redirect(route('user.list'))->with($this->messages['created_success']);
+        return redirect(route('user.list'))->with($this->messages['create_success']);
     }
 
     public function show(Request $request)
@@ -69,14 +67,17 @@ class UserController extends Controller
 
     public function update(EditUserRequest $request, $id)
     {
-        $params = $request->except('_token', 'url');
+        $params = $request->except('_token');
         $user   = User::find($id);
 
-        list($status, $token) = $this->userService->update($params, $user);
+        if ($params['email'] != $user->email) {
+            $this->userService->updateIfChangedMail($params, $user);
+            $this->userService->sendMail($params['email']);
+        } else {
+            $user->update($params);
+        }
 
-        if (!$status) {
-            return redirect(route('notification', ['verify_token' => $token]))->with($this->messages['send_mail_failed']);
-        } elseif (strpos($request->url(), 'profile')) {
+        if (strpos($request->url(), 'profile')) {
             return redirect(route('admin.profile'))->with($this->messages['update_success']);
         }
 

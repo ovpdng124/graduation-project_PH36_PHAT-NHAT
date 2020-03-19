@@ -31,33 +31,31 @@ class RegisterController extends Controller
     {
         $params = $request->except('_token', 'password_confirmation');
 
-        list($status, $token) = $this->userService->store($params);
+        $user = $this->userService->store($params);
 
-        if (!$status) {
-            return redirect(route('notification', ['verify_token' => $token]))->with($this->messages['send_mail_failed']);
-        }
+        $this->userService->sendMail($user->email);
 
         return redirect(route('notification'))->with($this->messages['register_success']);
     }
 
     public function showNotification(Request $request)
     {
-        $verify_token = $request->get('verify_token');
+        $email = $request->get('email');
 
-        return view('user.auth.notification', compact('verify_token'));
+        return view('user.auth.notification', compact('email'));
     }
 
-    public function sendMail(Request $request)
+    public function sendMailAgain(Request $request)
     {
-        $verify_token = $request->get('verify_token');
+        $email = $request->get('email');
 
-        $status = $this->userService->sendMail($verify_token);
+        $status = $this->userService->sendMail($email);
 
         if (!$status) {
-            return redirect(route('notification', ['verify_token' => $verify_token]))->with($this->messages['send_mail_failed']);
+            return redirect(route('notification', ['email' => $email]))->with($this->messages['send_mail_failed']);
         }
 
-        return redirect(route('notification', ['verify_token' => $verify_token]))->with($this->messages['send_mail_success']);
+        return redirect(route('notification'))->with($this->messages['send_mail_success']);
     }
 
     public function verify(Request $request)
