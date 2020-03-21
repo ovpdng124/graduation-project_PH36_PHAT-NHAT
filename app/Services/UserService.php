@@ -10,6 +10,7 @@ use Exception;
 use Mail;
 use Auth;
 use Hash;
+use Log;
 
 class UserService
 {
