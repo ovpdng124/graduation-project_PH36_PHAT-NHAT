@@ -55,8 +55,9 @@ class ProductAttributeController extends Controller
     {
         $colorDefault     = $this->colorDefaults;
         $productAttribute = ProductAttributes::find($id);
+        $products = Product::all();
 
-        return view('admin.products.product_attributes.edit', compact('productAttribute', 'colorDefault'));
+        return view('admin.products.product_attributes.edit', compact('productAttribute', 'colorDefault','products'));
     }
 
     public function update(EditProductAttributeRequest $request, $id)
