@@ -15,9 +15,22 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-9 well well-sm col-md-offset-4 container">
-                                    <form action="{{route('product-attribute.update', $productAttribute->id)}}" method="post" class="form" role="form" enctype="multipart/form-data">
+                                    <form action="{{route('product-attribute.update', $productAttribute->id)}}"
+                                          method="post" class="form" role="form" enctype="multipart/form-data">
                                         @csrf
                                         @method('put')
+                                        <div class="form-group row">
+                                            <div class="col-xs-3 col-md-3">
+                                                <label for="" class="float-md-right mt-2">Product: </label>
+                                            </div>
+                                            <div class="col-xs-9 col-md-9">
+                                                <select name="product_id" class="form-control">
+                                                    @foreach($products as $item)
+                                                        <option value="{{$item->id}}" {{($productAttribute->product_id == $item->id) ? 'selected' : ''}}>{{$item->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="form-group row">
                                             <div class="col-xs-3 col-md-3">
                                                 <label for="" class="float-md-right mt-2">Sub Name: </label>
