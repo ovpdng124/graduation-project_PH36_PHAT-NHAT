@@ -60,23 +60,20 @@ class ProductAttributeService
     public function update($params, $id, $thumbnails)
     {
         if (!empty($thumbnails)) {
-            $this->updateThumbnails($thumbnails, $id);
+            $this->updateThumbnails($params, $thumbnails, $id);
         }
 
         return ProductAttributes::find($id)->update($params);
     }
 
-    public function updateThumbnails($thumbnails, $id)
+    public function updateThumbnails($params, $thumbnails, $id)
     {
         $productImages = ProductImage::where('product_attribute_id', $id)->where('image_type', ProductImage::$types['Thumbnail'])->get();
-        $product_id    = $productImages->first()->product_id;
 
         foreach ($productImages as $productImage) {
             $productImage->delete();
         }
 
-        $this->storeThumbnails($thumbnails, $id, $product_id);
-
-        return true;
+        return $this->storeThumbnails($thumbnails, $id, $params['product_id']);
     }
 }

@@ -35,7 +35,7 @@ class CreateProductAttributeRequest extends FormRequest
     public function messages()
     {
         return [
-          'thumbnails.*.image' => 'The thumbnails must be an image.'
+          'thumbnails.*.image' => 'Thumbnails must be an image.'
         ];
     }
 }

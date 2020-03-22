@@ -75,8 +75,14 @@ class UserService
         $tokenExplode = explode('.', $verify_token);
         $email        = base64_decode($tokenExplode[0]);
         $dateTime     = base64_decode($tokenExplode[1]);
-        $expired      = GlobalHelper::checkExpiredDate($dateTime, 2);
-        $user         = User::where('email', $email)->first();
+
+        return [$email, $dateTime];
+    }
+
+    public function verifyAccount($email, $dateTime)
+    {
+        $expired = GlobalHelper::checkExpiredDate($dateTime, 2);
+        $user    = User::where('email', $email)->first();
 
         if ($expired) {
             $params['email']        = $email;

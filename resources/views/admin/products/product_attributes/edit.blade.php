@@ -25,8 +25,8 @@
                                             </div>
                                             <div class="col-xs-9 col-md-9">
                                                 <select name="product_id" class="form-control">
-                                                    @foreach($products as $key => $item)
-                                                        <option value="{{$item->id}}" {{$item->id == $product_attribute->product_id ? 'selected' : ''}}>{{$item->name}}</option>
+                                                    @foreach($products as $item)
+                                                        <option value="{{$item->id}}" {{($product_attribute->product_id == $item->id) ? 'selected' : ''}}>{{$item->name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>

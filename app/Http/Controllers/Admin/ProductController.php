@@ -23,7 +23,7 @@ class ProductController extends Controller
     public function __construct()
     {
         $this->productService = app(ProductService::class);
-        $this->messages       = GlobalHelper::getErrorMessages();
+        $this->messages       = GlobalHelper::$messages;
     }
 
     public function index(Request $request)
@@ -58,7 +58,7 @@ class ProductController extends Controller
 
     public function store(CreateProductRequest $request)
     {
-        $params = $request->except('_token', 'url', 'avatar');
+        $params = $request->except('_token', 'avatar');
         $avatar = $request->file('avatar');
 
         $this->productService->store($params, $avatar);
@@ -84,7 +84,7 @@ class ProductController extends Controller
 
     public function update(EditProductRequest $request, $id)
     {
-        $params = $request->except('_token', 'url', 'avatar');
+        $params = $request->except('_token', 'avatar');
         $avatar = $request->file('avatar');
 
         $this->productService->update($params, $id, $avatar);

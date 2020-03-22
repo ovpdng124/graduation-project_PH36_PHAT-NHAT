@@ -21,7 +21,7 @@ class CategoryController extends Controller
     public function __construct()
     {
         $this->categoryService = app(CategoryService::class);
-        $this->messages        = GlobalHelper::getErrorMessages();
+        $this->messages        = GlobalHelper::$messages;
     }
 
     public function index(Request $request)
@@ -70,7 +70,7 @@ class CategoryController extends Controller
 
     public function update(EditCategoryRequest $request, $id)
     {
-        $params = $request->except('_token', 'url');
+        $params = $request->except('_token');
 
         Category::find($id)->update($params);
 

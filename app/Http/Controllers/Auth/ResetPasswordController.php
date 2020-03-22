@@ -21,7 +21,7 @@ class ResetPasswordController extends Controller
     public function __construct()
     {
         $this->resetPasswordService = app(ResetPasswordService::class);
-        $this->messages             = GlobalHelper::getErrorMessages();
+        $this->messages             = GlobalHelper::$messages;
     }
 
     public function passwordResetForm(Request $request)

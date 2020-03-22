@@ -19,7 +19,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->userService = app(UserService::class);
-        $this->messages    = GlobalHelper::getErrorMessages();
+        $this->messages    = GlobalHelper::$messages;
     }
 
     public function showRegisterForm()
@@ -62,7 +62,9 @@ class RegisterController extends Controller
     {
         $verify_token = $request->get('verify_token');
 
-        $status = $this->userService->decodeToken($verify_token);
+        list($email, $dateTime) = $this->userService->decodeToken($verify_token);
+
+        $status = $this->userService->verifyAccount($email, $dateTime);
 
         if (!$status) {
             return abort(403, 'Expired link: Please check mail again!');

@@ -23,7 +23,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->userService = app(UserService::class);
-        $this->messages    = GlobalHelper::getErrorMessages();
+        $this->messages    = GlobalHelper::$messages;
     }
 
     public function index()
@@ -38,7 +38,7 @@ class UserController extends Controller
 
     public function store(CreateUserRequest $request)
     {
-        $params = $request->except(['_token', 'password_confirmation']);
+        $params = $request->except('_token', 'password_confirmation');
 
         $user = $this->userService->store($params);
 

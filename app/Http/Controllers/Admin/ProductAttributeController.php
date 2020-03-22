@@ -24,7 +24,7 @@ class ProductAttributeController extends Controller
     {
         $this->productAttributeService = app(ProductAttributeService::class);
         $this->colorDefaults           = GlobalHelper::$colorDefaults;
-        $this->messages                = GlobalHelper::getErrorMessages();
+        $this->messages                = GlobalHelper::$messages;
     }
 
     public function index(Request $request)
@@ -52,7 +52,7 @@ class ProductAttributeController extends Controller
 
     public function store(CreateProductAttributeRequest $request)
     {
-        $params     = $request->except('_token', 'url', 'thumbnails');
+        $params     = $request->except('_token', 'thumbnails');
         $thumbnails = $request->file('thumbnails');
 
         $this->productAttributeService->store($params, $thumbnails);
@@ -80,7 +80,7 @@ class ProductAttributeController extends Controller
 
     public function update(EditProductAttributeRequest $request, $id)
     {
-        $params     = $request->except('_token', 'url', 'thumbnails');
+        $params     = $request->except('_token', 'thumbnails');
         $thumbnails = $request->file('thumbnails');
 
         $this->productAttributeService->update($params, $id, $thumbnails);

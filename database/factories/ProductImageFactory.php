@@ -11,7 +11,7 @@ $factory->define(ProductImage::class, function () {
     return [
         'image_path'           => strtr('template/images/sX.jpg', 'X', $id),
         'image_type'           => 1,
-        'product_id'           => $id,
-        'product_attribute_id' => $id++,
+        'product_id'           => $id++,
+        'product_attribute_id' => null,
     ];
 });

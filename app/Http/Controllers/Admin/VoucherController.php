@@ -18,7 +18,7 @@ class VoucherController extends Controller
     public function __construct()
     {
         $this->voucherService = app(VoucherService::class);
-        $this->messages       = GlobalHelper::getErrorMessages();
+        $this->messages       = GlobalHelper::$messages;
     }
 
     public function index(Request $request)
