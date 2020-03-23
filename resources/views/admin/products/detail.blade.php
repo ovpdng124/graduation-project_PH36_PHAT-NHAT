@@ -12,33 +12,33 @@
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
                                 <p class="text-bold d-inline">Name:</p>
-                                <p class="d-inline">{{$productData['product']->name}}</p>
+                                <p class="d-inline">{{$product->name}}</p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
                                 <p class="text-bold d-inline">Category:</p>
-                                <p class="d-inline"><a class="text-dark text-decoration-none" href="{{route('category.index')}}">{{$productData['product']->category->name}}</a></p>
+                                <p class="d-inline"><a class="text-dark text-decoration-none" href="{{route('category.index')}}">{{$product->category->name}}</a></p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
                                 <p class="text-bold d-inline">Price : </p>
-                                <p class="d-inline">{{number_format($productData['product']->price)}}</p>
+                                <p class="d-inline">{{number_format($product->price)}}</p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
                                 <p class="mb-0">
                                     <span class="text-bold ">Description : </span><br>
-                                    {{$productData['product']->description}}
+                                    {{$product->description}}
                                 </p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
                                 <p class="text-bold d-inline">Avatar : </p><br>
-                                <p class="d-inline"><img style="block-size: 200px" src="/{{$productData['product']->product_images->first()->image_path}}" alt="Avatar"></p>
+                                <p class="d-inline"><img style="block-size: 200px" src="/{{$product->product_images->first()->image_path}}" alt="Avatar"></p>
                             </div>
                         </div>
                     </div>
@@ -48,7 +48,7 @@
                                 <a href="{{route('product.index')}}" class="btn btn-primary">Back</a>
                             </div>
                             <div class="col-6">
-                                <a href="{{route('product.edit', $productData['product']->id)}}" class="btn btn-primary">Update information </a>
+                                <a href="{{route('product.detail.edit', $product->id)}}" class="btn btn-primary">Update information </a>
                             </div>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($productData['productAttributes'] as $key => $item)
+                                @foreach($product_attributes as $key => $item)
                                     <tr>
                                         <td width="2%">{{++$key}}</td>
                                         <td width="40%">{{$item->sub_name}}</td>
@@ -81,7 +81,7 @@
                                         <td width="10%">{{$item->size}}</td>
                                         <td width="5%" style="width: 30px; background-color: {{$item->color}}"></td>
                                         <td width="5%">
-                                            <a href="{{route('product-attribute.edit', $item->id)}}">
+                                            <a href="{{route('product.product-attribute.edit', $item->id)}}">
                                                 <button class="btn-link">Edit</button>
                                             </a>
                                         </td>
@@ -95,12 +95,12 @@
                                     </tr>
                                 @endforeach
                             </table>
-                            @if(count($productData['productAttributes']) == 0)
+                            @if(count($product_attributes) == 0)
                                 <div class="text-center container-fluid">
                                     <p><i>There are no products to list</i></p>
-                                    <a href="{{route('product-attribute.create')}}">Create new</a>
                                 </div>
                             @endif
+                            <a class="btn btn-primary float-right" href="{{route('product.product-attribute.create')}}">Create new</a>
                         </div>
                     </div>
                 </div>

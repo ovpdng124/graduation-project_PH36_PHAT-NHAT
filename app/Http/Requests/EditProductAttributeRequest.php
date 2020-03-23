@@ -27,9 +27,15 @@ class EditProductAttributeRequest extends FormRequest
         return [
             'sub_name'     => ['required', Rule::unique('product_attributes')->ignore($this->product_attribute)],
             'sub_price'    => 'numeric',
-            'size'         => 'required|numeric',
-            'color'        => 'required',
-            'thumbnails.*' => 'mimes:jpeg,png',
+            'size'         => 'numeric',
+            'thumbnails.*' => 'image|dimensions:min_width=300,min_height=300',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'thumbnails.*.image' => 'Thumbnails must be an image.',
         ];
     }
 }

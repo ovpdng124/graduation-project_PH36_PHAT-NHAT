@@ -33,7 +33,7 @@
                                 </div>
                                 <div class="col-md-9">
                                     <input type="text" id="email" class="form-control" name="email"
-                                           placeholder="Enter your email to new Password" autofocus>
+                                           placeholder="Enter email to retrieve your password." autofocus>
                                 </div>
                             </div>
                             <button type="submit" class="float-right btn btn-success">Send Mail</button>

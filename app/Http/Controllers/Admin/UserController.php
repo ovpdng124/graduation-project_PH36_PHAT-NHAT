@@ -10,9 +10,7 @@ use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\EditUserRequest;
 use App\Services\UserService;
 use Auth;
-use Exception;
 use Illuminate\Http\Request;
-use Log;
 
 class UserController extends Controller
 {
@@ -20,12 +18,12 @@ class UserController extends Controller
      * @var UserService
      */
     protected $userService;
-    protected $message;
+    protected $messages;
 
     public function __construct()
     {
         $this->userService = app(UserService::class);
-        $this->message     = GlobalHelper::getErrorMessages();
+        $this->messages    = GlobalHelper::$messages;
     }
 
     public function index()
@@ -40,15 +38,13 @@ class UserController extends Controller
 
     public function store(CreateUserRequest $request)
     {
-        $params = $request->except(['_token', 'password_confirmation']);
+        $params = $request->except('_token', 'password_confirmation');
 
-        list($status, $string) = $this->userService->store($params);
+        $user = $this->userService->store($params);
 
-        if (!$status) {
-            return redirect(route('notification', ['verify_token' => $string]))->with($this->message['send_mail_failed']);
-        }
+        $this->userService->sendMail($user->email);
 
-        return redirect(route('user.list'))->with('success', $string);
+        return redirect(route('user.list'))->with($this->messages['create_success']);
     }
 
     public function show(Request $request)
@@ -71,31 +67,22 @@ class UserController extends Controller
 
     public function update(EditUserRequest $request, $id)
     {
-        $params = $request->except('_token', 'url');
-        $user   = User::find($id);
+        $params = $request->except('_token');
 
-        list($status, $string) = $this->userService->update($params, $user);
+        User::find($id)->update($params);;
 
-        if (!$status) {
-            return redirect(route('notification', ['verify_token' => $string]))->with($this->message['send_mail_failed']);
+        if (strpos($request->url(), 'profile')) {
+            return redirect(route('admin.profile'))->with($this->messages['update_success']);
         }
 
-        return redirect($request->get('url'))->with('success', $string);
+        return redirect(route('user.list'))->with($this->messages['update_success']);
     }
 
     public function delete($id)
     {
-        $user = User::find($id);
+        User::find($id)->delete();
 
-        try {
-            $user->delete();
-
-            return redirect(route('user.list'))->with('success', 'Deleted Successfully!');
-        } catch (Exception $e) {
-            Log::error($e);
-
-            return redirect(route('user.list'))->with('failed', 'Deleted failed!');
-        }
+        return redirect()->back()->with($this->messages['delete_success']);
     }
 
     public function profile()
@@ -105,22 +92,23 @@ class UserController extends Controller
         return view('admin.users.profile', compact('userProfile'));
     }
 
-    public function changePasswordProfile()
+    public function changePasswordProfile(Request $request)
     {
-        $userProfile = Auth::user();
+        $userId = $request->get('id');
 
-        return view('admin.users.profile_edit_password', compact('userProfile'));
+        return view('admin.users.profile_edit_password', compact('userId'));
     }
 
     public function updatePasswordProfile(ChangePasswordProfileRequest $request)
     {
         $params = $request->except('_token', 'password_confirmation');
+
         $status = $this->userService->updatePasswordProfile($params);
 
         if (!$status) {
             return redirect()->back()->withErrors(['current_password' => 'Wrong password!']);
         }
 
-        return redirect(route('admin.profile'))->with('success', 'Changed password successfully!');
+        return redirect(route('admin.profile'))->with($this->messages['change_password_success']);
     }
 }

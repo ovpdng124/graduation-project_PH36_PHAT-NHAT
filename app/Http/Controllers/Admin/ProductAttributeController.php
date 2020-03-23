@@ -18,11 +18,13 @@ class ProductAttributeController extends Controller
      */
     protected $productAttributeService;
     protected $colorDefaults;
+    protected $messages;
 
     public function __construct()
     {
         $this->productAttributeService = app(ProductAttributeService::class);
         $this->colorDefaults           = GlobalHelper::$colorDefaults;
+        $this->messages                = GlobalHelper::$messages;
     }
 
     public function index(Request $request)
@@ -40,15 +42,26 @@ class ProductAttributeController extends Controller
     {
         $colorDefault = $this->colorDefaults;
         $products     = Product::all();
+        $data         = [
+            'colors'   => $colorDefault,
+            'products' => $products,
+        ];
 
-        return view('admin.products.product_attributes.create', compact('colorDefault', 'products'));
+        return view('admin.products.product_attributes.create', $data);
     }
 
     public function store(CreateProductAttributeRequest $request)
     {
-        $this->productAttributeService->store($request);
+        $params     = $request->except('_token', 'thumbnails');
+        $thumbnails = $request->file('thumbnails');
 
-        return redirect(route('product-attribute.index'))->with('success', 'Create Successfully!');
+        $this->productAttributeService->store($params, $thumbnails);
+
+        if (strpos($request->url(), 'product/')) {
+            return redirect(route('product.show', $params['product_id']))->with($this->messages['create_success']);
+        }
+
+        return redirect(route('product-attribute.index'))->with($this->messages['create_success']);
     }
 
     public function edit($id)
@@ -57,9 +70,9 @@ class ProductAttributeController extends Controller
         $productAttribute = ProductAttributes::find($id);
         $products         = Product::all();
         $data             = [
-            'colorDefault'     => $colorDefault,
-            'productAttribute' => $productAttribute,
-            'products'         => $products,
+            'colors'            => $colorDefault,
+            'product_attribute' => $productAttribute,
+            'products'          => $products,
         ];
 
         return view('admin.products.product_attributes.edit', $data);
@@ -67,15 +80,22 @@ class ProductAttributeController extends Controller
 
     public function update(EditProductAttributeRequest $request, $id)
     {
-        $this->productAttributeService->update($request, $id);
+        $params     = $request->except('_token', 'thumbnails');
+        $thumbnails = $request->file('thumbnails');
 
-        return redirect(route('product-attribute.index'))->with('success', 'Updated Successfully!');
+        $this->productAttributeService->update($params, $id, $thumbnails);
+
+        if (strpos($request->url(), 'product/')) {
+            return redirect(route('product.show', $params['product_id']))->with($this->messages['update_success']);
+        }
+
+        return redirect(route('product-attribute.index'))->with($this->messages['update_success']);
     }
 
     public function destroy($id)
     {
         ProductAttributes::find($id)->delete();
 
-        return redirect(route('product-attribute.index'))->with('success', 'Deleted Successfully');
+        return redirect()->back()->with($this->messages['delete_success']);
     }
 }

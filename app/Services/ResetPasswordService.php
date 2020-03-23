@@ -6,6 +6,7 @@ use App\Entities\User;
 use App\Helpers\GlobalHelper;
 use App\Mail\ResetPasswordMail;
 use Mail;
+use Log;
 
 class ResetPasswordService
 {
@@ -13,7 +14,7 @@ class ResetPasswordService
 
     public function __construct()
     {
-        $this->message = GlobalHelper::getErrorMessages();
+        $this->message = GlobalHelper::$messages;
     }
 
     public function sendPasswordMail($email)

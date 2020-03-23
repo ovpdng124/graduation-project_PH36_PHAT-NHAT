@@ -12,7 +12,7 @@
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
                                 <p class="text-bold d-inline">Name:</p>
-                                <p class="d-inline">{{$categoryData['category']->name}}</p>
+                                <p class="d-inline">{{$category->name}}</p>
                             </div>
                         </div>
                     </div>
@@ -22,7 +22,7 @@
                                 <a href="{{route('category.index')}}" class="btn btn-primary">Back</a>
                             </div>
                             <div class="col-6">
-                                <a href="{{route('category.edit', $categoryData['category']->id)}}" class="btn btn-primary">Update information </a>
+                                <a href="{{route('category.detail.edit', $category->id)}}" class="btn btn-primary">Update information </a>
                             </div>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                                         <th class="text-center">Image</th>
                                         <th class="text-center" colspan="3">Action</th>
                                     </tr>
-                                    @foreach($categoryData['products'] as $key => $item)
+                                    @foreach($products as $key => $item)
                                         <tr>
                                             <td width="2%">{{++$key}}</td>
                                             <td width="70%">{{$item->name}}</td>
@@ -51,11 +51,6 @@
                                             <td width="10%">
                                                 <a href="{{route('product.show', $item->id)}}">
                                                     <button class="btn-link">Details</button>
-                                                </a>
-                                            </td>
-                                            <td width="10%">
-                                                <a href="{{route('product.edit', $item->id)}}">
-                                                    <button class="btn-link">Edit</button>
                                                 </a>
                                             </td>
                                             <td width="10%">
@@ -68,12 +63,12 @@
                                         </tr>
                                     @endforeach
                                 </table>
-                                @if(count($categoryData['products']) == 0)
+                                @if(count($products) == 0)
                                     <div class="text-center container-fluid">
                                         <p><i>There are no products to list</i></p>
-                                        <a href="{{url()->previous()}}">Back</a>
                                     </div>
                                 @endif
+                                <a class="btn btn-primary float-right" href="{{route('category.product.create')}}">Create new</a>
                             </div>
                         </div>
                     </div>

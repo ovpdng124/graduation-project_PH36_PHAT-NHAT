@@ -15,11 +15,9 @@
                             <h1 class="text-center mb-4">Information</h1>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-7 well well-sm col-md-offset-4 container">
-                                    <form action="{{route('user.edit', $user->id)}}" method="post" class="form"
-                                          role="form">
+                                    <form action="{{route(strpos(url()->current(), 'profile') ? 'profile.user.update' : 'user.update', $user->id)}}" method="post" class="form" role="form">
                                         @csrf
                                         @method('put')
-                                        <input type="hidden" name="url" value="{{url()->previous()}}">
                                         <div class="form-group row">
                                             <div class="col-xs-3 col-md-3">
                                                 <label for="" class="float-md-right mt-2">Full Name: </label>

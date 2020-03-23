@@ -32,10 +32,8 @@ class ProductService
         return $query;
     }
 
-    public function store($request)
+    public function store($params, $avatar)
     {
-        $params  = $request->except('_token', 'avatar');
-        $avatar  = $request->file('avatar');
         $product = Product::create($params);
 
         return $this->storeAvatar($avatar, $product->id);
@@ -58,13 +56,9 @@ class ProductService
         return ProductImage::create($productAvatar);
     }
 
-    public function update($request, $id)
+    public function update($params, $id, $avatar)
     {
-        $params = $request->except('_token', 'avatar');
-
-        if ($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar');
-
+        if (!empty($avatar)) {
             $this->updateAvatar($avatar, $id);
         }
 

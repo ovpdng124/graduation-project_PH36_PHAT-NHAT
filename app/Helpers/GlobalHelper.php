@@ -16,17 +16,20 @@ class GlobalHelper
         'Green' => '#33ff33',
     ];
 
-    public static function getErrorMessages()
-    {
-        return [
-            'send_mail_failed'       => ['notification' => 'Send mail failed.', 'messages' => 'Please send email again!'],
-            'register_success'       => ['notification' => 'Register success', 'messages' => 'Please check your email to verify account!'],
-            'send_mail_success'      => ['notification' => 'Send mail success', 'messages' => 'Please check your email!'],
-            'verify_success'         => ['notification' => 'Verified success', 'messages' => 'The account has been verified!'],
-            'not_verify'             => ['notification' => 'Not verified.', 'messages' => 'This account is not verified, please check your email to verify your account!'],
-            'reset_password_success' => ['notification' => 'Reset password success', 'messages' => 'You can sign in your account with new password'],
-        ];
-    }
+    public static $messages = [
+        'send_mail_failed'        => ['notification' => 'Send mail failed.', 'messages' => 'Please send email again!'],
+        'register_success'        => ['notification' => 'Register success', 'messages' => 'Please check your email to verify account!'],
+        'send_mail_success'       => ['notification' => 'Send mail success', 'messages' => 'Please check your email!'],
+        'verify_success'          => ['notification' => 'Verified success', 'messages' => 'The account has been verified!'],
+        'not_verify'              => ['notification' => 'Not verified.', 'messages' => 'This account is not verified, please check your email to verify your account!'],
+        'reset_password_success'  => ['notification' => 'Reset password success', 'messages' => 'You can sign in your account with new password'],
+        'change_password_success' => ['success' => 'Changed password successfully!'],
+        'create_success'          => ['success' => 'Created successfully!'],
+        'update_success'          => ['success' => 'Updated successfully!'],
+        'delete_success'          => ['success' => 'Deleted successfully!'],
+        'create_failed'           => ['failed' => 'Create failed!'],
+        'update_failed'           => ['failed' => 'Update failed!'],
+    ];
 
     public static function checkAdminRole()
     {

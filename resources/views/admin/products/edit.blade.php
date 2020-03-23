@@ -15,7 +15,8 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-9 well well-sm col-md-offset-4 container">
-                                    <form action="{{route('product.update', $product->id)}}" enctype="multipart/form-data" method="post" class="form" role="form">
+                                    <form action="{{route(strpos(url()->current(),'detail')? 'product.detail.update' : 'product.update', $product->id)}}" enctype="multipart/form-data" method="post"
+                                          class="form" role="form">
                                         @csrf
                                         @method('put')
                                         <div class="form-group row">
@@ -54,11 +55,6 @@
                                                         <option {{$product->category_id == $item->id ? 'selected' : ''}} value="{{$item->id}}">{{$item->name}}</option>
                                                     @endforeach
                                                 </select>
-                                                @if($errors->any())
-                                                    @foreach($errors->get('category_id') as $messages)
-                                                        <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
-                                                    @endforeach
-                                                @endif
                                             </div>
                                         </div>
                                         <div class="form-group row">

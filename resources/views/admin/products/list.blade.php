@@ -58,7 +58,7 @@
                                     <tr>
                                         <td width="2%">{{$key + $products->firstItem()}}</td>
                                         <td width="70%">{{$item->name}}</td>
-                                        <td width="20%"><img src="/{{$item->product_images->first()->image_path}}" width="150" height="150"></td>
+                                        <td width="20%"><img src="{{asset($item->product_images->first()->image_path)}}" width="150" height="150"></td>
                                         <td width="10%">
                                             <a href="{{route('product.show', $item->id)}}">
                                                 <button class="btn-link">Details</button>

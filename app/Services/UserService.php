@@ -10,6 +10,7 @@ use Exception;
 use Mail;
 use Auth;
 use Hash;
+use Log;
 
 class UserService
 {
@@ -37,42 +38,21 @@ class UserService
     {
         $params['password']     = bcrypt($params['password']);
         $params['verify_token'] = $this->encodeToken($params);
-        $user                   = User::create($params);
 
-        if (!$this->sendMail($user->verify_token)) {
-            return [false, $user->verify_token];
-        }
-
-        return [true, 'Created successfully!'];
+        return User::create($params);
     }
 
-    public function update($params, $user)
+    public function sendMail($email)
     {
-        if ($params['email'] === $user->email) {
-            return [$user->update($params), 'Updated successfully'];
-        }
-
-        $params['verify_at']    = null;
-        $params['verify_token'] = $this->encodeToken($params);
-
-        $user->update($params);
-
-        if (!$this->sendMail($params['verify_token'])) {
-            return [false, $user->verify_token];
-        }
-
-        return [true, 'Updated successfully'];
-    }
-
-    public function sendMail($token)
-    {
-        $user = User::where('verify_token', $token)->first();
+        $user = User::where('email', $email)->first();
 
         try {
             Mail::to($user->email)->send(new VerifyMail($user));
 
             return true;
         } catch (Exception $exception) {
+            Log::error($exception);
+
             return false;
         }
     }
@@ -82,20 +62,27 @@ class UserService
         return base64_encode($params['email']) . '.' . base64_encode(now());
     }
 
-    public function decodeToken($params)
+    public function decodeToken($verify_token)
     {
-        $tokenExplode = explode('.', $params['verify_token']);
+        $tokenExplode = explode('.', $verify_token);
         $email        = base64_decode($tokenExplode[0]);
         $dateTime     = base64_decode($tokenExplode[1]);
-        $expired      = GlobalHelper::checkExpiredDate($dateTime, 2);
-        $user         = User::where('email', $email)->first();
+
+        return [$email, $dateTime];
+    }
+
+    public function verifyAccount($email, $dateTime)
+    {
+        $expired = GlobalHelper::checkExpiredDate($dateTime, 2);
+        $user    = User::where('email', $email)->first();
 
         if ($expired) {
             $params['email']        = $email;
             $newToken               = $this->encodeToken($params);
             $params['verify_token'] = $newToken;
+
             $user->update($params);
-            $this->sendMail($newToken);
+            $this->sendMail($email);
 
             return false;
         }
@@ -116,7 +103,9 @@ class UserService
                 'password' => bcrypt($params['new_password']),
             ];
 
-            return $user->update($newPassword);
+            $user->update($newPassword);
+
+            return true;
         }
 
         return false;

@@ -20,7 +20,7 @@ class LoginController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $params = $request->only(['username', 'password']);
+        $params = $request->except('_token');
 
         if (Auth::attempt($params)) {
             if (GlobalHelper::checkAdminRole()) {
