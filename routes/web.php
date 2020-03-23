@@ -28,6 +28,7 @@ Route::group(['namespace' => 'Auth'], function () {
 
 Route::group(['namespace' => 'User'], function () {
     Route::get('/', 'UserController@index')->name('index');
+    Route::get('product/{id}', 'UserController@productDetail')->name('product-detail');
 });
 
 Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
