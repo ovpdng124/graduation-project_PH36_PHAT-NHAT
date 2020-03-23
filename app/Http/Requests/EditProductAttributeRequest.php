@@ -35,8 +35,8 @@ class EditProductAttributeRequest extends FormRequest
     public function messages()
     {
         return [
-            'thumbnails.*.image' => 'Thumbnails must be an image.',
-            'thumbnails.*.dimensions' => 'Thumbnails has invalid image dimensions.'
+            'thumbnails.*.image'      => 'Thumbnails must be an image.',
+            'thumbnails.*.dimensions' => 'Thumbnails has invalid image dimensions.',
         ];
     }
 }

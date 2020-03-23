@@ -110,7 +110,7 @@ class ProductService
         return $popularProduct;
     }
 
-    public function productDetail($id, $products)
+    public function showDetailsProduct($id, $products)
     {
         $product          = $products->where('id', $id)->first();
         $productImages    = $product->product_images->where('product_id', $id);

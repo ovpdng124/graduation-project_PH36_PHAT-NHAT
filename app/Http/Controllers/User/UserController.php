@@ -36,11 +36,11 @@ class UserController extends Controller
         echo "Hello user";
     }
 
-    public function productDetail($id)
+    public function showDetailsProduct($id)
     {
         $products = Product::with( 'product_images')->get();
 
-        $data = $this->productService->productDetail($id, $products);
+        $data = $this->productService->showDetailsProduct($id, $products);
 
         return view('user.index.detail_product', $data);
     }
