@@ -42,14 +42,6 @@ class UserService
         return User::create($params);
     }
 
-    public function updateIfChangedMail($params, $user)
-    {
-        $params['verify_at']    = null;
-        $params['verify_token'] = $this->encodeToken($params);
-
-        return $user->update($params);
-    }
-
     public function sendMail($email)
     {
         $user = User::where('email', $email)->first();

@@ -68,14 +68,8 @@ class UserController extends Controller
     public function update(EditUserRequest $request, $id)
     {
         $params = $request->except('_token');
-        $user   = User::find($id);
 
-        if ($params['email'] != $user->email) {
-            $this->userService->updateIfChangedMail($params, $user);
-            $this->userService->sendMail($params['email']);
-        } else {
-            $user->update($params);
-        }
+        User::find($id)->update($params);;
 
         if (strpos($request->url(), 'profile')) {
             return redirect(route('admin.profile'))->with($this->messages['update_success']);
