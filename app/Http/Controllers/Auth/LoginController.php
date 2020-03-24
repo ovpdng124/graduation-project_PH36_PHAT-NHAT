@@ -28,7 +28,7 @@ class LoginController extends Controller
             if (GlobalHelper::checkAdminRole()) {
                 return redirect(route('admin.index'));
             }
-            $_SESSION['info_user'] = $params;
+            $_SESSION['info_user'] = Auth::user();
             return redirect(route('profile'));
         }
 
