@@ -18,6 +18,7 @@
     </script>
     <!-- //Meta tag Keywords -->
     <!-- Custom-Files -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="{{asset('/template/css/bootstrap.css')}}">
     <!-- Bootstrap-Core-CSS -->
     <link rel="stylesheet" href="{{asset('/template/css/style.css')}}" type="text/css" media="all" />
@@ -28,7 +29,8 @@
     <!-- /Fonts -->
     <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700" rel="stylesheet">
     <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900" rel="stylesheet">
-
+    <!-- //Fonts -->
+    @yield('custom_import')
 </head>
 
 <body>
@@ -42,6 +44,7 @@
 <!-- //Main-Contents -->
 
 <!-- /Footer -->
+@yield('custom_footer_script')
 @include('user.layouts.partials.footer')
 <!-- //Footer -->
 </body>

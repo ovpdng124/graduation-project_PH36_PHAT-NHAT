@@ -38,4 +38,13 @@ class UserController extends Controller
 
         return view('user.auth.profile',compact('user'));
     }
+
+    public function showDetailProduct($id)
+    {
+        $products = Product::with( 'product_images')->get();
+
+        $data = $this->productService->getDetailProduct($id, $products);
+
+        return view('user.index.detail_product', $data);
+    }
 }

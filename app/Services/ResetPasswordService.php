@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Entities\User;
 use App\Helpers\GlobalHelper;
 use App\Mail\ResetPasswordMail;
+use Exception;
 use Mail;
 use Log;
 
