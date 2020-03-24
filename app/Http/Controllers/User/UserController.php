@@ -7,8 +7,8 @@ use App\Entities\User;
 use App\Http\Controllers\Controller;
 use App\Services\ProductService;
 use App\Services\UserService;
+use Auth;
 
-session_start();
 
 class UserController extends Controller
 {
@@ -39,7 +39,7 @@ class UserController extends Controller
 
     public function profile()
     {
-        $user = User::where('username', $_SESSION['info_user']['username'])->get();
+        $user = Auth::user();
         $data = [
             'user' => $user,
         ];

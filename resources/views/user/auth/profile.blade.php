@@ -50,51 +50,50 @@
                                 <div class="col-md-8">
                                     <div class="tab-content profile-tab" id="myTabContent">
                                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                            @foreach($user as $value)
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <label>User</label>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <p>{{$value->username}}</p>
-                                                    </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>User</label>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <label>Full Name</label>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <p>{{$value->full_name}}</p>
-                                                    </div>
+                                                <div class="col-md-6">
+                                                    <p>{{$user->username}}</p>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <label>Email</label>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <p>{{$value->email}}</p>
-                                                    </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Full Name</label>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <label>Phone</label>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <p>{{$value->phone_number}}</p>
-                                                    </div>
+                                                <div class="col-md-6">
+                                                    <p>{{$user->full_name}}</p>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <label>Address</label>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <p>{{$value->address}}</p>
-                                                    </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Email</label>
                                                 </div>
-                                            @endforeach
+                                                <div class="col-md-6">
+                                                    <p>{{$user->email}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Phone</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>{{$user->phone_number}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Address</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>{{$user->address}}</p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <a href="#"><button type="submit" class="btn-info">Shop Cart</button>
+                                    <a href="#">
+                                        <button type="submit" class="btn-info">Shop Cart</button>
                                 </div>
                             </div>
                         </div>

@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use Auth;
 
-session_start();
 
 class LoginController extends Controller
 {
@@ -16,7 +15,6 @@ class LoginController extends Controller
         if (Auth::check()) {
             return redirect(route('profile'));
         }
-
         return view('user.auth.login');
     }
 
@@ -28,7 +26,6 @@ class LoginController extends Controller
             if (GlobalHelper::checkAdminRole()) {
                 return redirect(route('admin.index'));
             }
-            $_SESSION['info_user'] = Auth::user();
             return redirect(route('profile'));
         }
 
@@ -39,7 +36,6 @@ class LoginController extends Controller
     {
         if (Auth::check()) {
             Auth::logout();
-            unset($_SESSION['info_user']);
             return redirect(route('index'));
         }
 
