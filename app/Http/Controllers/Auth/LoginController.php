@@ -26,7 +26,7 @@ class LoginController extends Controller
             if (GlobalHelper::checkAdminRole()) {
                 return redirect(route('admin.index'));
             }
-            
+
             return redirect(route('profile'));
         }
 
