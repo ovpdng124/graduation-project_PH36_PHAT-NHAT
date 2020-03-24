@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Entities\Product;
 use App\Http\Controllers\Controller;
 use App\Services\ProductService;
+use Auth;
 
 class UserController extends Controller
 {
@@ -33,12 +34,14 @@ class UserController extends Controller
 
     public function profile()
     {
-        echo "Hello user";
+        $user = Auth::user();
+
+        return view('user.auth.profile', compact('user'));
     }
 
     public function showDetailProduct($id)
     {
-        $products = Product::with( 'product_images')->get();
+        $products = Product::with('product_images')->get();
 
         $data = $this->productService->getDetailProduct($id, $products);
 
