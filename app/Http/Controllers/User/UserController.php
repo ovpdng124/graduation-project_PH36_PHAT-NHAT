@@ -3,12 +3,9 @@
 namespace App\Http\Controllers\User;
 
 use App\Entities\Product;
-use App\Entities\User;
 use App\Http\Controllers\Controller;
 use App\Services\ProductService;
-use App\Services\UserService;
 use Auth;
-
 
 class UserController extends Controller
 {
@@ -16,12 +13,10 @@ class UserController extends Controller
      * @var ProductService
      */
     protected $productService;
-    protected $userService;
 
     public function __construct()
     {
         $this->productService = app(ProductService::class);
-        $this->userService    = app(UserService::class);
     }
 
     public function index()
@@ -41,6 +36,6 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        return view('user.auth.profile', compact($user));
+        return view('user.auth.profile',compact('user'));
     }
 }

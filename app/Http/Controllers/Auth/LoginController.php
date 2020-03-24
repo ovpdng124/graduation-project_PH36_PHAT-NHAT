@@ -14,6 +14,7 @@ class LoginController extends Controller
         if (Auth::check()) {
             return redirect(route('profile'));
         }
+
         return view('user.auth.login');
     }
 
@@ -35,6 +36,7 @@ class LoginController extends Controller
     {
         if (Auth::check()) {
             Auth::logout();
+
             return redirect(route('index'));
         }
 
