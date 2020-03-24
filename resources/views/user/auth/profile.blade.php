@@ -2,7 +2,6 @@
 @section('title','Profile')
 
 @section('content')
-
     <div class="main-banner inner" style="background: url({{asset('template/images/banner.jpg')}})no-repeat center;"
          id="home"></div>
     <ol class="breadcrumb">
@@ -25,11 +24,8 @@
                                     </div>
                                 @endforeach
                             </div>
-                        @endif
-                        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-                        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-                        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-                        <!------ Include the above in your HEAD tag ---------->
+                    @endif
+                    <!------ Include the above in your HEAD tag ---------->
                         <div class="container emp-profile">
                             <div class="row">
                                 <div class="col-md-6">
@@ -46,7 +42,6 @@
                                 </div>
                             </div>
                             <div class="row">
-
                                 <div class="col-md-8">
                                     <div class="tab-content profile-tab" id="myTabContent">
                                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -94,6 +89,7 @@
                                     </div>
                                     <a href="#">
                                         <button type="submit" class="btn-info">Shop Cart</button>
+                                    </a>
                                 </div>
                             </div>
                         </div>

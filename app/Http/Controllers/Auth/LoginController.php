@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use Auth;
 
-
 class LoginController extends Controller
 {
     public function showLoginForm()
