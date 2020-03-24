@@ -35,4 +35,13 @@ class UserController extends Controller
     {
         echo "Hello user";
     }
+
+    public function showDetailProduct($id)
+    {
+        $products = Product::with( 'product_images')->get();
+
+        $data = $this->productService->getDetailProduct($id, $products);
+
+        return view('user.index.detail_product', $data);
+    }
 }

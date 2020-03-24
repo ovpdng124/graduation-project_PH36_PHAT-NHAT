@@ -109,4 +109,17 @@ class ProductService
 
         return $popularProduct;
     }
+
+    public function getDetailProduct($id, $products)
+    {
+        $product          = $products->where('id', $id)->first();
+        $productImages    = $product->product_images->where('product_id', $id);
+        $featuredProducts = $product->where('category_id', $product->category_id)->get();
+
+        return [
+            'product'          => $product,
+            'productImages'    => $productImages,
+            'featuredProducts' => $featuredProducts,
+        ];
+    }
 }
