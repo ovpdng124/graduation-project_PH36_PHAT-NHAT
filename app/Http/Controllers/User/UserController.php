@@ -36,12 +36,12 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        return view('user.auth.profile',compact('user'));
+        return view('user.auth.profile', compact('user'));
     }
 
     public function showDetailProduct($id)
     {
-        $products = Product::with( 'product_images')->get();
+        $products = Product::with('product_images')->get();
 
         $data = $this->productService->getDetailProduct($id, $products);
 
