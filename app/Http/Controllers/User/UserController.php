@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Entities\Product;
 use App\Entities\User;
+use App\Helpers\GlobalHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EditUserRequest;
 use App\Services\ProductService;
@@ -18,11 +19,13 @@ class UserController extends Controller
      */
     protected $productService;
     protected $userService;
+    protected $messages;
 
     public function __construct()
     {
         $this->productService = app(ProductService::class);
         $this->userService    = app(UserService::class);
+        $this->messages       = GlobalHelper::$messages;
     }
 
     public function index()
@@ -58,7 +61,7 @@ class UserController extends Controller
 
         User::find($id)->update($params);
 
-        return redirect(route('profile'))->with('success', 'Update Success');
+        return redirect(route('profile'))->with($this->messages['update_success']);
     }
 
     public function showDetailProduct($id)
@@ -85,6 +88,6 @@ class UserController extends Controller
             return redirect()->back()->withErrors(['current_password' => 'Wrong password!']);
         }
 
-        return redirect(route('profile'))->with('success', 'Change Password Success');
+        return redirect(route('profile'))->with($this->messages['change_password_success']);
     }
 }
