@@ -12,6 +12,14 @@
     </ol>
     <section class="about py-5">
         <div class="card-body">
+            <div class="container">
+                {{--show message success--}}
+                @if(session()->has('success'))
+                    <div class="alert alert-success">
+                        {{ session()->get('success') }}
+                    </div>
+                @endif
+            </div>
             <div class="container-fluid">
                 <h1 class="text-center mb-4">Personal Information</h1>
                 <div class="row">
@@ -74,6 +82,9 @@
                                     </div>
                                     <a href="#">
                                         <button type="submit" class="btn-info">Shop Cart</button>
+                                    </a>
+                                    <a href="{{route('edit',$user->id)}}">
+                                        <button type="submit" class="btn-primary float-right">Edit Info</button>
                                     </a>
                                 </div>
                             </div>

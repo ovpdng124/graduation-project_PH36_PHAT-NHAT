@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\User;
 
 use App\Entities\Product;
+use App\Entities\User;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EditUserRequest;
 use App\Services\ProductService;
+use App\Http\Requests\ChangePasswordProfileRequest;
+use App\Services\UserService;
 use Auth;
 
 class UserController extends Controller
@@ -13,10 +17,12 @@ class UserController extends Controller
      * @var ProductService
      */
     protected $productService;
+    protected $userService;
 
     public function __construct()
     {
         $this->productService = app(ProductService::class);
+        $this->userService    = app(UserService::class);
     }
 
     public function index()
@@ -39,6 +45,22 @@ class UserController extends Controller
         return view('user.auth.profile', compact('user'));
     }
 
+    public function edit($id)
+    {
+        $user = User::find($id);
+
+        return view('user.auth.edit', compact('user'));
+    }
+
+    public function update(EditUserRequest $request, $id)
+    {
+        $params = $request->except('_token');
+
+        User::find($id)->update($params);
+
+        return redirect(route('profile'))->with('success', 'Update Success');
+    }
+
     public function showDetailProduct($id)
     {
         $products = Product::with('product_images')->get();
@@ -46,5 +68,23 @@ class UserController extends Controller
         $data = $this->productService->getDetailProduct($id, $products);
 
         return view('user.index.detail_product', $data);
+    }
+
+    public function ChangePasswordUser()
+    {
+        return view('user.auth.profile_edit_password');
+    }
+
+    public function UpdatePasswordUser(ChangePasswordProfileRequest $request)
+    {
+        $params = $request->except('_token', 'password_confirmation');
+
+        $status = $this->userService->updatePasswordProfile($params);
+
+        if (!$status) {
+            return redirect()->back()->withErrors(['current_password' => 'Wrong password!']);
+        }
+
+        return redirect(route('profile'))->with('success', 'Change Password Success');
     }
 }
