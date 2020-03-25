@@ -24,7 +24,7 @@
                             <h1 class="text-center mb-4">Change password</h1>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-7 well well-sm col-md-offset-4 container">
-                                    <form action="{{route('UpdatePasswordUser')}}" method="post" class="form" role="form">
+                                    <form action="{{route('update-password')}}" method="post" class="form" role="form">
                                         @csrf
                                         @method('put')
                                         <div class="form-group row">
@@ -32,7 +32,7 @@
                                                 <label for="" class="float-md-right mt-2">Old Password: </label>
                                             </div>
                                             <div class="col-xs-9 col-md-9">
-                                                <input type="text" class="form-control" name="current_password"
+                                                <input type="password" class="form-control" name="current_password"
                                                        value="">
                                                 @if($errors->any())
                                                     @foreach($errors->get('current_password') as $messages)
@@ -47,7 +47,7 @@
                                                 <label for="" class="float-md-right mt-2">New Password: </label>
                                             </div>
                                             <div class="col-xs-9 col-md-9">
-                                                <input type="text" class="form-control" name="new_password"
+                                                <input type="password" class="form-control" name="new_password"
                                                        value="">
                                                 @if($errors->any())
                                                     @foreach($errors->get('new_password') as $messages)
@@ -62,7 +62,7 @@
                                                 <label for="" class="float-md-right mt-2">Confirm Password: </label>
                                             </div>
                                             <div class="col-xs-9 col-md-9">
-                                                <input type="text" class="form-control" name="password_confirmation"
+                                                <input type="password" class="form-control" name="password_confirmation"
                                                        value="">
                                                 @if($errors->any())
                                                     @foreach($errors->get('password_confirmation') as $messages)

@@ -10,6 +10,13 @@
         </li>
         <li class="breadcrumb-item active">Profile</li>
     </ol>
+    <div class="container">
+        @if(Session::has('success'))
+            <div class="bg-success alert col-md-4 text-bold container text-center">{{Session::get('success')}}</div>
+        @elseif(Session::has('failed'))
+            <div class="bg-danger alert col-md-4 text-bold container text-center">{{Session::get('failed')}}</div>
+        @endif
+    </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
@@ -19,7 +26,7 @@
                             <a href="{{url()->previous()}}" class="btn btn-info float-right"><i class="fa fa-arrow-left mr-1"></i>Back</a>
                         </div>
                         <div class="float-right ml-3">
-                            <a href="{{route('ChangePasswordUser')}}">
+                            <a href="{{route('edit-password')}}">
                                 <button type="submit" class="btn btn-lg btn-info btn-block col-md-12 container"> Change Password</button>
                             </a>
                         </div>

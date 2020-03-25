@@ -42,14 +42,14 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        return view('user.auth.profile', compact('user'));
+        return view('user.profile.profile', compact('user'));
     }
 
     public function edit($id)
     {
         $user = User::find($id);
 
-        return view('user.auth.edit', compact('user'));
+        return view('user.profile.edit', compact('user'));
     }
 
     public function update(EditUserRequest $request, $id)
@@ -70,12 +70,12 @@ class UserController extends Controller
         return view('user.index.detail_product', $data);
     }
 
-    public function ChangePasswordUser()
+    public function changePasswordUser()
     {
-        return view('user.auth.profile_edit_password');
+        return view('user.profile.profile_edit_password');
     }
 
-    public function UpdatePasswordUser(ChangePasswordProfileRequest $request)
+    public function updatePasswordUser(ChangePasswordProfileRequest $request)
     {
         $params = $request->except('_token', 'password_confirmation');
 
