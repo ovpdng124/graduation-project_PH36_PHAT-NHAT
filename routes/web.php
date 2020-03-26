@@ -74,6 +74,9 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
             Route::put('detail/{product}/', 'ProductController@update')->name('product.detail.update');
         });
 
+        Route::group(['prefix' => 'order'], function () {
+            Route::get('/', 'OrderController@showListOrder')->name('order.list');
+        });
     });
 
     Route::group(['namespace' => 'User'], function () {
