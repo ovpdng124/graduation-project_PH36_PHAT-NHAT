@@ -10,6 +10,13 @@
         </li>
         <li class="breadcrumb-item active">Profile</li>
     </ol>
+    <div class="container">
+        @if(Session::has('success'))
+            <div class="bg-success alert col-md-4 text-bold container text-center">{{Session::get('success')}}</div>
+        @elseif(Session::has('failed'))
+            <div class="bg-danger alert col-md-4 text-bold container text-center">{{Session::get('failed')}}</div>
+        @endif
+    </div>
     <section class="about py-5">
         <div class="card-body">
             <div class="container-fluid">
@@ -73,7 +80,10 @@
                                         </div>
                                     </div>
                                     <a href="#">
-                                        <button type="submit" class="btn-info">Shop Cart</button>
+                                        <button class="btn btn-info">Shop Cart</button>
+                                    </a>
+                                    <a href="{{route('edit',$user->id)}}">
+                                        <button class="btn btn-primary float-right">Edit Info</button>
                                     </a>
                                 </div>
                             </div>

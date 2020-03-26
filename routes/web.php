@@ -29,6 +29,10 @@ Route::group(['namespace' => 'Auth'], function () {
 Route::group(['namespace' => 'User'], function () {
     Route::get('/', 'UserController@index')->name('index');
     Route::get('product/{id}', 'UserController@showDetailProduct')->name('product-detail');
+    Route::get('/edit/{id}', 'UserController@edit')->name('edit');
+    Route::put('/edit/{id}', 'UserController@update')->name('update');
+    Route::get('/change-password', 'UserController@changePasswordUser')->name('edit-password');
+    Route::put('/change-password', 'UserController@updatePasswordUser')->name('update-password');
 });
 
 Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
