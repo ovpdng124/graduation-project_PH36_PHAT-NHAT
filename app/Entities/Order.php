@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected     $guarded = [];
-    public static $status  = [
+    protected $guarded = [];
+
+    public static $status = [
         'Pending'  => 0,
         'Shipping' => 1,
         'Paid'     => 2,

@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Entities\ProductAttributes;
+use App\Entities\ProductAttribute;
 use App\Entities\ProductImage;
 use App\Filters\ProductFilter;
 
@@ -17,7 +17,7 @@ class ProductAttributeService
 
     public function getProducts($limits, $search, $searchKey)
     {
-        $query = ProductAttributes::query();
+        $query = ProductAttribute::query();
 
         if (!empty($searchKey) && !empty($search)) {
             $query = $this->productFilter->search($query, $search, $searchKey);
@@ -30,7 +30,7 @@ class ProductAttributeService
 
     public function store($params, $thumbnails)
     {
-        $productAttribute = ProductAttributes::create($params);
+        $productAttribute = ProductAttribute::create($params);
 
         return $this->storeThumbnails($thumbnails, $productAttribute->id, $productAttribute->product_id);
     }
@@ -63,7 +63,7 @@ class ProductAttributeService
             $this->updateThumbnails($params, $thumbnails, $id);
         }
 
-        return ProductAttributes::find($id)->update($params);
+        return ProductAttribute::find($id)->update($params);
     }
 
     public function updateThumbnails($params, $thumbnails, $id)

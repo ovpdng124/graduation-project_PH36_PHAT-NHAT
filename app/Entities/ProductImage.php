@@ -25,6 +25,6 @@ class ProductImage extends Model
 
     public function product_attribute()
     {
-        return $this->belongsTo(ProductAttributes::class);
+        return $this->belongsTo(ProductAttribute::class);
     }
 }
