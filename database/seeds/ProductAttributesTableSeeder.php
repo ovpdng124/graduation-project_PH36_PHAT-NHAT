@@ -1,6 +1,6 @@
 <?php
 
-use App\Entities\ProductAttributes;
+use App\Entities\ProductAttribute;
 use Illuminate\Database\Seeder;
 
 class ProductAttributesTableSeeder extends Seeder
@@ -12,6 +12,6 @@ class ProductAttributesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(ProductAttributes::class, 10)->create();
+        factory(ProductAttribute::class, 10)->create();
     }
 }

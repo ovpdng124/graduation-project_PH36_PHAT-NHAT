@@ -93,13 +93,13 @@ class ProductService
         return $chunk->merge($products)->forPage(1, 9);
     }
 
-    public function getPopularProducts($products)
+    public function getPopularProducts($productAttributes)
     {
-        $products       = $products->sortByDesc('order_products_count')->take(3);
-        $popularProduct = [];
-        $count          = 1;
+        $productAttributes = $productAttributes->sortByDesc('order_products_count')->take(3);
+        $popularProduct    = [];
+        $count             = 1;
 
-        foreach ($products as $key => $product) {
+        foreach ($productAttributes as $product) {
             $image_path                         = $product->product_images->first()->image_path;
             $popularProduct["product" . $count] = $product->id;
             $popularProduct["image" . $count]   = $image_path;
