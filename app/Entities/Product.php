@@ -16,11 +16,6 @@ class Product extends Model
 
     use SoftDeletes;
 
-    public function order_products()
-    {
-        return $this->hasMany(OrderProduct::class);
-    }
-
     public function product_images()
     {
         return $this->hasMany(ProductImage::class);
@@ -33,6 +28,6 @@ class Product extends Model
 
     public function product_attributes()
     {
-        return $this->hasMany(ProductAttributes::class);
+        return $this->hasMany(ProductAttribute::class);
     }
 }

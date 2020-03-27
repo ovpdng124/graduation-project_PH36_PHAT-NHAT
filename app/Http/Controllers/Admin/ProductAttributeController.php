@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Entities\Product;
-use App\Entities\ProductAttributes;
+use App\Entities\ProductAttribute;
 use App\Helpers\GlobalHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateProductAttributeRequest;
@@ -67,7 +67,7 @@ class ProductAttributeController extends Controller
     public function edit($id)
     {
         $colorDefault     = $this->colorDefaults;
-        $productAttribute = ProductAttributes::find($id);
+        $productAttribute = ProductAttribute::find($id);
         $products         = Product::all();
         $data             = [
             'colors'            => $colorDefault,
@@ -94,7 +94,7 @@ class ProductAttributeController extends Controller
 
     public function destroy($id)
     {
-        ProductAttributes::find($id)->delete();
+        ProductAttribute::find($id)->delete();
 
         return redirect()->back()->with($this->messages['delete_success']);
     }

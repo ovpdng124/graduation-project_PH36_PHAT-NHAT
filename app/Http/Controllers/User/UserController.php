@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Entities\Product;
 use App\Entities\User;
 use App\Helpers\GlobalHelper;
+use App\Entities\ProductAttribute;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EditUserRequest;
 use App\Services\ProductService;
@@ -30,10 +31,13 @@ class UserController extends Controller
 
     public function index()
     {
-        $products        = Product::with(['product_images', 'order_products'])->withCount('order_products')->orderByDesc('updated_at')->get();
+        $products          = Product::with('product_images')->orderByDesc('updated_at')->get();
+        $productAttributes = ProductAttribute::with('order_products', 'product_images')->withCount('order_products')->orderByDesc('updated_at')->get();
+
         $newArrivals     = $this->productService->getNewArrivals(clone($products));
-        $popularProducts = $this->productService->getPopularProducts(clone($products));
-        $productData     = [
+        $popularProducts = $this->productService->getPopularProducts(clone($productAttributes));
+
+        $productData = [
             'new_arrivals'     => $newArrivals,
             'popular_products' => $popularProducts,
         ];
