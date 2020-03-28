@@ -8,13 +8,19 @@ use App\Helpers\GlobalHelper;
 use App\Entities\ProductAttribute;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EditUserRequest;
+use App\Services\OrderService;
 use App\Services\ProductService;
 use App\Http\Requests\ChangePasswordProfileRequest;
 use App\Services\UserService;
 use Auth;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    /**
+     * @var OrderService
+     */
+    protected $orderService;
     /**
      * @var ProductService
      */
@@ -27,6 +33,7 @@ class UserController extends Controller
         $this->productService = app(ProductService::class);
         $this->userService    = app(UserService::class);
         $this->messages       = GlobalHelper::$messages;
+        $this->orderService   = app(OrderService::class);
     }
 
     public function index()
@@ -93,5 +100,32 @@ class UserController extends Controller
         }
 
         return redirect(route('profile'))->with($this->messages['change_password_success']);
+    }
+
+    public function createOrder(Request $request)
+    {
+        //        $params = $request->except('_token', 'thumbnail');
+
+        //Params example!
+        $params = [
+            'user_id'        => '2',
+            'total_price'    => 100000,
+            'total_quantity' => 10,
+            'method_type'    => 0,
+            'is_sale'        => true,
+            'sale_price'     => 100000,
+            'voucher_id'     => 2,
+            'products'       => [
+                0 => [
+                    'sub_name'  => 'Miss Alysha Ankunding',
+                    'sub_price' => '123',
+                    'quantity'  => '3',
+                ],
+            ],
+        ];
+
+        $status = $this->orderService->createOrder($params);
+
+        return response()->json('Success');
     }
 }

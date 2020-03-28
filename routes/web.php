@@ -85,5 +85,6 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
 
     Route::group(['namespace' => 'User'], function () {
         Route::get('/profile', 'UserController@profile')->name('profile');
+        Route::get('/create-order', 'UserController@createOrder')->name('order.create');
     });
 });
