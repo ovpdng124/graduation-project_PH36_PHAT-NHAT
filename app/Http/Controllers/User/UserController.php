@@ -104,14 +104,17 @@ class UserController extends Controller
 
     public function productCart(Request $request)
     {
-        $params            = $request->all();
-        $productIDs        = array_values(array_unique(array_column($params['products'], 'product_id')));
+        $params = $request->get('products');
+
+        $productIDs = array_values(array_unique(array_column($params, 'product_id')));
+
         $productAttributes = ProductAttribute::whereIn('product_id', $productIDs)->get();
         $productImages     = ProductImage::whereIn('product_id', $productIDs)->where('image_type', ProductImage::$types['Thumbnail'])->get();
-        $arr               = [];
-        $total_price       = [];
 
-        foreach ($params['products'] as $product) {
+        $arr         = [];
+        $total_price = [];
+
+        foreach ($params as $product) {
             $productAttribute              = $productAttributes->where('product_id', $product['product_id'])->where('color', "#" . $product['color'])->first();
             $productImage                  = $productImages->where('product_id', $product['product_id'])->where('product_attribute_id', $productAttribute->id)->first();
             $productAttribute->image_path  = $productImage->image_path;

@@ -36,11 +36,6 @@
 
                                 </tbody>
                             </table>
-                            <div class="row container-fluid float-right">
-                                <div class="col-2">
-                                    <button class="btn btn-success float-right">Order</button>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

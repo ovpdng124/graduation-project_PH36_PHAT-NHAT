@@ -205,14 +205,14 @@
                             <h5>${{number_format($product->price)}}</h5>
                             <div class="available mt-3">
                                 <button type="submit" class="btn btn-success btn-cart" data-product-id="{{$product->id}}">Add to cart</button>
-                                <p>Lorem Ipsum has been the industry's standard since the 1500s. Praesent ullamcorper dui turpis.. </p>
                             </div>
-                            <div class="available mt3">
+                            <div class="available mt3 mt-3">
                                 <form action="{{route('product-detail',$product->id)}}" method="get">
                                     <h3 class="">Color</h3>
                                     @foreach($product->product_attributes as $item)
                                         <label class="col-md-4" for="color-{{$item->color}}" style="width: 30px; height: 30px; background-color:{{$item->color}}"></label>
-                                        <input class="col-md-4 color-change" type="radio" id="color-{{$item->color}}" value="{{ltrim($item->color, $item->color[0])}}" name="color" style="width: 20px">
+                                        <input class="col-md-4 color-change" type="radio" hidden id="color-{{$item->color}}" value="{{ltrim($item->color, $item->color[0])}}" name="color"
+                                               style="width: 20px">
                                     @endforeach
                                 </form>
                             </div>
@@ -330,6 +330,8 @@
                 }
 
                 localStorage.setItem('cart', JSON.stringify(cart))
+
+                alert("Add cart success")
 
             } else {
                 alert("Please choose color")

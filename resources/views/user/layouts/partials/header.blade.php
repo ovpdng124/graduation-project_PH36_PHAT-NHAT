@@ -30,8 +30,7 @@
                         <li><a href="#">Single Page</a></li>
                     </ul>
                 </li>
-                <li><a href="{{route('list.cart')}}">Cart</a><br>
-                </li>
+                <li><a href="{{route('list.cart')}}">Cart</a><br></li>
                 @auth
                     <li>
                         <a href="#">User<span class="fa fa-angle-down" aria-hidden="true"></span></a>
