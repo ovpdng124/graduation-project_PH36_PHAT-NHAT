@@ -27,10 +27,20 @@
                                     <th>Images</th>
                                     <th>Color</th>
                                     <th>Size</th>
+                                    <th>Unit Price</th>
                                     <th>Quantity</th>
-                                    <th class="text-center" colspan="2">Action</th>
+                                    <th>Total Price</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
+                                <tbody class="table-body">
+
+                                </tbody>
                             </table>
+                            <div class="row container-fluid float-right">
+                                <div class="col-2">
+                                    <button class="btn btn-success float-right">Order</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -41,14 +51,17 @@
 @endsection
 @section('custom_footer_script')
     <script type="text/javascript">
-        $(document).ready(function () {
+        function getProducts() {
             let cart = localStorage.getItem('cart')
             $.ajax({
                 type: "GET",
-                url: "http://127.0.0.1:8000/test",
+                url : "http://127.0.0.1:8000/product-cart",
                 data: JSON.parse(cart)
             }).then(function (res) {
+                $('.table-body').append(res)
             })
-        })
+        }
+
+        $(document).ready(getProducts())
     </script>
 @endsection
