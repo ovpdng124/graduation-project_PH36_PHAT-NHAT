@@ -117,9 +117,29 @@ class UserController extends Controller
             'voucher_id'     => 2,
             'products'       => [
                 0 => [
-                    'sub_name'  => 'Miss Alysha Ankunding',
+                    'sub_name'  => 'Gustave Deckow',
                     'sub_price' => '123',
-                    'quantity'  => '3',
+                    'quantity'  => '35',
+                ],
+                1 => [
+                    'sub_name'  => 'Carmella Herzog',
+                    'sub_price' => '123',
+                    'quantity'  => '134',
+                ],
+                2 => [
+                    'sub_name'  => 'Ms. Scarlett Crooks',
+                    'sub_price' => '123',
+                    'quantity'  => '321',
+                ],
+                3 => [
+                    'sub_name'  => 'Cory Bernhard DDS',
+                    'sub_price' => '123',
+                    'quantity'  => '315',
+                ],
+                4 => [
+                    'sub_name'  => 'Dr. Allie Runolfsson',
+                    'sub_price' => '123',
+                    'quantity'  => '433',
                 ],
             ],
         ];

@@ -53,11 +53,9 @@ class OrderService
 
     public function createOrderProduct($order, $params)
     {
-        $orderProduct      = OrderProduct::query();
-        $productAttributes = ProductAttribute::query();
+        $productAttributes = ProductAttribute::get();
 
         foreach ($params['products'] as $value) {
-
             $productAttribute = $productAttributes->where('sub_name', $value['sub_name'])->first();
 
             $orderProductData = [
@@ -67,7 +65,7 @@ class OrderService
                 'price'                => $value['sub_price'],
             ];
 
-            $orderProduct->create($orderProductData);
+            OrderProduct::create($orderProductData);
         }
 
         return true;
