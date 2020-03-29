@@ -7,7 +7,6 @@ use App\Entities\ProductAttribute;
 use App\Entities\ProductImage;
 use App\Filters\ProductFilter;
 use App\Helpers\GlobalHelper;
-use Illuminate\Http\Request;
 
 class ProductService
 {

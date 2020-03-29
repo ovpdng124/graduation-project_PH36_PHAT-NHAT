@@ -210,7 +210,8 @@
                                 <form action="{{route('product-detail',$product->id)}}" method="get">
                                     <h3 class="">Color</h3>
                                     @foreach($product->product_attributes as $item)
-                                        <label class="col-md-4 color" id="{{$item->id}}" data-label-color="{{$item->id}}" for="color-{{$item->color}}" style="width: 30px; height: 30px; background-color:{{$item->color}}"></label>
+                                        <label class="col-md-4 color" id="{{$item->id}}" data-label-color="{{$item->id}}" for="color-{{$item->color}}"
+                                               style="width: 30px; height: 30px; border-radius: 10px; background-color:{{$item->color}}"></label>
                                         <input class="col-md-4" type="radio" hidden id="color-{{$item->color}}" value="{{ltrim($item->color, $item->color[0])}}" name="color" style="width: 20px">
                                     @endforeach
                                 </form>
@@ -301,7 +302,7 @@
             $('.color').css("border-style", "none")
 
             if ($("input[name='color']:checked")) {
-                $(labelId).css("border-style", "outset")
+                $(labelId).css("border-style", "inset")
             }
         })
 
