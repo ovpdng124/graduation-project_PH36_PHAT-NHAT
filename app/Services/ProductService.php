@@ -3,9 +3,11 @@
 namespace App\Services;
 
 use App\Entities\Product;
+use App\Entities\ProductAttribute;
 use App\Entities\ProductImage;
 use App\Filters\ProductFilter;
 use App\Helpers\GlobalHelper;
+use Illuminate\Http\Request;
 
 class ProductService
 {
@@ -120,6 +122,32 @@ class ProductService
             'product'          => $product,
             'productImages'    => $productImages,
             'featuredProducts' => $featuredProducts,
+        ];
+    }
+
+    public function getProductCart($params)
+    {
+        $productIDs = array_values(array_unique(array_column($params, 'product_id')));
+
+        $productAttributes = ProductAttribute::whereIn('product_id', $productIDs)->get();
+        $productImages     = ProductImage::whereIn('product_id', $productIDs)->where('image_type', ProductImage::$types['Thumbnail'])->get();
+
+        $arr         = [];
+        $total_price = [];
+
+        foreach ($params as $product) {
+            $productAttribute              = $productAttributes->where('product_id', $product['product_id'])->where('color', "#" . $product['color'])->first();
+            $productImage                  = $productImages->where('product_id', $product['product_id'])->where('product_attribute_id', $productAttribute->id)->first();
+            $productAttribute->image_path  = $productImage->image_path;
+            $productAttribute->quantity    = $product['quantity'];
+            $productAttribute->total_price = $productAttribute['sub_price'] * $product['quantity'];
+            $arr[]                         = $productAttribute->toArray();
+            $total_price[]                 = $productAttribute->total_price;
+        }
+
+        return [
+            'products' => $arr,
+            'total'    => array_sum($total_price),
         ];
     }
 }

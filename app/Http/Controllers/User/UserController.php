@@ -102,35 +102,12 @@ class UserController extends Controller
         return view('user.index.list_cart');
     }
 
-    public function productCart(Request $request)
+    public function showProductCart(Request $request)
     {
         $params = $request->get('products');
 
-        $productIDs = array_values(array_unique(array_column($params, 'product_id')));
+        $data = $this->productService->getProductCart($params);
 
-        $productAttributes = ProductAttribute::whereIn('product_id', $productIDs)->get();
-        $productImages     = ProductImage::whereIn('product_id', $productIDs)->where('image_type', ProductImage::$types['Thumbnail'])->get();
-
-        $arr         = [];
-        $total_price = [];
-
-        foreach ($params as $product) {
-            $productAttribute              = $productAttributes->where('product_id', $product['product_id'])->where('color', "#" . $product['color'])->first();
-            $productImage                  = $productImages->where('product_id', $product['product_id'])->where('product_attribute_id', $productAttribute->id)->first();
-            $productAttribute->image_path  = $productImage->image_path;
-            $productAttribute->quantity    = $product['quantity'];
-            $productAttribute->total_price = $productAttribute['sub_price'] * $product['quantity'];
-            $arr[]                         = $productAttribute->toArray();
-            $total_price[]                 = $productAttribute->total_price;
-        }
-
-        $data = [
-            'products' => $arr,
-            'total'    => array_sum($total_price),
-        ];
-
-        $html = view('user.index.product_cart', $data)->render();
-
-        return response()->json($html);
+        return response()->json(view('user.index.product_cart', $data)->render());
     }
 }

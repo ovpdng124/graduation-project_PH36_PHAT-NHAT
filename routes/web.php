@@ -33,8 +33,8 @@ Route::group(['namespace' => 'User'], function () {
     Route::put('/edit/{id}', 'UserController@update')->name('update');
     Route::get('/change-password', 'UserController@changePasswordUser')->name('edit-password');
     Route::put('/change-password', 'UserController@updatePasswordUser')->name('update-password');
-    Route::get('list-cart','UserController@showListCart')->name('list.cart');
-    Route::get('product-cart', 'UserController@productCart');
+    Route::get('list-cart', 'UserController@showListCart')->name('list.cart');
+    Route::get('product-cart', 'UserController@showProductCart');
 });
 
 Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
