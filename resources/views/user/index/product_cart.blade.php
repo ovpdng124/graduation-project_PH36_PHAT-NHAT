@@ -3,7 +3,7 @@
         <td>{{++$key}}</td>
         <td>{{$item['sub_name']}}</td>
         <td><img style="width: 50px; height: 50px ; display: block;" src="{{$item['image_path']}}"></td>
-        <td style="width: 30px; height: 30px; background-color:{{$item['color']}}"></td>
+        <td class="text-center"><span  style="width: 50px; height: 50px; border-radius: 50px; display: block; background-color:{{$item['color']}}"></span></td>
         <td>{{$item['size']}}</td>
         <td>$ {{number_format($item['sub_price'])}}</td>
         <td>{{$item['quantity']}}</td>
