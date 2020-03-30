@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Entities\Product;
 use App\Entities\ProductAttribute;
 use App\Entities\ProductImage;
+use App\Entities\Role;
+use App\Entities\User;
 use App\Filters\ProductFilter;
 use App\Helpers\GlobalHelper;
 
@@ -126,21 +128,16 @@ class ProductService
 
     public function getProductCart($params)
     {
-        $productIDs = array_values(array_unique(array_column($params, 'product_id')));
-
-        $productAttributes = ProductAttribute::whereIn('product_id', $productIDs)->get();
-        $productImages     = ProductImage::whereIn('product_id', $productIDs)->where('image_type', ProductImage::$types['Thumbnail'])->get();
+        $productAttributes = ProductAttribute::with('product_images')->get();
 
         $arr         = [];
         $total_price = [];
 
         foreach ($params as $product) {
             $productAttribute              = $productAttributes->where('product_id', $product['product_id'])->where('color', "#" . $product['color'])->first();
-            $productImage                  = $productImages->where('product_id', $product['product_id'])->where('product_attribute_id', $productAttribute->id)->first();
-            $productAttribute->image_path  = $productImage->image_path;
             $productAttribute->quantity    = $product['quantity'];
             $productAttribute->total_price = $productAttribute['sub_price'] * $product['quantity'];
-            $arr[]                         = $productAttribute->toArray();
+            $arr[]                         = $productAttribute;
             $total_price[]                 = $productAttribute->total_price;
         }
 
