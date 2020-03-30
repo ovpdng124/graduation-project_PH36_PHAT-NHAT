@@ -4,10 +4,13 @@ namespace App\Services;
 
 use App\Entities\User;
 use App\Filters\UserFilter;
+use App\Helpers\GlobalHelper;
 use App\Mail\VerifyMail;
-use Carbon\Carbon;
 use Exception;
 use Mail;
+use Auth;
+use Hash;
+use Log;
 
 class UserService
 {
@@ -35,24 +38,21 @@ class UserService
     {
         $params['password']     = bcrypt($params['password']);
         $params['verify_token'] = $this->encodeToken($params);
-        $user                   = User::create($params);
 
-        if (!$this->sendMail($user->verify_token)) {
-            return [false, 'Send mail failed'];
-        }
-
-        return [true, 'Create success'];
+        return User::create($params);
     }
 
-    public function sendMail($token)
+    public function sendMail($email)
     {
-        $user = User::where('verify_token', $token)->first();
+        $user = User::where('email', $email)->first();
 
         try {
             Mail::to($user->email)->send(new VerifyMail($user));
 
             return true;
         } catch (Exception $exception) {
+            Log::error($exception);
+
             return false;
         }
     }
@@ -62,21 +62,27 @@ class UserService
         return base64_encode($params['email']) . '.' . base64_encode(now());
     }
 
-    public function decodeToken($params)
+    public function decodeToken($verify_token)
     {
-        $tokenExplode = explode('.', $params['verify_token']);
+        $tokenExplode = explode('.', $verify_token);
         $email        = base64_decode($tokenExplode[0]);
         $dateTime     = base64_decode($tokenExplode[1]);
 
-        $expired = Carbon::now()->diffInDays(Carbon::parse($dateTime)) < 2;
+        return [$email, $dateTime];
+    }
+
+    public function verifyAccount($email, $dateTime)
+    {
+        $expired = GlobalHelper::checkExpiredDate($dateTime, 2);
         $user    = User::where('email', $email)->first();
 
-        if (!$expired) {
+        if ($expired) {
             $params['email']        = $email;
             $newToken               = $this->encodeToken($params);
             $params['verify_token'] = $newToken;
+
             $user->update($params);
-            $this->sendMail($newToken);
+            $this->sendMail($email);
 
             return false;
         }
@@ -86,5 +92,22 @@ class UserService
         $user->update($params);
 
         return true;
+    }
+
+    public function updatePasswordProfile($params)
+    {
+        $user = Auth::user();
+
+        if (Hash::check($params['current_password'], $user->getAuthPassword())) {
+            $newPassword = [
+                'password' => bcrypt($params['new_password']),
+            ];
+
+            $user->update($newPassword);
+
+            return true;
+        }
+
+        return false;
     }
 }

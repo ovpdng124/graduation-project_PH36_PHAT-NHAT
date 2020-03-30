@@ -6,7 +6,6 @@ use App\Entities\Product;
 use App\Entities\ProductImage;
 use App\Filters\ProductFilter;
 use App\Helpers\GlobalHelper;
-use Illuminate\Support\Arr;
 
 class ProductService
 {
@@ -28,24 +27,16 @@ class ProductService
             $query = $this->productFilter->search($query, $search, $searchKey);
         }
 
-        $query = $query->with('category', 'product_images')->paginate($limits);
+        $query = $query->with('category', 'product_images')->orderByDesc('updated_at')->paginate($limits);
 
         return $query;
     }
 
-    public function store($request)
+    public function store($params, $avatar)
     {
-        $params = $request->except('_token', 'avatar');
+        $product = Product::create($params);
 
-        if ($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar');
-
-            $product = Product::create($params);
-
-            return $this->storeAvatar($avatar, $product->id);
-        }
-
-        return false;
+        return $this->storeAvatar($avatar, $product->id);
     }
 
     public function storeAvatar($avatar, $id)
@@ -65,13 +56,9 @@ class ProductService
         return ProductImage::create($productAvatar);
     }
 
-    public function update($request, $id)
+    public function update($params, $id, $avatar)
     {
-        $params = $request->except('_token', 'avatar');
-
-        if ($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar');
-
+        if (!empty($avatar)) {
             $this->updateAvatar($avatar, $id);
         }
 
@@ -106,13 +93,13 @@ class ProductService
         return $chunk->merge($products)->forPage(1, 9);
     }
 
-    public function getPopularProducts($products)
+    public function getPopularProducts($productAttributes)
     {
-        $products       = $products->sortByDesc('order_products_count')->take(3);
-        $popularProduct = [];
-        $count          = 1;
+        $productAttributes = $productAttributes->sortByDesc('order_products_count')->take(3);
+        $popularProduct    = [];
+        $count             = 1;
 
-        foreach ($products as $key => $product) {
+        foreach ($productAttributes as $product) {
             $image_path                         = $product->product_images->first()->image_path;
             $popularProduct["product" . $count] = $product->id;
             $popularProduct["image" . $count]   = $image_path;
@@ -121,5 +108,18 @@ class ProductService
         }
 
         return $popularProduct;
+    }
+
+    public function getDetailProduct($id, $products)
+    {
+        $product          = $products->where('id', $id)->first();
+        $productImages    = $product->product_images->where('product_id', $id);
+        $featuredProducts = $product->where('category_id', $product->category_id)->get();
+
+        return [
+            'product'          => $product,
+            'productImages'    => $productImages,
+            'featuredProducts' => $featuredProducts,
+        ];
     }
 }

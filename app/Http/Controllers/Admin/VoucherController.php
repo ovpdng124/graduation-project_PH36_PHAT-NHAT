@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Entities\Voucher;
+use App\Helpers\GlobalHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EditVoucherRequest;
 use App\Http\Requests\VoucherRequest;
@@ -12,10 +13,12 @@ use Illuminate\Http\Request;
 class VoucherController extends Controller
 {
     protected $voucherService;
+    protected $messages;
 
     public function __construct()
     {
         $this->voucherService = app(VoucherService::class);
+        $this->messages       = GlobalHelper::$messages;
     }
 
     public function index(Request $request)
@@ -40,7 +43,7 @@ class VoucherController extends Controller
 
         Voucher::create($params);
 
-        return redirect(route('voucher.index'));
+        return redirect(route('voucher.index'))->with($this->messages['create_success']);
     }
 
     public function edit($id)
@@ -56,13 +59,13 @@ class VoucherController extends Controller
 
         Voucher::find($id)->update($params);
 
-        return redirect(route('voucher.index'))->with('success', 'Updated successfully!');
+        return redirect(route('voucher.index'))->with($this->messages['update_success']);
     }
 
     public function destroy($id)
     {
         Voucher::find($id)->delete();
 
-        return redirect(route('voucher.index'))->with('success', 'Deleted Successfully!');
+        return redirect()->back()->with($this->messages['delete_success']);
     }
 }

@@ -25,7 +25,7 @@ class CategoryService
             $query = $this->categoryFilter->search($query, $search, $searchKey);
         }
 
-        $query = $query->with('products')->paginate($limits);
+        $query = $query->with('products')->orderByDesc('updated_at')->paginate($limits);
 
         return $query;
     }

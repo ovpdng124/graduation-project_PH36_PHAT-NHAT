@@ -12,13 +12,7 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         if (Auth::check()) {
-            if (empty(Auth::user()->verify_at)) {
-                Auth::logout();
-
-                return $this->showLoginForm()->withErrors('Please login again!');
-            }
-
-            return redirect(route('index'));
+            return redirect(route('profile'));
         }
 
         return view('user.auth.login');
@@ -26,7 +20,7 @@ class LoginController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $params = $request->only(['username', 'password']);
+        $params = $request->except('_token');
 
         if (Auth::attempt($params)) {
             if (GlobalHelper::checkAdminRole()) {

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Entities\ProductAttributes;
+use App\Entities\Product;
+use App\Entities\ProductAttribute;
 use App\Helpers\GlobalHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateProductAttributeRequest;
@@ -12,13 +13,18 @@ use Illuminate\Http\Request;
 
 class ProductAttributeController extends Controller
 {
+    /**
+     * @var ProductAttributeService
+     */
     protected $productAttributeService;
     protected $colorDefaults;
+    protected $messages;
 
     public function __construct()
     {
         $this->productAttributeService = app(ProductAttributeService::class);
-        $this->colorDefaults = GlobalHelper::$colorDefaults;
+        $this->colorDefaults           = GlobalHelper::$colorDefaults;
+        $this->messages                = GlobalHelper::$messages;
     }
 
     public function index(Request $request)
@@ -35,40 +41,61 @@ class ProductAttributeController extends Controller
     public function create()
     {
         $colorDefault = $this->colorDefaults;
+        $products     = Product::all();
+        $data         = [
+            'colors'   => $colorDefault,
+            'products' => $products,
+        ];
 
-        return view('admin.products.product_attributes.create', compact('colorDefault'));
+        return view('admin.products.product_attributes.create', $data);
     }
 
     public function store(CreateProductAttributeRequest $request)
     {
-        $params = $request->except('_token');
+        $params     = $request->except('_token', 'thumbnails');
+        $thumbnails = $request->file('thumbnails');
 
-        ProductAttributes::create($params);
+        $this->productAttributeService->store($params, $thumbnails);
 
-        return redirect(route('product-attribute.index'))->with('success', 'Create Successfully!');
+        if (strpos($request->url(), 'product/')) {
+            return redirect(route('product.show', $params['product_id']))->with($this->messages['create_success']);
+        }
+
+        return redirect(route('product-attribute.index'))->with($this->messages['create_success']);
     }
 
     public function edit($id)
     {
-        $productAttribute = ProductAttributes::find($id);
-        $colorDefault = $this->colorDefaults;
+        $colorDefault     = $this->colorDefaults;
+        $productAttribute = ProductAttribute::find($id);
+        $products         = Product::all();
+        $data             = [
+            'colors'            => $colorDefault,
+            'product_attribute' => $productAttribute,
+            'products'          => $products,
+        ];
 
-        return view('admin.products.product_attributes.edit', compact('productAttribute','colorDefault'));
+        return view('admin.products.product_attributes.edit', $data);
     }
 
     public function update(EditProductAttributeRequest $request, $id)
     {
-        $params = $request->except('_token');
+        $params     = $request->except('_token', 'thumbnails');
+        $thumbnails = $request->file('thumbnails');
 
-        ProductAttributes::find($id)->update($params);
+        $this->productAttributeService->update($params, $id, $thumbnails);
 
-        return redirect(route('product-attribute.index'))->with('success', 'Updated Successfully!');
+        if (strpos($request->url(), 'product/')) {
+            return redirect(route('product.show', $params['product_id']))->with($this->messages['update_success']);
+        }
+
+        return redirect(route('product-attribute.index'))->with($this->messages['update_success']);
     }
 
     public function destroy($id)
     {
-        ProductAttributes::find($id)->delete();
+        ProductAttribute::find($id)->delete();
 
-        return redirect(route('product-attribute.index'))->with('success', 'Deleted Successfully');
+        return redirect()->back()->with($this->messages['delete_success']);
     }
 }

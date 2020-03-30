@@ -32,9 +32,21 @@
                 </li>
                 <li><a href="#">Contact</a></li>
                 @auth
-                    <li><a href="{{route('logout')}}">Logout</a></li>
+                    <li>
+                        <a href="#">User<span class="fa fa-angle-down" aria-hidden="true"></span></a>
+                        <ul>
+                            <li><a href="{{route('profile')}}">Profile</a></li>
+                            <li><a href="{{route('logout')}}">Logout</a></li>
+                        </ul>
+                    </li>
                 @else
-                    <li><a href="{{route('login-form')}}">Login</a></li>
+                    <li>
+                        <a href="#">User<span class="fa fa-angle-down" aria-hidden="true"></span></a>
+                        <ul>
+                            <li><a href="{{route('login-form')}}">Login</a></li>
+                            <li><a href="{{route('register-form')}}">Register</a></li>
+                        </ul>
+                    </li>
                 @endauth
             </ul>
         </nav>

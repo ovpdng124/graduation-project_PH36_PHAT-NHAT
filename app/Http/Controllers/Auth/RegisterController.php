@@ -14,12 +14,12 @@ class RegisterController extends Controller
      * @var UserService
      */
     protected $userService;
-    protected $errorMessages;
+    protected $messages;
 
     public function __construct()
     {
-        $this->userService   = app(UserService::class);
-        $this->errorMessages = GlobalHelper::getErrorMessages();
+        $this->userService = app(UserService::class);
+        $this->messages    = GlobalHelper::$messages;
     }
 
     public function showRegisterForm()
@@ -29,41 +29,47 @@ class RegisterController extends Controller
 
     public function store(CreateUserRequest $request)
     {
-        $params = $request->except(['_token', 'password_confirmation']);
+        $params = $request->except('_token', 'password_confirmation');
 
-        list($status) = $this->userService->store($params);
+        $user = $this->userService->store($params);
+
+        $this->userService->sendMail($user->email);
+
+        return redirect(route('notification'))->with($this->messages['register_success']);
+    }
+
+    public function showNotification(Request $request)
+    {
+        $email = $request->get('email');
+
+        return view('user.auth.notification', compact('email'));
+    }
+
+    public function sendMailAgain(Request $request)
+    {
+        $email = $request->get('email');
+
+        $status = $this->userService->sendMail($email);
 
         if (!$status) {
-            return redirect(route('verify-notification'))->with($this->errorMessages['send_mail_failed']);
+            return redirect(route('notification', ['email' => $email]))->with($this->messages['send_mail_failed']);
         }
 
-        return redirect(route('verify-notification'))->with($this->errorMessages['create_success']);
-    }
-
-    public function verifyNotification(Request $request)
-    {
-        $verify_token = $request->all();
-
-        return view('user.auth.verify', compact('verify_token'));
-    }
-
-    public function sendMail(Request $request)
-    {
-        $token = $request->all();
-
-        $this->userService->sendMail($token['verify_token']);
-
-        return redirect(route('verify-notification', $token))->with($this->errorMessages['send_mail']);
+        return redirect(route('notification'))->with($this->messages['send_mail_success']);
     }
 
     public function verify(Request $request)
     {
-        $params = $request->all();
+        $verify_token = $request->get('verify_token');
 
-        if (!$this->userService->decodeToken($params)) {
-            return abort(403, 'Please check mail again!');
+        list($email, $dateTime) = $this->userService->decodeToken($verify_token);
+
+        $status = $this->userService->verifyAccount($email, $dateTime);
+
+        if (!$status) {
+            return abort(403, 'Expired link: Please check mail again!');
         }
 
-        return redirect(route('verify-notification'))->with($this->errorMessages['verify_success']);
+        return redirect(route('notification'))->with($this->messages['verify_success']);
     }
 }

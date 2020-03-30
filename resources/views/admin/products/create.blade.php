@@ -15,7 +15,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-9 well well-sm col-md-offset-4 container">
-                                    <form action="{{route('product.store')}}" enctype="multipart/form-data" method="post" class="form" role="form">
+                                    <form action="{{route(strpos(url()->current(), 'category') ? 'category.product.store' : 'product.store')}}" enctype="multipart/form-data" method="post" class="form" role="form">
                                         @csrf
                                         <div class="form-group row">
                                             <div class="col-xs-3 col-md-3">
@@ -50,14 +50,9 @@
                                             <div class="col-xs-9 col-md-9">
                                                 <select name="category_id" class="form-control">
                                                     @foreach($categories as $item)
-                                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                                        <option value="{{$item->id}}" {{$item->id == old('category_id') ? 'selected' : ''}}>{{$item->name}}</option>
                                                     @endforeach
                                                 </select>
-                                                @if($errors->any())
-                                                    @foreach($errors->get('category_id') as $messages)
-                                                        <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
-                                                    @endforeach
-                                                @endif
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -78,7 +73,7 @@
                                                 <label for="" class="float-md-right mt-2">Description: </label>
                                             </div>
                                             <div class="col-xs-9 col-md-9">
-                                                <textarea class="form-control" name="description" id="" cols="30" rows="10"></textarea>
+                                                <textarea class="form-control" name="description" id="" cols="30" rows="10">{{old('description')}}</textarea>
                                                 @if($errors->any())
                                                     @foreach($errors->get('description') as $messages)
                                                         <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>

@@ -12,6 +12,6 @@ class ProductImagesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(ProductImage::class, 10)->create();
+        factory(ProductImage::class, 20)->create();
     }
 }

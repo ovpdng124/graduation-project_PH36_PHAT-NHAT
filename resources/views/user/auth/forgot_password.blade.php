@@ -6,7 +6,7 @@
          id="home"></div>
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{{route('index')}}">Home</a>
+            <a href="{{route('login-form')}}">Login</a>
         </li>
         <li class="breadcrumb-item active">Forgot Password</li>
     </ol>
@@ -33,11 +33,10 @@
                                 </div>
                                 <div class="col-md-9">
                                     <input type="text" id="email" class="form-control" name="email"
-                                           placeholder="Enter your email to new Password" autofocus>
+                                           placeholder="Enter email to retrieve your password." autofocus>
                                 </div>
                             </div>
-                            <button type="submit" style="width: 100px" class="float-right btn btn-success">Send Mail
-                            </button>
+                            <button type="submit" class="float-right btn btn-success">Send Mail</button>
                         </form>
                     </div>
                 </div>

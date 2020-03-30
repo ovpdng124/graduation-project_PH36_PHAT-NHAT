@@ -10,7 +10,7 @@ class ProductImage extends Model
 
     public static $paths = [
         'Avatar'    => 'images/avatars/',
-        'Thumbnail' => 'images/thumbnails',
+        'Thumbnail' => 'images/thumbnails/',
     ];
 
     public static $types = [
@@ -25,6 +25,6 @@ class ProductImage extends Model
 
     public function product_attribute()
     {
-        return $this->belongsTo(ProductAttributes::class);
+        return $this->belongsTo(ProductAttribute::class);
     }
 }

@@ -12,10 +12,10 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{asset('bower_components/admin-lte/dist/img/avatar5.png')}}" class="img-circle elevation-2" alt="User Image">
+                <a href="{{route('admin.profile')}}"><img src="{{asset('bower_components/admin-lte/dist/img/avatar5.png')}}" class="img-circle elevation-2" alt="User Image"></a>
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{Auth::user()->full_name}}</a>
+                <a href="{{route('admin.profile')}}" class="d-block">{{Auth::user()->full_name}}</a>
             </div>
         </div>
 
@@ -31,6 +31,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{route('order.list')}}" class="nav-link">
+                        <i class="fa fa-list"></i>
+                        <span>Order list</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{route('voucher.index')}}" class="nav-link">
                         <i class="fa fa-list"></i>
                         <span>Voucher list</span>
@@ -40,6 +46,12 @@
                     <a href="{{route('product.index')}}" class="nav-link">
                         <i class="fa fa-list"></i>
                         <span>Product list</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('product-attribute.index')}}" class="nav-link">
+                        <i class="fa fa-list"></i>
+                        <span>Product attributes list</span>
                     </a>
                 </li>
                 <li class="nav-item">
