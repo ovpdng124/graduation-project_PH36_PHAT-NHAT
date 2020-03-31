@@ -128,36 +128,40 @@ class ProductService
     {
         $productAttributes = ProductAttribute::with('product_images')->get();
 
-        $arr         = [];
-        $total_price = [];
-
-        foreach ($params as $param) {
-            $productAttribute = $this->getProductAttribute($param, $productAttributes);
-            $productAttribute = $this->createObjectAttributes($productAttribute, ['quantity', 'total_price','image_path'], [$param['quantity'], $productAttribute->sub_price * $param['quantity'],$productAttribute->product_images->first()->image_path]);
-            $total_price[] = $productAttribute->total_price;
-            $arr[]         = $productAttribute;
-        }
+        $productAttributes = $this->getProductAttributeCart($params, $productAttributes);
+        $totalPriceCart    = $this->getTotalPriceCart($productAttributes);
 
         return [
-            'products' => $arr,
-            'total'    => array_sum($total_price),
+            'products' => $productAttributes,
+            'total'    => $totalPriceCart,
         ];
     }
 
-    public function getProductAttribute($params, $productAttributes)
+    public function getProductAttributeCart($params, $collection)
     {
-        return $productAttributes->where('product_id', $params['product_id'])->where('color', "#" . $params['color'])->first();
-    }
+        $productAttributes = [];
 
-    public function createObjectAttributes($collect, $attributes = [], $params = [])
-    {
-        for ($i = 0; $i < count($attributes); $i++) {
-            $attribute = $attributes[$i];
-            $param     = $params[$i];
+        foreach ($params as $param) {
+            $productAttribute = $collection->where('product_id', $param['product_id'])->where('color', "#" . $param['color'])->first();
 
-            $collect->$attribute = $param;
+            $productAttribute->quantity    = $param['quantity'];
+            $productAttribute->image_path  = $productAttribute->product_images->first()->image_path;
+            $productAttribute->total_price = $productAttribute->quantity * $productAttribute->sub_price;
+
+            $productAttributes[] = $productAttribute;
         }
 
-        return $collect;
+        return $productAttributes;
+    }
+
+    public function getTotalPriceCart($productAttributes)
+    {
+        $totalPriceCart = [];
+
+        foreach ($productAttributes as $productAttribute) {
+            $totalPriceCart[] = $productAttribute->total_price;
+        }
+
+        return array_sum($totalPriceCart);
     }
 }
