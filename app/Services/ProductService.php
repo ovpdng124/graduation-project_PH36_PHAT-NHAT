@@ -5,8 +5,6 @@ namespace App\Services;
 use App\Entities\Product;
 use App\Entities\ProductAttribute;
 use App\Entities\ProductImage;
-use App\Entities\Role;
-use App\Entities\User;
 use App\Filters\ProductFilter;
 use App\Helpers\GlobalHelper;
 
@@ -126,24 +124,41 @@ class ProductService
         ];
     }
 
-    public function getProductCart($params)
+    public function getCartProducts($params)
     {
         $productAttributes = ProductAttribute::with('product_images')->get();
 
         $arr         = [];
         $total_price = [];
 
-        foreach ($params as $product) {
-            $productAttribute              = $productAttributes->where('product_id', $product['product_id'])->where('color', "#" . $product['color'])->first();
-            $productAttribute->quantity    = $product['quantity'];
-            $productAttribute->total_price = $productAttribute['sub_price'] * $product['quantity'];
-            $arr[]                         = $productAttribute;
-            $total_price[]                 = $productAttribute->total_price;
+        foreach ($params as $param) {
+            $productAttribute = $this->getProductAttribute($param, $productAttributes);
+            $productAttribute = $this->createObjectAttributes($productAttribute, ['quantity', 'total_price'], [$param['quantity'], $productAttribute->sub_price * $param['quantity']]);
+
+            $total_price[] = $productAttribute->total_price;
+            $arr[]         = $productAttribute;
         }
 
         return [
             'products' => $arr,
             'total'    => array_sum($total_price),
         ];
+    }
+
+    public function getProductAttribute($params, $productAttributes)
+    {
+        return $productAttributes->where('product_id', $params['product_id'])->where('color', "#" . $params['color'])->first();
+    }
+
+    public function createObjectAttributes($collect, $attributes = [], $params = [])
+    {
+        for ($i = 0; $i < count($attributes); $i++) {
+            $attribute = $attributes[$i];
+            $param     = $params[$i];
+
+            $collect->$attribute = $param;
+        }
+
+        return $collect;
     }
 }

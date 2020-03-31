@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\User;
 
 use App\Entities\Product;
-use App\Entities\ProductImage;
 use App\Entities\User;
 use App\Helpers\GlobalHelper;
 use App\Entities\ProductAttribute;
@@ -106,7 +105,11 @@ class UserController extends Controller
     {
         $params = $request->get('products');
 
-        $data = $this->productService->getProductCart($params);
+        if (empty($params)){
+            return response()->json("<td colspan='9' class='text-center'><i>There are no products to list</i></td>");
+        }
+
+        $data = $this->productService->getCartProducts($params);
 
         return response()->json(view('user.index.product_cart', $data)->render());
     }
