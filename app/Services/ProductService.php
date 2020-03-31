@@ -133,8 +133,7 @@ class ProductService
 
         foreach ($params as $param) {
             $productAttribute = $this->getProductAttribute($param, $productAttributes);
-            $productAttribute = $this->createObjectAttributes($productAttribute, ['quantity', 'total_price'], [$param['quantity'], $productAttribute->sub_price * $param['quantity']]);
-
+            $productAttribute = $this->createObjectAttributes($productAttribute, ['quantity', 'total_price','image_path'], [$param['quantity'], $productAttribute->sub_price * $param['quantity'],$productAttribute->product_images->first()->image_path]);
             $total_price[] = $productAttribute->total_price;
             $arr[]         = $productAttribute;
         }
