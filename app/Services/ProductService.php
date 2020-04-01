@@ -128,11 +128,12 @@ class ProductService
     {
         $productAttributes = ProductAttribute::with('product_images')->get();
 
-        $productAttributes = $this->getProductAttributeCart($params, $productAttributes);
-        $totalPriceCart    = $this->getTotalPriceCart($productAttributes);
+        $products = $this->getProductAttributeCart($params, $productAttributes);
+
+        $totalPriceCart = $productAttributes->sum('total_price');
 
         return [
-            'products' => $productAttributes,
+            'products' => $products,
             'total'    => $totalPriceCart,
         ];
     }
@@ -152,16 +153,5 @@ class ProductService
         }
 
         return $productAttributes;
-    }
-
-    public function getTotalPriceCart($productAttributes)
-    {
-        $totalPriceCart = [];
-
-        foreach ($productAttributes as $productAttribute) {
-            $totalPriceCart[] = $productAttribute->total_price;
-        }
-
-        return array_sum($totalPriceCart);
     }
 }
