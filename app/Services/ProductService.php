@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Entities\Product;
+use App\Entities\ProductAttribute;
 use App\Entities\ProductImage;
 use App\Filters\ProductFilter;
 use App\Helpers\GlobalHelper;
@@ -121,5 +122,36 @@ class ProductService
             'productImages'    => $productImages,
             'featuredProducts' => $featuredProducts,
         ];
+    }
+
+    public function getCartProducts($params)
+    {
+        $productAttributes = ProductAttribute::with('product_images')->get();
+
+        $products = $this->getProductAttributeCart($params, $productAttributes);
+
+        $totalPriceCart = $productAttributes->sum('total_price');
+
+        return [
+            'products' => $products,
+            'total'    => $totalPriceCart,
+        ];
+    }
+
+    public function getProductAttributeCart($params, $collection)
+    {
+        $productAttributes = [];
+
+        foreach ($params as $param) {
+            $productAttribute = $collection->where('product_id', $param['product_id'])->where('color', "#" . $param['color'])->first();
+
+            $productAttribute->quantity    = $param['quantity'];
+            $productAttribute->image_path  = $productAttribute->product_images->first()->image_path;
+            $productAttribute->total_price = $productAttribute->quantity * $productAttribute->sub_price;
+
+            $productAttributes[] = $productAttribute;
+        }
+
+        return $productAttributes;
     }
 }

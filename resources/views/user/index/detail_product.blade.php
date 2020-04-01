@@ -204,20 +204,15 @@
                             <h3>{{$product->name}}</h3>
                             <h5>${{number_format($product->price)}}</h5>
                             <div class="available mt-3">
-                                <form action="" method="post" class="form" role="form">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{$product->id}}">
-                                    <button type="submit" class="btn btn-success">Add to cart</button>
-                                </form>
-                                <p>Lorem Ipsum has been the industry's standard since the 1500s. Praesent ullamcorper dui turpis.. </p>
+                                <button type="submit" class="btn btn-success btn-cart" data-product-id="{{$product->id}}">Add to cart</button>
                             </div>
-                            <div class="available mt3">
+                            <div class="available mt3 mt-3">
                                 <form action="{{route('product-detail',$product->id)}}" method="get">
                                     <h3 class="">Color</h3>
                                     @foreach($product->product_attributes as $item)
-                                        <label class="col-md-4" for="color-{{$item->color}}" style="width: 30px; height: 30px; background-color:{{$item->color}}"></label>
-                                        <input class="col-md-4 color-change" type="radio" id="color-{{$item->color}}" value="{{ltrim($item->color, $item->color[0])}}" checked name="color"
-                                               style="width: 20px">
+                                        <label class="col-md-4 color" id="{{$item->id}}" data-label-color="{{$item->id}}" for="color-{{$item->color}}"
+                                               style="width: 30px; height: 30px; border-radius: 10px; background-color:{{$item->color}}"></label>
+                                        <input class="col-md-4" type="radio" hidden id="color-{{$item->color}}" value="{{ltrim($item->color, $item->color[0])}}" name="color" style="width: 20px">
                                     @endforeach
                                 </form>
                             </div>
@@ -288,6 +283,7 @@
     <script src="{{mix("/js/lightslider.js")}}"></script>
 @endsection
 @section('custom_footer_script')
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#lightSlider").lightSlider({
@@ -298,6 +294,61 @@
                 thumbItem  : 9
             })
         })
+
+        $('.color').click(function () {
+            let color   = $(this).data('labelColor')
+            let labelId = '#'.concat(color)
+
+            $('.color').css("border-style", "none")
+
+            if ($("input[name='color']:checked")) {
+                $(labelId).css("border-style", "inset")
+            }
+        })
+
+        $(".btn-cart").click((function () {
+            let cart  = localStorage.getItem('cart')
+            let color = $("input[name='color']:checked").val()
+
+            if (cart == null) {
+                cart = {
+                    "products": []
+                }
+            } else {
+                cart = JSON.parse(cart)
+            }
+            if (color != null) {
+                let productId  = $(this).data('product-id')
+                let checkExist = false
+
+                //check Quantity
+                _.forEach(cart.products, function (product) {
+                    if (product.product_id === productId && product.color === color) {
+                        product.quantity = product.quantity + 1
+                        product.color    = color
+
+                        checkExist = true
+                    }
+                })
+
+                if (!checkExist) {
+                    let product = {
+                        product_id: productId,
+                        quantity  : 1,
+                        color     : color
+                    }
+
+                    cart.products.push(product)
+                }
+
+                localStorage.setItem('cart', JSON.stringify(cart))
+
+                alert("Add cart success")
+
+            } else {
+                alert("Please choose color")
+            }
+        }))
     </script>
 @endsection
 
