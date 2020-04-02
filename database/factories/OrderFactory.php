@@ -7,10 +7,11 @@ use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factory;
 
 $factory->define(Order::class, function (Faker $faker) {
+    $userId      = $faker->numberBetween(1, 3);
     $order_label = 'BI-' . $faker->monthName . '-' . $faker->numberBetween(1, 10);
 
     return [
-        'user_id'     => $faker->numberBetween(1, 3),
+        'user_id'     => $userId,
         'voucher_id'  => $faker->numberBetween(1, 10),
         'total_price' => $faker->randomFloat(null, 0, 100000),
         'quantity'    => $faker->numberBetween(1, 10),

@@ -27,4 +27,26 @@ class OrderService
 
         return $query->orderByDesc('updated_at')->paginate($limits);
     }
+
+    public function getOrderDetail($id, $order_products)
+    {
+        $order_product     = $order_products->where('order_id', $id);
+        $order             = $order_product->first()->order;
+        $productAttributes = [];
+
+        foreach ($order_product as $item) {
+            $productAttribute = $item->product_attributes->first();
+
+            $productAttribute->quantity = $item->quantity;
+            $productAttribute->price    = $item->price;
+            $productAttribute->total    = $item->quantity * $item->price;
+
+            $productAttributes[]        = $item->product_attributes->first();
+        }
+
+        return [
+            'order'              => $order,
+            'product_attributes' => $productAttributes,
+        ];
+    }
 }
