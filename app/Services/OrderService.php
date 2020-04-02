@@ -32,6 +32,7 @@ class OrderService
     {
         $order_product     = $order_products->where('order_id', $id);
         $order             = $order_product->first()->order;
+        $orders            = Order::$status;
         $productAttributes = [];
 
         foreach ($order_product as $item) {
@@ -41,12 +42,13 @@ class OrderService
             $productAttribute->price    = $item->price;
             $productAttribute->total    = $item->quantity * $item->price;
 
-            $productAttributes[]        = $item->product_attributes->first();
+            $productAttributes[] = $item->product_attributes->first();
         }
 
         return [
             'order'              => $order,
             'product_attributes' => $productAttributes,
+            'orders'             => $orders,
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Entities\Order;
 use App\Entities\OrderProduct;
 use App\Http\Controllers\Controller;
 use App\Services\OrderService;
@@ -33,9 +34,15 @@ class OrderController extends Controller
     public function detail($id)
     {
         $order_product = OrderProduct::with('order', 'product_attributes')->get();
+        $data          = $this->orderService->getOrderDetail($id, $order_product);
 
-        $productAttributes = $this->orderService->getOrderDetail($id, $order_product);
+        return view('admin.orders.detail', $data);
+    }
 
-        return view('admin.orders.detail', $productAttributes);
+    public function updateStatus($id, $status)
+    {
+        Order::find($id)->update(['status' => $status]);
+
+        return redirect()->route('order.detail', $id);
     }
 }

@@ -41,31 +41,17 @@
                             <div class="col-md-12 col-sm-12">
                                 <p class="mb-0">
                                     <span class="text-bold ">Status: </span>
-
-                                    {{--                                        <a href="{{route('order.change_status')}}">--}}
-                                    {{--                                        <select id="order_status" >--}}
-                                    {{--                                            @foreach($orders as $key => $value)--}}
-                                    {{--                                                @if($order->status == $value)--}}
-                                    {{--                                                    <option id="selected_status" value="{{$order->status}}" selected>{{$key}}</option>--}}
-                                    {{--                                                @else--}}
-                                    {{--                                                    <option id="status_order" value="{{$value}}">{{$key}}</option>--}}
-                                    {{--                                                @endif--}}
-                                    {{--                                            @endforeach--}}
-                                    {{--                                        </select>--}}
-                                    {{--                                        </a>--}}
                                 </p>
                                 <div class="dropdown">
-                                    @foreach($orders as $key => $value)
-                                        @if($order->status == $value)
-                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <a href="">{{$key}}</a>
-                                            </button>
-                                        @else
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="#">{{$key}}</a>
-                                            </div>
-                                        @endif
-                                    @endforeach
+                                    <button class="bg bg-{!! $order->color_status !!} dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                        <span href="">{!! $order->name_status !!}</span>
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        @foreach($orders as $key => $value)
+                                            <a class="dropdown-item bg bg-{!! \App\Entities\Order::$statusColor[$value] !!} rounded-pill" href="{{route('order.updateStatus',[$order->id,$value] )}}">{{$key}}</a>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -126,50 +112,4 @@
             </div>
         </div>
     </div>
-@endsection
-@section('order_footer_script')
-    <script type="text/javascript">
-        var URL = '{{route('order.change_status')}}'
-
-        $(function () {
-            $("#order_status").change(function () {
-                var selected_status = $("#selected_status").val()
-                var status1         = $("#order_status option:selected").val()
-                console.log(selected_status)
-                $.ajax({
-                    url     : URL,
-                    type    : 'GET',
-                    data    : {
-                        selected_status: selected_status,
-                        status1        : status1
-                    },
-                    dataType: 'json',
-                    success : function (data) {
-                        console.log(data)
-                    }
-
-                })
-
-                // var mysql = require('mysql');
-                //
-                // var con = mysql.createConnection({
-                //     host: "localhost",
-                //     user: "root",
-                //     password: "Abc123@",
-                //     database: "do_an"
-                // });
-                //
-                // con.connect(function(err) {
-                //     if (err) throw err;
-                //     var sql = "UPDATE orders SET status = '3' WHERE address = '0'";
-                //     con.query(sql, function (err, result) {
-                //         if (err) throw err;
-                //         console.log(result.affectedRows + " record(s) updated");
-                //     });
-                // });
-                // con.end();
-
-            })
-        })
-    </script>
 @endsection
