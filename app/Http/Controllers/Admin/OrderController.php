@@ -33,14 +33,22 @@ class OrderController extends Controller
 
     public function detail($id)
     {
-        $order_product = OrderProduct::with('order', 'product_attributes')->get();
-        $data          = $this->orderService->getOrderDetail($id, $order_product);
+        $order_product      = OrderProduct::with('order', 'product_attributes')->get();
+        $order              = $this->orderService->getOrderDetail($id, $order_product);
+        $product_attributes = $this->orderService->getProductAttributes($id, $order_product);
+        $orders_status      = $this->orderService->getOrderStatus();
+        $data               = [
+            'order'              => $order,
+            'product_attributes' => $product_attributes,
+            'orders_status'      => $orders_status,
+        ];
 
         return view('admin.orders.detail', $data);
     }
 
-    public function updateStatus($id, $status)
+    public function updateStatus(Request $request, $id)
     {
+        $status = $request->statusOrder;
         Order::find($id)->update(['status' => $status]);
 
         return redirect()->route('order.detail', $id);

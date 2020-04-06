@@ -28,11 +28,9 @@ class OrderService
         return $query->orderByDesc('updated_at')->paginate($limits);
     }
 
-    public function getOrderDetail($id, $order_products)
+    public function getProductAttributes($id, $order_products)
     {
         $order_product     = $order_products->where('order_id', $id);
-        $order             = $order_product->first()->order;
-        $orders            = Order::$status;
         $productAttributes = [];
 
         foreach ($order_product as $item) {
@@ -45,10 +43,21 @@ class OrderService
             $productAttributes[] = $item->product_attributes->first();
         }
 
-        return [
-            'order'              => $order,
-            'product_attributes' => $productAttributes,
-            'orders'             => $orders,
-        ];
+        return $productAttributes;
+    }
+
+    public function getOrderDetail($id, $order_products)
+    {
+        $order_product = $order_products->where('order_id', $id);
+        $order         = $order_product->first()->order;
+
+        return $order;
+    }
+
+    public function getOrderStatus()
+    {
+        $orders_status = Order::$status;
+
+        return $orders_status;
     }
 }

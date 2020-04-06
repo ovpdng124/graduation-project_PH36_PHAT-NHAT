@@ -83,7 +83,7 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
         Route::group(['prefix' => 'order'], function () {
             Route::get('/', 'OrderController@showListOrder')->name('order.list');
             Route::get('/detail/{id}', 'OrderController@detail')->name('order.detail');
-            Route::get('updateStatus/{id}/{status}', 'OrderController@updateStatus')->name('order.updateStatus');
+            Route::put('updateStatus/{id}', 'OrderController@updateStatus')->name('order.updateStatus');
         });
     });
 

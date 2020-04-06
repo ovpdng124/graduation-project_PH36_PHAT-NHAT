@@ -42,17 +42,20 @@
                                 <p class="mb-0">
                                     <span class="text-bold ">Status: </span>
                                 </p>
-                                <div class="dropdown">
-                                    <button class="bg bg-{!! $order->color_status !!} dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                        <span href="">{!! $order->name_status !!}</span>
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        @foreach($orders as $key => $value)
-                                            <a class="dropdown-item bg bg-{!! \App\Entities\Order::$statusColor[$value] !!} rounded-pill" href="{{route('order.updateStatus',[$order->id,$value] )}}">{{$key}}</a>
+                                <form action="{{route('order.updateStatus',$order->id)}}" method="post" role="form" nctype="multipart/form-data">
+                                    @csrf
+                                    @method('PUT')
+                                    <select name="statusOrder" id="" class="bg bg-{{$order->colorstatus}} p-2 rounded-pill">
+                                        @foreach($orders_status as $key => $value)
+                                            @if($value == $order->status)
+                                                <option value="{{$value}}" selected class="bg bg-{{$order->colorstatus}} rounded-pill">{{$key}}</option>
+                                            @else
+                                                <option value="{{$value}}" class="bg bg-{{ \App\Entities\Order::$statusColor[$value] }} rounded-pill">{{$key}}</option>
+                                            @endif
                                         @endforeach
-                                    </div>
-                                </div>
+                                    </select>
+                                    <input type="submit" class="btn btn-success mx-3">
+                                </form>
                             </div>
                         </div>
                     </div>

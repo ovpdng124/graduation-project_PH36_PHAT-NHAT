@@ -45,7 +45,7 @@
                                         </td>
                                         <td>
                                             <div class="btn-group">
-                                                <a class="btn btn-info" href="{{route('order.detail',$item->id)}}">Detail</a>
+                                                <a class="btn btn-info" href="{{route('order.detail', $item->id)}}">Detail</a>
                                                 <a class="btn btn-info" href="">Edit</a>
                                                 <a class="btn btn-info" href="">Delete</a>
                                             </div>
