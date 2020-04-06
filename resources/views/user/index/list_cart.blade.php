@@ -42,21 +42,8 @@
             </div>
         </div>
     </div>
-
 @endsection
-@section('custom_footer_script')
-    <script type="text/javascript">
-        function getProducts() {
-            let cart = localStorage.getItem('cart')
-            $.ajax({
-                type: "GET",
-                url : "http://127.0.0.1:8000/product-cart",
-                data: JSON.parse(cart)
-            }).then(function (res) {
-                $('.table-body').append(res)
-            })
-        }
 
-        $(document).ready(getProducts())
-    </script>
+@section('custom_footer_script')
+    <script src="{{mix("/js/list_cart/list_cart.js")}}"></script>
 @endsection
