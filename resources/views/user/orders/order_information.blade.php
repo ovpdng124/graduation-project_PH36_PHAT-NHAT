@@ -1,11 +1,14 @@
 @extends('user.layouts.master')
-
+@section('title','My Order')
 @section('content')
     <div class="main-banner inner" style="background: url({{asset('template/images/banner.jpg')}})no-repeat center;"
          id="home"></div>
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
             <a href="{{route('index')}}">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{{route('profile')}}">Profile</a>
         </li>
         <li class="breadcrumb-item active">Order information</li>
     </ol>

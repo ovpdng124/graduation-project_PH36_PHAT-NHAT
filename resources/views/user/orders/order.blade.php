@@ -1,4 +1,5 @@
 @extends('user.layouts.master')
+@section('title','Create Order')
 @section('custom_import')
     <script src="{{mix('js/app.js')}}"></script>
 @endsection
@@ -9,7 +10,10 @@
         <li class="breadcrumb-item">
             <a href="{{route('index')}}">Home</a>
         </li>
-        <li class="breadcrumb-item active">Cart</li>
+        <li class="breadcrumb-item">
+            <a href="{{route('index')}}">Cart</a>
+        </li>
+        <li class="breadcrumb-item active">Create Order</li>
     </ol>
     <div class="container-fluid">
         <div class="container-fluid row justify-content-center">
@@ -26,19 +30,5 @@
     </div>
 @endsection
 @section('custom_footer_script')
-    <script type="text/javascript">
-        function getOrderProductList() {
-            let cart = localStorage.getItem('cart')
-            let url  = '/order-form'
-            $.ajax({
-                type: "GET",
-                url : url,
-                data: JSON.parse(cart)
-            }).then(function (res) {
-                $('.card-body').append(res)
-            })
-        }
-
-        $(document).ready(getOrderProductList())
-    </script>
+    <script src="{{mix('/js/orders/list.js')}}"></script>
 @endsection

@@ -74,9 +74,9 @@
             <input type="hidden" class="form-control discount-price" name="sale_price" value="">
             <input type="hidden" class="form-control voucher" name="voucher_id" value="">
             @foreach($products as $key => $item)
-            <input type="hidden" class="form-control" name="products[{{$key}}][sub_name]" value="{{$item->sub_name}}">
-            <input type="hidden" class="form-control" name="products[{{$key}}][sub_price]" value="{{$item->sub_price}}">
-            <input type="hidden" class="form-control" name="products[{{$key}}][quantity]" value="{{$item->quantity}}">
+                <input type="hidden" class="form-control" name="products[{{$key}}][sub_name]" value="{{$item->sub_name}}">
+                <input type="hidden" class="form-control" name="products[{{$key}}][sub_price]" value="{{$item->sub_price}}">
+                <input type="hidden" class="form-control" name="products[{{$key}}][quantity]" value="{{$item->quantity}}">
             @endforeach
             <div class="form-group">
                 <div class="row">
@@ -94,50 +94,5 @@
         </form>
     </div>
 </div>
-<script type="text/javascript">
-    $('#voucher-code').on('keyup', function () {
-        let voucherCode = $(this).val()
-        let totalPrice  = $("#total-price").text().replace(/,/g, '')
-        let url         = '/check-voucher'
-        $.ajax({
-            type: 'GET',
-            url : url,
-            data: {
-                'total_price' : totalPrice,
-                'voucher_code': voucherCode
-            }
-        }).then(function (response) {
-            let discountPriceText  = $('#discount-price')
-            let totalPaymentText   = $('#total-payment')
-            let discountPriceInput = $('.discount-price')
-            let totalPaymentInput  = $('.total-payment')
-            let isSale             = $('.is-sale')
-            let voucher            = $('.voucher')
-            let numberFormat       = new Intl.NumberFormat('en-US')
+<script src="{{mix('/js/orders/create.js')}}"></script>
 
-            if (response['discount_price'] !== 'No discount') {
-                discountPriceText.text(numberFormat.format(response['discount_price'].toFixed()))
-                totalPaymentText.text(numberFormat.format(response['total_payment'].toFixed()))
-                totalPaymentInput.attr('value', response['total_payment'])
-                isSale.attr('value', '1')
-                discountPriceInput.attr('value', response['discount_price'])
-                voucher.attr('value', response['voucher_id'])
-            }
-            else {
-                discountPriceText.text(response['discount_price'])
-                totalPaymentText.text(numberFormat.format(totalPrice))
-                totalPaymentInput.attr('value', totalPrice)
-                isSale.attr('value', '0')
-                discountPriceInput.attr('value', '')
-                voucher.attr('value', '')
-            }
-        })
-    })
-    $('.submit-order').click(function () {
-        let confirmed = confirm('Check your order again before submit');
-        if (confirmed){
-            $('#form-data').submit()
-            localStorage.removeItem('cart');
-        }
-    })
-</script>
