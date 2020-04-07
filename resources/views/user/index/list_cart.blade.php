@@ -50,7 +50,7 @@
             let cart = localStorage.getItem('cart')
             $.ajax({
                 type: "GET",
-                url : "http://127.0.0.1:8000/product-cart",
+                url : "/product-cart",
                 data: JSON.parse(cart)
             }).then(function (res) {
                 $('.table-body').append(res)

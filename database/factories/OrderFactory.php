@@ -11,7 +11,7 @@ $factory->define(Order::class, function (Faker $faker) {
     $voucherId   = $faker->randomElement([null, $faker->numberBetween(1, 10)]);
     $isSale      = ($voucherId) ? true : false;
     $salePrice   = ($isSale) ? $faker->randomFloat(null, 0, 100000) : null;
-    $order_label = 'BI' . strtoupper(now()->monthName) . now()->day . now()->year . $userId;
+    $order_label = 'BI' . strtoupper(now()->monthName) . now()->day . str_replace(':', '', now()->toTimeString()) . $userId;
 
     return [
         'user_id'     => $userId,

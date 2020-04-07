@@ -8,7 +8,6 @@ use App\Helpers\GlobalHelper;
 use App\Entities\ProductAttribute;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EditUserRequest;
-use App\Services\OrderService;
 use App\Services\ProductService;
 use App\Http\Requests\ChangePasswordProfileRequest;
 use App\Services\UserService;
@@ -17,10 +16,6 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    /**
-     * @var OrderService
-     */
-    protected $orderService;
     /**
      * @var ProductService
      */
@@ -33,7 +28,6 @@ class UserController extends Controller
         $this->productService = app(ProductService::class);
         $this->userService    = app(UserService::class);
         $this->messages       = GlobalHelper::$messages;
-        $this->orderService   = app(OrderService::class);
     }
 
     public function index()
@@ -111,59 +105,12 @@ class UserController extends Controller
     {
         $params = $request->get('products');
 
-        if (empty($params)){
+        if (empty($params)) {
             return response()->json("<td colspan='9' class='text-center'><i>There are no products to list</i></td>");
         }
 
         $data = $this->productService->getCartProducts($params);
 
         return response()->json(view('user.index.product_cart', $data)->render());
-    }
-
-    public function createOrder(Request $request)
-    {
-        //        $params = $request->except('_token', 'thumbnail');
-
-        //Params example!
-        $params = [
-            'user_id'        => '2',
-            'total_price'    => 100000,
-            'total_quantity' => 10,
-            'method_type'    => 0,
-            'is_sale'        => true,
-            'sale_price'     => 100000,
-            'voucher_id'     => 2,
-            'products'       => [
-                0 => [
-                    'sub_name'  => 'Gustave Deckow',
-                    'sub_price' => '123',
-                    'quantity'  => '35',
-                ],
-                1 => [
-                    'sub_name'  => 'Carmella Herzog',
-                    'sub_price' => '123',
-                    'quantity'  => '134',
-                ],
-                2 => [
-                    'sub_name'  => 'Ms. Scarlett Crooks',
-                    'sub_price' => '123',
-                    'quantity'  => '321',
-                ],
-                3 => [
-                    'sub_name'  => 'Cory Bernhard DDS',
-                    'sub_price' => '123',
-                    'quantity'  => '315',
-                ],
-                4 => [
-                    'sub_name'  => 'Dr. Allie Runolfsson',
-                    'sub_price' => '123',
-                    'quantity'  => '433',
-                ],
-            ],
-        ];
-
-        $status = $this->orderService->createOrder($params);
-
-        return response()->json('Success');
     }
 }

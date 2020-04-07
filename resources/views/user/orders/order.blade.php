@@ -15,42 +15,30 @@
         <div class="container-fluid row justify-content-center">
             <div class="card container-fluid">
                 <div class="card-header">
-                    <div class="float-right">
+                    <div class="text-center">
+                        <h1>Your Order</h1>
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="container-fluid">
-                        <h1 class="text-center">Your Cart</h1>
-                        <div class="row">
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                Launch demo modal
-                            </button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            ...
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+@section('custom_footer_script')
+    <script type="text/javascript">
+        function getOrderProductList() {
+            let cart = localStorage.getItem('cart')
+            let url  = '/order-form'
+            $.ajax({
+                type: "GET",
+                url : url,
+                data: JSON.parse(cart)
+            }).then(function (res) {
+                $('.card-body').append(res)
+            })
+        }
+
+        $(document).ready(getOrderProductList())
+    </script>
 @endsection

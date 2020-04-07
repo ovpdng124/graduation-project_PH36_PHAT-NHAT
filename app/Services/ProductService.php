@@ -131,10 +131,12 @@ class ProductService
         $products = $this->getProductAttributeCart($params, $productAttributes);
 
         $totalPriceCart = $productAttributes->sum('total_price');
+        $totalQuantity  = $productAttributes->sum('quantity');
 
         return [
-            'products' => $products,
-            'total'    => $totalPriceCart,
+            'products'       => $products,
+            'total_price'    => $totalPriceCart,
+            'total_quantity' => $totalQuantity,
         ];
     }
 

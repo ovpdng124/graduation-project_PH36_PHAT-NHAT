@@ -30,13 +30,23 @@ class OrderService
         return $query->orderByDesc('updated_at')->paginate($limits);
     }
 
+    public function getOrderLabel($userId)
+    {
+        $month = strtoupper(now()->monthName);
+        $day   = now()->day;
+        $time  = str_replace(':', '', now()->toTimeString());
+
+        return 'BI' . $month . $day . $time . $userId;
+    }
+
     public function createOrder($params)
     {
-        $order = Order::query();
+        $order      = Order::query();
+        $orderLabel = $this->getOrderLabel($params['user_id']);
 
         $orderData = [
             'user_id'     => $params['user_id'],
-            'order_label' => 'BI' . strtoupper(now()->monthName) . now()->day . now()->year . $params['user_id'],
+            'order_label' => $orderLabel,
             'quantity'    => $params['total_quantity'],
             'total_price' => $params['total_price'],
             'method_type' => $params['method_type'],
@@ -69,5 +79,48 @@ class OrderService
         }
 
         return true;
+    }
+
+    public function checkVoucherExist($vouchers)
+    {
+        if (count($vouchers) != 0) {
+            return $vouchers->first();
+        }
+
+        return false;
+    }
+
+    public function getVoucherInfo($voucher, $totalPrice)
+    {
+        $discountPrice = $this->checkDiscountUnit($voucher, $totalPrice);
+        $totalPayment  = $this->getTotalPayment($totalPrice, $discountPrice);
+
+        $voucherId = $voucher->id;
+
+        return [
+            'voucher_id'     => $voucherId,
+            'discount_price' => $discountPrice,
+            'total_payment'  => $totalPayment,
+        ];
+    }
+
+    public function checkDiscountUnit($voucher, $totalPrice)
+    {
+        if ($voucher->unit === '-') {
+            return $discountPrice = $voucher->value;
+        }
+
+        return $discountPrice = ($voucher->value * $totalPrice) / 100;
+    }
+
+    public function getTotalPayment($totalPrice, $discountPrice)
+    {
+        $totalPayment = $totalPrice - $discountPrice;
+
+        if ($totalPayment < 0) {
+            $totalPayment = 0;
+        }
+
+        return $totalPayment;
     }
 }

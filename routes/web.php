@@ -87,6 +87,10 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
 
     Route::group(['namespace' => 'User'], function () {
         Route::get('/profile', 'UserController@profile')->name('profile');
-        Route::get('/create-order', 'UserController@createOrder')->name('order.create');
+        Route::get('/order', 'OrderController@showOrderPage')->name('order.page');
+        Route::post('/create-order', 'OrderController@createOrder')->name('order.create');
+        Route::get('/my-order', 'OrderController@showOrderInformation')->name('order.info');
+        Route::get('/order-form', 'OrderController@showOrderForm');
+        Route::get('/check-voucher', 'OrderController@checkVoucherCode');
     });
 });
