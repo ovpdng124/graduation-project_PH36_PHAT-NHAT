@@ -49,7 +49,7 @@ class OrderController extends Controller
 
         $voucher = $this->orderService->checkVoucherExist($vouchers);
 
-        if ($voucher) {
+        if (!empty($voucher)) {
             $data = $this->orderService->getVoucherInfo($voucher, $totalPrice);
 
             return response()->json($data);

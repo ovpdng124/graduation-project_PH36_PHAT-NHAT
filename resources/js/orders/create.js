@@ -11,11 +11,11 @@ class Create {
             submitOrder       : $('.submit-order'),
             discountPriceInput: $('.discount-price'),
             totalPaymentInput : $('.total-payment'),
-            discountPriceText : $('#discount-price'),
-            totalPaymentText  : $('#total-payment'),
-            voucherCodeField  : $('#voucher-code'),
-            totalPrice        : $('#total-price'),
-            orderForm         : $('#form-data')
+            discountPriceText : $('#discountPrice'),
+            totalPaymentText  : $('#totalPayment'),
+            voucherCodeField  : $('#voucherCode'),
+            totalPrice        : $('#totalPrice'),
+            orderForm         : $('#formData')
         }
     }
 
@@ -62,7 +62,7 @@ class Create {
     submitOrder() {
         let orderForm = this.element.orderForm
         this.element.submitOrder.click(function () {
-            let confirmed = confirm('Check your order again before submit!')
+            let confirmed = confirm('The order will be created after clicking "OK", are you sure?')
             if (confirmed) {
                 orderForm.submit()
                 localStorage.removeItem('cart')
