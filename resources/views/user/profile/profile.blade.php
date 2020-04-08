@@ -39,7 +39,7 @@
                                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <label>User:</label>
+                                                    <label>Username:</label>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <p>{{$user->username}}</p>

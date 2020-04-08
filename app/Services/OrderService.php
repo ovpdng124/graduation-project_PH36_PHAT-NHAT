@@ -41,7 +41,6 @@ class OrderService
 
     public function createOrder($params)
     {
-        $order      = Order::query();
         $orderLabel = $this->getOrderLabel($params['user_id']);
 
         $orderData = [
@@ -56,14 +55,14 @@ class OrderService
             'voucher_id'  => $params['voucher_id'],
         ];
 
-        $order = $order->create($orderData);
+        $order = Order::create($orderData);
 
         return $this->createOrderProduct($order, $params);
     }
 
     public function createOrderProduct($order, $params)
     {
-        $productAttributes = ProductAttribute::get();
+        $productAttributes = ProductAttribute::all();
 
         foreach ($params['products'] as $value) {
             $productAttribute = $productAttributes->where('sub_name', $value['sub_name'])->first();
