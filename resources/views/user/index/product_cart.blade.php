@@ -15,9 +15,13 @@
     </tr>
 @endforeach
 
-<td colspan="8"><span class="float-right mr-5"><b style="font-size: 120%">Total: $ {{number_format($total)}}</b></span></td>
+<td colspan="8"><span class="float-right mr-5"><b style="font-size: 120%">Total: $ {{number_format($total_price)}}</b></span></td>
 <td>
-    <button class="container btn btn-success">Order</button>
+    @if(Auth::check())
+        <a href="{{route('order.page')}}" type="button" class="btn container btn-primary" >Order</a>
+    @else
+        <a type="button" href="{{route('login-form')}}" class="btn container btn-success">Login to order</a>
+    @endif
 </td>
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
 <script>

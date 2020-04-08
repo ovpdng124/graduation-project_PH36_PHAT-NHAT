@@ -39,7 +39,7 @@
                                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <label>User:</label>
+                                                    <label>Username:</label>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <p>{{$user->username}}</p>
@@ -79,12 +79,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="#">
-                                        <button class="btn btn-info">Shop Cart</button>
-                                    </a>
-                                    <a href="{{route('edit',$user->id)}}">
-                                        <button class="btn btn-primary float-right">Edit Info</button>
-                                    </a>
+                                </div>
+
+                            </div>
+                            <div class="row ml-1 container">
+                                <div class="col-5">
+                                    <a type="button" class="btn btn-info" href="{{route('edit',$user->id)}}">Edit Info</a>
+                                </div>
+                                <div class="col-7">
+                                    <a type="button" class="btn btn-success mr-3" href="{{route('list.cart')}}">Shop Cart</a>
+                                    <a type="button" class="btn btn-success" href="{{route('order.info')}}">My Order</a>
                                 </div>
                             </div>
                         </div>

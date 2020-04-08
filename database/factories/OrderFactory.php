@@ -7,17 +7,21 @@ use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factory;
 
 $factory->define(Order::class, function (Faker $faker) {
-    $order_label = 'BI-' . $faker->monthName . '-' . $faker->numberBetween(1, 10);
+    $userId      = $faker->numberBetween(1, 3);
+    $voucherId   = $faker->randomElement([null, $faker->numberBetween(1, 10)]);
+    $isSale      = ($voucherId) ? true : false;
+    $salePrice   = ($isSale) ? $faker->randomFloat(null, 0, 100000) : null;
+    $order_label = 'BI' . strtoupper(now()->monthName) . now()->day . str_replace(':', '', now()->toTimeString()) . $userId;
 
     return [
-        'user_id'     => $faker->numberBetween(1, 3),
-        'voucher_id'  => $faker->numberBetween(1, 10),
+        'user_id'     => $userId,
+        'voucher_id'  => $voucherId,
         'total_price' => $faker->randomFloat(null, 0, 100000),
         'quantity'    => $faker->numberBetween(1, 10),
         'method_type' => $faker->numberBetween(1, 2),
         'status'      => $faker->numberBetween(0, 4),
-        'is_sale'     => $faker->boolean,
-        'sale_price'  => $faker->randomFloat(null, 0, 100000),
+        'is_sale'     => $isSale,
+        'sale_price'  => $salePrice,
         'order_label' => $order_label,
     ];
 });

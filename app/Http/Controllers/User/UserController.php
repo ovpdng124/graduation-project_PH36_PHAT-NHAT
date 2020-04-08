@@ -105,7 +105,7 @@ class UserController extends Controller
     {
         $params = $request->get('products');
 
-        if (empty($params)){
+        if (empty($params)) {
             return response()->json("<td colspan='9' class='text-center'><i>There are no products to list</i></td>");
         }
 

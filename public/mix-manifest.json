@@ -6,5 +6,7 @@
     "/css/bootstraps.css": "/css/bootstraps.css",
     "/js/auth/login.js": "/js/auth/login.js",
     "/js/auth/register.js": "/js/auth/register.js",
-    "/js/lightslider.js": "/js/lightslider.js"
+    "/js/lightslider.js": "/js/lightslider.js",
+    "/js/orders/create.js": "/js/orders/create.js",
+    "/js/orders/list.js": "/js/orders/list.js"
 }
