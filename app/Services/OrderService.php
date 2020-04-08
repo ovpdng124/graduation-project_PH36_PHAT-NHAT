@@ -41,11 +41,9 @@ class OrderService
 
     public function createOrder($params)
     {
-        $orderLabel = $this->getOrderLabel($params['user_id']);
-
         $orderData = [
             'user_id'     => $params['user_id'],
-            'order_label' => $orderLabel,
+            'order_label' => $this->getOrderLabel($params['user_id']),
             'quantity'    => $params['total_quantity'],
             'total_price' => $params['total_price'],
             'method_type' => $params['method_type'],
@@ -86,7 +84,7 @@ class OrderService
             return $vouchers->first();
         }
 
-        return false;
+        return null;
     }
 
     public function getVoucherInfo($voucher, $totalPrice)
@@ -116,10 +114,6 @@ class OrderService
     {
         $totalPayment = $totalPrice - $discountPrice;
 
-        if ($totalPayment < 0) {
-            $totalPayment = 0;
-        }
-
-        return $totalPayment;
+        return ($totalPayment < 0) ? $totalPayment = 0 : $totalPayment;
     }
 }

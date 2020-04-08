@@ -1,6 +1,7 @@
 <div class="container-fluid">
-    <h2 class="">Order Information: </h2>
-    <div class="row">
+    <hr>
+    <h4 class="">Information: </h4><br>
+    <div class="row  font-weight-bold">
         <div class="col-6">
             <div class="row">
                 <label for="" class="col-2 float-right">Name</label>
@@ -22,7 +23,9 @@
             </div>
         </div>
     </div>
+    <hr>
 
+    <h4 class="">Products: </h4><br>
     <div class="row">
         <table class="table table-striped">
             <tr>
@@ -51,20 +54,21 @@
             </tbody>
         </table>
     </div>
-    <div class="row">
+    <hr>
+    <div class="row font-weight-bold">
         <div class="col-12">
-            <p class="float-right">Total price: $ <span id="total-price">{{number_format($total_price)}}</span></p>
+            <p style="color: black; font-size: 110%" class="float-right">Total price: $ <span id="totalPrice">{{number_format($total_price)}}</span></p>
         </div>
         <div class="col-12">
-            <p class="float-right">Discount price: $ <span id="discount-price">No discount</span></p>
+            <p style="color: black; font-size: 110%" class="float-right">Discount price: $ <span id="discountPrice">No discount</span></p>
 
         </div>
         <div class="col-12">
-            <p class="float-right">Total payment: $ <span id="total-payment">{{number_format($total_price)}}</span></p>
+            <p style="color: black; font-size: 110%" class="float-right">Total payment: $ <span id="totalPayment">{{number_format($total_price)}}</span></p>
         </div>
     </div>
     <div>
-        <form action="{{route('order.create')}}" method="post" id="form-data">
+        <form action="{{route('order.create')}}" method="post" id="formData">
             @csrf
             <input type="hidden" class="form-control" name="user_id" value="{{$user->id}}">
             <input type="hidden" class="form-control" name="method_type" value="1">
@@ -84,7 +88,7 @@
                         <div class="float-right">
                             <button type="button" style="width: 100%" class="btn btn-secondary" data-toggle="collapse" data-target="#voucher">Did you have discount code?</button>
                             <div id="voucher" class="collapse">
-                                <input type="text" id="voucher-code" class="form-control" name="voucher" placeholder="Enter discount code">
+                                <input type="text" id="voucherCode" class="form-control" name="voucher" placeholder="Enter discount code">
                             </div>
                         </div>
                     </div>
