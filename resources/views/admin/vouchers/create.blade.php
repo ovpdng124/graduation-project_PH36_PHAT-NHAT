@@ -59,7 +59,7 @@
                                                 <div class="">
                                                     <input type="radio" id="-" name="unit"
                                                            value="-">
-                                                    <label for="-">Division (-)</label>
+                                                    <label for="-">Minus (-)</label>
                                                 </div>
                                                 @if($errors->any())
                                                     @foreach($errors->get('unit') as $messages)

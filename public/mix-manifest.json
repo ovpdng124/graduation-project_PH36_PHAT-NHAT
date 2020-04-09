@@ -8,6 +8,8 @@
     "/js/auth/register.js": "/js/auth/register.js",
     "/js/detail_product/detail_product.js": "/js/detail_product/detail_product.js",
     "/js/list_cart/list_cart.js": "/js/list_cart/list_cart.js",
+    "/js/orders/create.js": "/js/orders/create.js",
+    "/js/orders/list.js": "/js/orders/list.js",
     "/js/product_cart/product_cart.js": "/js/product_cart/product_cart.js",
     "/js/slider/lightslider.js": "/js/slider/lightslider.js"
 }
