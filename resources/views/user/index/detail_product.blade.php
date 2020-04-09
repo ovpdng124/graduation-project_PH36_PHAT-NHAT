@@ -201,8 +201,8 @@
                             </ul>
                         </div>
                         <div class="desc1-right col-md-6 pl-lg-4">
-                            <h3>{{$product->name}}</h3>
-                            <h5>${{number_format($product->price)}}</h5>
+                            <h3 id="sub_name">{{$product->name}}</h3>
+                            <h5 id="sub_price">${{number_format($product->price)}}</h5>
                             <div class="available mt-3">
                                 <button type="submit" class="btn btn-success btn-cart" data-product-id="{{$product->id}}">Add to cart</button>
                             </div>
@@ -210,8 +210,8 @@
                                 <form action="{{route('product-detail',$product->id)}}" method="get">
                                     <h3 class="">Color</h3>
                                     @foreach($product->product_attributes as $item)
-                                        <label class="col-md-4 color" id="{{$item->id}}" data-label-color="{{$item->id}}" for="color-{{$item->color}}"
-                                               style="width: 30px; height: 30px; border-radius: 10px; background-color:{{$item->color}}"></label>
+                                        <label class="col-md-4 color" id="{{$item->id}}" data-sub-name="{{$item->sub_name}}" data-sub-price="{{number_format($item->sub_price)}}" data-label-color="{{$item->id}}" for="color-{{$item->color}}"
+                                               style="width: 30px; height: 30px; border-radius: 10px; border: 2px gray solid; background-color:{{$item->color}}"></label>
                                         <input class="col-md-4" type="radio" hidden id="color-{{$item->color}}" value="{{ltrim($item->color, $item->color[0])}}" name="color" style="width: 20px">
                                     @endforeach
                                 </form>

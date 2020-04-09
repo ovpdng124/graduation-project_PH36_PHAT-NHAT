@@ -22,11 +22,16 @@ class DetailProduct {
         $('.color').click(function () {
             let color   = $(this).data('labelColor')
             let labelId = '#'.concat(color)
+            let name    = $(this).data('subName')
+            let price   = '$'.concat($(this).data('subPrice'))
 
-            $('.color').css("border-style", "none")
+            $('.color').css({'border':'solid gray 2px', "height":"30px"})
 
             if ($("input[name='color']:checked")) {
-                $(labelId).css("border-style", "inset")
+                $(labelId).css({"height":"33px", "border-style":"inset"})
+
+                $('#sub_name').text(name)
+                $('#sub_price').text(price)
             }
         })
     }
