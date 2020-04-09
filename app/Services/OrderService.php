@@ -116,4 +116,32 @@ class OrderService
 
         return ($totalPayment < 0) ? $totalPayment = 0 : $totalPayment;
     }
+
+    public function getProductAttributes($orderProducts)
+    {
+        $productAttributes = [];
+
+        foreach ($orderProducts as $item) {
+            $productAttribute = $item->product_attributes->first();
+
+            $productAttribute->quantity = $item->quantity;
+            $productAttribute->price    = $item->price;
+            $productAttribute->total    = $item->quantity * $item->price;
+
+            $productAttributes[] = $productAttribute;
+        }
+
+        return $productAttributes;
+    }
+
+    public function getOrderDetail($orderProducts)
+    {
+        $order             = $orderProducts->first()->order;
+        $productAttributes = $this->getProductAttributes($orderProducts);
+
+        return [
+            'order'              => $order,
+            'product_attributes' => $productAttributes,
+        ];
+    }
 }
