@@ -92,6 +92,7 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
         Route::get('/order', 'OrderController@showOrderPage')->name('order.page');
         Route::post('/create-order', 'OrderController@createOrder')->name('order.create');
         Route::get('/my-order', 'OrderController@showOrderInformation')->name('order.info');
+        Route::get('/order-detail/{id}', 'OrderController@showOrderDetail')->name('user.order.detail');
         Route::get('/order-form', 'OrderController@showOrderForm');
         Route::get('/check-voucher', 'OrderController@checkVoucherCode');
     });
