@@ -42,13 +42,9 @@
                                     @foreach($orders as $key => $item)
                                         <tr>
                                             <td>{{$key + $orders->firstItem()}}</td>
-                                            <td width="50%">{{$item['order_label']}}</td>
-                                            <td width="20%">$ {{number_format($item['total_price'])}}</td>
-                                            <td width="20%">
-                                                <div class="btn-group">
-                                                    <span style="width: 100px" class="badge badge-pill badge-{!! $item->color_status !!}">{!! $item->name_status !!}</span>
-                                                </div>
-                                            </td>
+                                            <td width="50%"><a href="{{route('user.order.detail', $item->id)}}">{{$item->order_label}}</a></td>
+                                            <td width="20%">$ {{number_format($item->total_price)}}</td>
+                                            <td width="20%"><span style="width: 100px" class="badge badge-pill badge-{!! $item->color_status !!}">{!! $item->name_status !!}</span></td>
                                         </tr>
                                     @endforeach
                                 </table>
@@ -58,6 +54,9 @@
                                         <a class="btn btn-link" href="{{url()->previous()}}">Back</a>
                                     </div>
                                 @endif
+                            </div>
+                            <div class="container">
+                                <a href="{{url()->previous()}}" class="float-right btn btn-primary">Back</a>
                             </div>
                         </div>
                     </div>
