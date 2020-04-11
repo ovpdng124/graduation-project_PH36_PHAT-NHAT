@@ -117,31 +117,28 @@ class OrderService
         return ($totalPayment < 0) ? $totalPayment = 0 : $totalPayment;
     }
 
-    public function getProductAttributes($orderProducts)
+    public function getOrderDetail($productAttributes, $id)
     {
-        $productAttributes = [];
-
-        foreach ($orderProducts as $item) {
-            $productAttribute = $item->product_attributes->first();
-
-            $productAttribute->quantity = $item->quantity;
-            $productAttribute->price    = $item->price;
-            $productAttribute->total    = $item->quantity * $item->price;
-
-            $productAttributes[] = $productAttribute;
-        }
-
-        return $productAttributes;
-    }
-
-    public function getOrderDetail($orderProducts)
-    {
-        $order             = $orderProducts->first()->order;
-        $productAttributes = $this->getProductAttributes($orderProducts);
+        $order             = $productAttributes->first()->order_products->where('order_id', $id)->first()->order;
+        $productAttributes = $this->getProductAttributes($productAttributes, $id);
 
         return [
             'order'              => $order,
             'product_attributes' => $productAttributes,
         ];
+    }
+
+    public function getProductAttributes($productAttributes, $id)
+    {
+        foreach ($productAttributes as $item) {
+            $orderProduct = $item->order_products->where('order_id', $id)->first();
+
+            $item->quantity   = $orderProduct->quantity;
+            $item->price      = $orderProduct->price;
+            $item->total      = $orderProduct->quantity * $orderProduct->price;
+            $item->image_path = $item->product_images->first()->image_path;
+        }
+
+        return $productAttributes;
     }
 }

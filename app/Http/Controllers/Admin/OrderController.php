@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Entities\Order;
-use App\Entities\OrderProduct;
+use App\Entities\ProductAttribute;
 use App\Http\Controllers\Controller;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
@@ -33,9 +33,11 @@ class OrderController extends Controller
 
     public function detail($id)
     {
-        $orderProducts = OrderProduct::with('order', 'product_attributes')->where('order_id', $id)->get();
+        $productAttributes = ProductAttribute::with('product_images', 'order_products')->whereHas('order_products', function ($query) use ($id){
+           $query->where('order_id', $id);
+        })->get();
 
-        $orderDetail = $this->orderService->getOrderDetail($orderProducts);
+        $orderDetail = $this->orderService->getOrderDetail($productAttributes, $id);
 
         return view('admin.orders.detail', $orderDetail);
     }

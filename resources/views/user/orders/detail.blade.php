@@ -25,17 +25,17 @@
                             <div class="col-6">
                                 <div class="row">
                                     <label for="" class="col-2 float-right">Name</label>
-                                    <span>: {{$order->user->full_name}}</span>
+                                    <span>: {{Auth::user()->full_name}}</span>
                                 </div>
                                 <div class="row">
                                     <label for="" class="col-2">Address</label>
-                                    <span>: {{$order->user->address}}</span>
+                                    <span>: {{Auth::user()->address}}</span>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="row">
                                     <label for="" class="col-3">Status</label>
-                                        <span>: {{$order->name_status}}</span>
+                                    <span>: {{$order->name_status}}</span>
                                 </div>
                                 <div class="row">
                                     <label for="" class="col-3">Discount</label>
@@ -45,11 +45,11 @@
                             <div class="col-6">
                                 <div class="row">
                                     <label for="" class="col-2">Phone</label>
-                                    <span>: {{$order->user->phone_number}}</span>
+                                    <span>: {{Auth::user()->phone_number}}</span>
                                 </div>
                                 <div class="row">
                                     <label for="" class="col-2">Email</label>
-                                    <span>: {{$order->user->email}}</span>
+                                    <span>: {{Auth::user()->email}}</span>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -68,24 +68,28 @@
                     <div class="card-body">
                         <div class="container">
                             <div class="row">
-                                <table class="table table-striped">
+                                <table class="table table-striped text-center">
                                     <thead>
                                     <tr>
-                                        <th width="5%">#</th>
-                                        <th width="30%">Name</th>
-                                        <th width="30%">Unit Price</th>
-                                        <th width="10%">Quantity</th>
-                                        <th width="10%">Total</th>
+                                        <th width="2%">#</th>
+                                        <th width="38%" class="text-left">Name</th>
+                                        <th width="15%">Image</th>
+                                        <th width="10%">Color</th>
+                                        <th width="15%">Unit Price</th>
+                                        <th width="5%">Quantity</th>
+                                        <th width="15%">Total</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($product_attributes as $key  => $item)
                                         <tr>
                                             <td width="2%">{{++$key}}</td>
-                                            <td width="40%">{{$item->sub_name}}</td>
-                                            <td width="20%">$ {{number_format($item->price)}}</td>
+                                            <td width="38%" class="text-left">{{$item->sub_name}}</td>
+                                            <td width="15%"><img width="100px" height="100px" src="{{asset($item->image_path)}}" alt=""></td>
+                                            <td width="10%"><p style="margin-left: 10px;border-radius: 100px; background-color: {{$item->color}}; height: 80px; width: 80px"></p></td>
+                                            <td width="15%">$ {{number_format($item->price)}}</td>
                                             <td width="5%">{{$item->quantity}}</td>
-                                            <td width="25%">$ {{number_format($item->total)}}</td>
+                                            <td width="15%">$ {{number_format($item->total)}}</td>
                                         </tr>
                                     @endforeach
                                 </table>

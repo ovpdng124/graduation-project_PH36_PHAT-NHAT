@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Entities\Order;
-use App\Entities\OrderProduct;
+use App\Entities\ProductAttribute;
 use App\Entities\Voucher;
 use App\Http\Controllers\Controller;
 use App\Services\OrderService;
@@ -79,9 +79,11 @@ class OrderController extends Controller
 
     public function showOrderDetail($id)
     {
-        $orderProducts = OrderProduct::with('order', 'product_attributes')->where('order_id', $id)->get();
+        $productAttributes = ProductAttribute::with('product_images', 'order_products')->whereHas('order_products', function ($query) use ($id){
+            $query->where('order_id', $id);
+        })->get();
 
-        $orderDetail = $this->orderService->getOrderDetail($orderProducts);
+        $orderDetail = $this->orderService->getOrderDetail($productAttributes, $id);
 
         return view('user.orders.detail', $orderDetail);
     }
