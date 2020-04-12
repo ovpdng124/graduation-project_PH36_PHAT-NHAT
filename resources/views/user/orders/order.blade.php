@@ -11,7 +11,7 @@
             <a href="{{route('index')}}">Home</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="{{route('index')}}">Cart</a>
+            <a href="{{url()->previous()}}">Cart</a>
         </li>
         <li class="breadcrumb-item active">Create Order</li>
     </ol>
