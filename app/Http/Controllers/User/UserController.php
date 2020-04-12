@@ -12,7 +12,6 @@ use App\Services\ProductService;
 use App\Http\Requests\ChangePasswordProfileRequest;
 use App\Services\UserService;
 use Auth;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -69,15 +68,6 @@ class UserController extends Controller
         return redirect(route('profile'))->with($this->messages['update_success']);
     }
 
-    public function showDetailProduct($id)
-    {
-        $products = Product::with('product_images')->get();
-
-        $data = $this->productService->getDetailProduct($id, $products);
-
-        return view('user.index.detail_product', $data);
-    }
-
     public function changePasswordUser()
     {
         return view('user.profile.profile_edit_password');
@@ -94,23 +84,5 @@ class UserController extends Controller
         }
 
         return redirect(route('profile'))->with($this->messages['change_password_success']);
-    }
-
-    public function showListCart()
-    {
-        return view('user.index.list_cart');
-    }
-
-    public function showProductCart(Request $request)
-    {
-        $params = $request->get('products');
-
-        if (empty($params)) {
-            return response()->json("<td colspan='9' class='text-center'><i>There are no products to list</i></td>");
-        }
-
-        $data = $this->productService->getCartProducts($params);
-
-        return response()->json(view('user.index.product_cart', $data)->render());
     }
 }

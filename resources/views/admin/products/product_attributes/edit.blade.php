@@ -80,6 +80,11 @@
                                                         <option value="{{$item}}" {{$item == $product_attribute->color ? 'selected' : ''}}>{{$key}}</option>
                                                     @endforeach
                                                 </select>
+                                                @if($errors->any())
+                                                    @foreach($errors->get('color') as $messages)
+                                                        <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
+                                                    @endforeach
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="form-group row">

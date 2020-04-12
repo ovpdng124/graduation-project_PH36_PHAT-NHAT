@@ -201,8 +201,8 @@
                             </ul>
                         </div>
                         <div class="desc1-right col-md-6 pl-lg-4">
-                            <h3>{{$product->name}}</h3>
-                            <h5>${{number_format($product->price)}}</h5>
+                            <h3 id="sub_name">{{$product->name}}</h3>
+                            <h5 id="sub_price">${{number_format($product->price)}}</h5>
                             <div class="available mt-3">
                                 <button type="submit" class="btn btn-success btn-cart" data-product-id="{{$product->id}}">Add to cart</button>
                             </div>
@@ -210,8 +210,8 @@
                                 <form action="{{route('product-detail',$product->id)}}" method="get">
                                     <h3 class="">Color</h3>
                                     @foreach($product->product_attributes as $item)
-                                        <label class="col-md-4 color" id="{{$item->id}}" data-label-color="{{$item->id}}" for="color-{{$item->color}}"
-                                               style="width: 30px; height: 30px; border-radius: 10px; background-color:{{$item->color}}"></label>
+                                        <label class="col-md-4 color" id="{{$item->id}}" data-sub-name="{{$item->sub_name}}" data-sub-price="{{number_format($item->sub_price)}}" data-label-color="{{$item->id}}" for="color-{{$item->color}}"
+                                               style="width: 30px; height: 30px; border-radius: 10px; border: 2px gray solid; background-color:{{$item->color}}"></label>
                                         <input class="col-md-4" type="radio" hidden id="color-{{$item->color}}" value="{{ltrim($item->color, $item->color[0])}}" name="color" style="width: 20px">
                                     @endforeach
                                 </form>
@@ -278,77 +278,13 @@
         </div>
     </section>
 @endsection
+
 @section('custom_import')
     <link type="text/css" rel="stylesheet" href="{{asset("/template/css/lightslider.css") }}"/>
-    <script src="{{mix("/js/lightslider.js")}}"></script>
+    <script src="{{mix("/js/slider/lightslider.js")}}"></script>
 @endsection
+
 @section('custom_footer_script')
-    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#lightSlider").lightSlider({
-                gallery    : true,
-                item       : 1,
-                loop       : true,
-                slideMargin: 0,
-                thumbItem  : 9
-            })
-        })
-
-        $('.color').click(function () {
-            let color   = $(this).data('labelColor')
-            let labelId = '#'.concat(color)
-
-            $('.color').css("border-style", "none")
-
-            if ($("input[name='color']:checked")) {
-                $(labelId).css("border-style", "inset")
-            }
-        })
-
-        $(".btn-cart").click((function () {
-            let cart  = localStorage.getItem('cart')
-            let color = $("input[name='color']:checked").val()
-
-            if (cart == null) {
-                cart = {
-                    "products": []
-                }
-            } else {
-                cart = JSON.parse(cart)
-            }
-            if (color != null) {
-                let productId  = $(this).data('product-id')
-                let checkExist = false
-
-                //check Quantity
-                _.forEach(cart.products, function (product) {
-                    if (product.product_id === productId && product.color === color) {
-                        product.quantity = product.quantity + 1
-                        product.color    = color
-
-                        checkExist = true
-                    }
-                })
-
-                if (!checkExist) {
-                    let product = {
-                        product_id: productId,
-                        quantity  : 1,
-                        color     : color
-                    }
-
-                    cart.products.push(product)
-                }
-
-                localStorage.setItem('cart', JSON.stringify(cart))
-
-                alert("Add cart success")
-
-            } else {
-                alert("Please choose color")
-            }
-        }))
-    </script>
+    <script src="{{mix("/js/detail_product/detail_product.js")}}"></script>
 @endsection
 
