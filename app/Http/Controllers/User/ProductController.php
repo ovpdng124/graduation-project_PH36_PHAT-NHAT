@@ -22,12 +22,12 @@ class ProductController extends Controller
 
         $data = $this->productService->getDetailProduct($id, $products);
 
-        return view('user.index.detail_product', $data);
+        return view('user.products.detail_product', $data);
     }
 
     public function showListCart()
     {
-        return view('user.index.list_cart');
+        return view('user.carts.list_cart');
     }
 
     public function showProductCart(Request $request)
@@ -40,6 +40,6 @@ class ProductController extends Controller
 
         $data = $this->productService->getCartProducts($params);
 
-        return response()->json(view('user.index.product_cart', $data)->render());
+        return response()->json(view('user.carts.product_cart', $data)->render());
     }
 }
