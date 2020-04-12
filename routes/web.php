@@ -82,6 +82,8 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
 
         Route::group(['prefix' => 'order'], function () {
             Route::get('/', 'OrderController@showListOrder')->name('order.list');
+            Route::get('/detail/{id}', 'OrderController@detail')->name('order.detail');
+            Route::put('updateStatus/{id}', 'OrderController@updateStatus')->name('order.updateStatus');
         });
     });
 
@@ -90,6 +92,7 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
         Route::get('/order', 'OrderController@showOrderPage')->name('order.page');
         Route::post('/create-order', 'OrderController@createOrder')->name('order.create');
         Route::get('/my-order', 'OrderController@showOrderInformation')->name('order.info');
+        Route::get('/order-detail/{id}', 'OrderController@showOrderDetail')->name('user.order.detail');
         Route::get('/order-form', 'OrderController@showOrderForm');
         Route::get('/check-voucher', 'OrderController@checkVoucherCode');
     });
