@@ -40,6 +40,10 @@ class ProductController extends Controller
 
         $data = $this->productService->getCartProducts($params);
 
+        if (count($data['products']) == 0){
+            return response()->json(null);
+        }
+
         return response()->json(view('user.carts.product_cart', $data)->render());
     }
 }

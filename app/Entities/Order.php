@@ -19,7 +19,7 @@ class Order extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withTrashed();
     }
 
     public function order_products()
@@ -29,7 +29,7 @@ class Order extends Model
 
     public function voucher()
     {
-        return $this->belongsTo(Voucher::class);
+        return $this->belongsTo(Voucher::class)->withTrashed();
     }
 
     public function getColorStatusAttribute()

@@ -102,7 +102,7 @@ class ProductService
 
         foreach ($productAttributes as $product) {
             $image_path                         = $product->product_images->first()->image_path;
-            $popularProduct["product" . $count] = $product->id;
+            $popularProduct["product" . $count] = $product->product_id;
             $popularProduct["image" . $count]   = $image_path;
 
             $count++;
@@ -146,6 +146,11 @@ class ProductService
 
         foreach ($params as $param) {
             $productAttribute = $collection->where('product_id', $param['product_id'])->where('color', "#" . $param['color'])->first();
+
+            if (empty($productAttribute)) {
+                $productAttributes = [];
+                break;
+            }
 
             $productAttribute->quantity    = $param['quantity'];
             $productAttribute->image_path  = $productAttribute->product_images->first()->image_path;

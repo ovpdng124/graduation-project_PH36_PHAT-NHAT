@@ -56,7 +56,7 @@
                                     <th>Address</th>
                                     <th>Phone</th>
                                     <th>Role</th>
-                                    <th class="text-center" colspan="2">Action</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                                 @foreach($users as $key => $item)
                                     <tr>
@@ -68,16 +68,14 @@
                                         <td>{{$item['phone_number']}}</td>
                                         <td>{{$item->role->name}}</td>
                                         <td>
-                                            <a href="{{route('user.edit', $item->id)}}">
-                                                <button class="btn-link">Edit</button>
-                                            </a>
-                                        </td>
-                                        <td {{$item->role->id === \App\Entities\Role::$roles['Admin'] ? 'hidden' : ''}}>
-                                            <form action="{{route('user.delete', $item->id)}}" method="post">
-                                                @method('delete')
-                                                @csrf
-                                                <button onclick="return confirm('Do you want remove this user?')" class="btn-link" type="submit">Delete</button>
-                                            </form>
+                                            <div class="btn-group">
+                                                <a class="btn btn-warning" href="{{route('user.edit', $item->id)}}">Edit</a>
+                                                <form action="{{route('user.delete', $item->id)}}" method="post" {{$item->role->id === \App\Entities\Role::$roles['Admin'] ? 'hidden' : ''}}>
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button onclick="return confirm('Do you want remove this user?')" class="btn btn-info rounded-0 btn-danger" type="submit">Delete</button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

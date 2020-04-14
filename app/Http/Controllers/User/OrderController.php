@@ -79,7 +79,7 @@ class OrderController extends Controller
 
     public function showOrderDetail($id)
     {
-        $productAttributes = ProductAttribute::with('product_images', 'order_products')->whereHas('order_products', function ($query) use ($id){
+        $productAttributes = ProductAttribute::withTrashed()->with('product_images', 'order_products')->whereHas('order_products', function ($query) use ($id){
             $query->where('order_id', $id);
         })->get();
 

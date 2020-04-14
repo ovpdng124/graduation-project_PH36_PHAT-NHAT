@@ -28,14 +28,14 @@
                                                         <option value="{{$item->id}}" {{$item->id == old('product_id')? 'selected' : ''}}>{{$item->name}}</option>
                                                     @endforeach
                                                 </select>
+                                                @if($errors->any())
+                                                    @foreach($errors->get('product_id') as $messages)
+                                                        <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
+                                                    @endforeach
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            @if($errors->any())
-                                                @foreach($errors as $messages)
-                                                    <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
-                                                @endforeach
-                                            @endif
                                             <div class="col-xs-3 col-md-3">
                                                 <label for="" class="float-md-right mt-2">Sub Name: </label>
                                             </div>

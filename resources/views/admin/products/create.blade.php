@@ -53,6 +53,11 @@
                                                         <option value="{{$item->id}}" {{$item->id == old('category_id') ? 'selected' : ''}}>{{$item->name}}</option>
                                                     @endforeach
                                                 </select>
+                                                @if($errors->any())
+                                                    @foreach($errors->get('category_id') as $messages)
+                                                        <i style="color: red; font-size: 90%; font-family: sans-serif">*{{$messages}}</i>
+                                                    @endforeach
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="form-group row">

@@ -49,7 +49,7 @@
                                     <th>Code</th>
                                     <th>Value</th>
                                     <th>Unit</th>
-                                    <th class="text-center" colspan="2">Action</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                                 @foreach($vouchers as $key => $item)
                                     <tr>
@@ -57,24 +57,22 @@
                                         <td width="40%">{{$item->code}}</td>
                                         <td width="20%">{{$item->value}}</td>
                                         <td width="20%">{{$item->unit}}</td>
-                                        <td width="10%">
-                                            <a href="{{route('voucher.edit', $item->id)}}">
-                                                <button class="btn-link">Edit</button>
-                                            </a>
-                                        </td>
-                                        <td width="10%">
-                                            <form action="{{route('voucher.destroy', $item->id)}}" method="post">
-                                                @method('delete')
-                                                @csrf
-                                                <button onclick="return confirm('Do you want remove this code?')" class="btn-link" type="submit">Delete</button>
-                                            </form>
+                                        <td width="20%">
+                                            <div class="btn-group">
+                                                <a class="btn btn-warning" href="{{route('voucher.edit', $item->id)}}">Edit</a>
+                                                <form action="{{route('voucher.destroy',  $item->id)}}" method="post">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button onclick="return confirm('Do you want remove this voucher?')" class="btn btn-info rounded-0 btn-danger" type="submit">Delete</button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
                             </table>
                             @if(count($vouchers) == 0)
                                 <div class="text-center container-fluid">
-                                    <p><i>There are no products to list</i></p>
+                                    <p><i>No vouchers</i></p>
                                     <a href="{{url()->previous()}}">Back</a>
                                 </div>
                             @endif

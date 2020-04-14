@@ -33,35 +33,29 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th class="text-center" colspan="3">Action</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                                 @foreach($categories as $key => $item)
                                     <tr>
                                         <td width="2%">{{$key + $categories->firstItem()}}</td>
-                                        <td>{{$item->name}}</td>
-                                        <td width="10%" class="text-center">
-                                            <a href="{{route('category.show', $item->id)}}">
-                                                <button class="btn-link">Details</button>
-                                            </a>
-                                        </td>
-                                        <td width="10%" class="text-center">
-                                            <a href="{{route('category.edit', $item->id)}}">
-                                                <button class="btn-link">Edit</button>
-                                            </a>
-                                        </td>
-                                        <td width="10%">
-                                            <form action="{{route('category.destroy', $item->id)}}" method="post">
-                                                @method('delete')
-                                                @csrf
-                                                <button onclick="return confirm('Do you want remove this category?')" class="btn-link" type="submit">Delete</button>
-                                            </form>
+                                        <td width="78%">{{$item->name}}</td>
+                                        <td width="20%" class="text-center">
+                                            <div class="btn-group">
+                                                <a class="btn btn-info" href="{{route('category.show', $item->id)}}">Detail</a>
+                                                <a class="btn btn-warning" href="{{route('category.edit', $item->id)}}">Edit</a>
+                                                <form action="{{route('category.destroy', $item->id)}}" method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button class="btn btn-danger rounded-0" type="submit" onclick="return confirm('Do you want remove this category?')">Delete</button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
                             </table>
                             @if(count($categories) == 0)
                                 <div class="text-center container-fluid">
-                                    <p><i>There are no products to list</i></p>
+                                    <p><i>No categories</i></p>
                                     <a href="{{url()->previous()}}">Back</a>
                                 </div>
                             @endif

@@ -9,11 +9,11 @@ use Carbon\Carbon;
 class GlobalHelper
 {
     public static $colorDefaults = [
-        'White' => "#ffffff",
-        'Black' => '#000000',
-        'Blue'  => '#000066',
-        'Red'   => '#ff0000',
-        'Green' => '#33ff33',
+        'Black'  => '#000000',
+        'Blue'   => '#000066',
+        'Red'    => '#ff0000',
+        'Green'  => '#33ff33',
+        'Brown' => "#aa5500",
     ];
 
     public static $messages = [

@@ -25,6 +25,7 @@ class CreateProductAttributeRequest extends FormRequest
     public function rules()
     {
         return [
+            'product_id'   => 'required',
             'sub_name'     => 'required|unique:product_attributes',
             'sub_price'    => 'required|numeric',
             'size'         => 'required|numeric',

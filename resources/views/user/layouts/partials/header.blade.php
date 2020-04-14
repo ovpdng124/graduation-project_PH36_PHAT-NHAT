@@ -16,20 +16,6 @@
                     @endif
                 @endauth
                 <li class="active"><a href="{{route('index')}}">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Blog</a></li>
-                <li>
-                    <!-- First Tier Drop Down -->
-                    <label for="drop-2" class="toggle">Drop Down <span class="fa fa-angle-down"
-                                                                       aria-hidden="true"></span> </label>
-                    <a href="#">Drop Down <span class="fa fa-angle-down" aria-hidden="true"></span></a>
-                    <input type="checkbox" id="drop-2"/>
-                    <ul>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Shop Now</a></li>
-                        <li><a href="#">Single Page</a></li>
-                    </ul>
-                </li>
                 <li><a href="{{route('list.cart')}}">Cart</a><br></li>
                 @auth
                     <li>

@@ -48,17 +48,15 @@
                                             <td width="2%">{{++$key}}</td>
                                             <td width="70%">{{$item->name}}</td>
                                             <td width="20%"><img src="/{{$item->product_images->first()->image_path}}" width="150" height="150"></td>
-                                            <td width="10%">
-                                                <a href="{{route('product.show', $item->id)}}">
-                                                    <button class="btn-link">Details</button>
-                                                </a>
-                                            </td>
-                                            <td width="10%">
-                                                <form action="{{route('product.destroy', $item->id)}}" method="post">
-                                                    @method('delete')
-                                                    @csrf
-                                                    <button onclick="return confirm('Do you want remove this product?')" class="btn-link" type="submit">Delete</button>
-                                                </form>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a class="btn btn-info" href="{{route('product.show', $item->id)}}">Detail</a>
+                                                    <form action="{{route('product.destroy', $item->id)}}" method="post">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button class="btn btn-danger rounded-0" type="submit" onclick="return confirm('Do you want remove this product attribute?')">Delete</button>
+                                                    </form>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach

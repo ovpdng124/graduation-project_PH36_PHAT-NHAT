@@ -18,13 +18,13 @@
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
                                 <p class="text-bold d-inline">Category:</p>
-                                <p class="d-inline"><a class="text-dark text-decoration-none" href="{{route('category.index')}}">{{$product->category->name}}</a></p>
+                                <p class="d-inline"><b><a class="text-info text-decoration-none" href="{{route('category.index')}}">{{($product->category) ? $product->category->name : 'Has been deleted'}}</a></b></p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
                                 <p class="text-bold d-inline">Price : </p>
-                                <p class="d-inline">{{number_format($product->price)}}</p>
+                                <p class="d-inline">$ {{number_format($product->price)}}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -68,8 +68,8 @@
                                     <th width="30%">Name</th>
                                     <th width="30%">Price</th>
                                     <th width="10%">Size</th>
-                                    <th width="10%">Color</th>
-                                    <th width="20%" colspan="2" class="text-center">Action</th>
+                                    <th class="text-center">Color</th>
+                                    <th width="20%" class="text-center">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -79,18 +79,16 @@
                                         <td width="40%">{{$item->sub_name}}</td>
                                         <td width="20%">$ {{number_format($item->sub_price)}}</td>
                                         <td width="10%">{{$item->size}}</td>
-                                        <td width="5%" style="width: 30px; background-color: {{$item->color}}"></td>
-                                        <td width="5%">
-                                            <a href="{{route('product.product-attribute.edit', $item->id)}}">
-                                                <button class="btn-link">Edit</button>
-                                            </a>
-                                        </td>
-                                        <td width="5%">
-                                            <form action="{{route('product-attribute.destroy', $item->id)}}" method="post">
-                                                @method('delete')
-                                                @csrf
-                                                <button onclick="return confirm('Do you want remove this product attribute?')" class="btn-link" type="submit">Delete</button>
-                                            </form>
+                                        <td width="5%" style="border-radius: 50px; background-color: {{$item->color}}"></td>
+                                        <td width="23%">
+                                            <div class="btn-group">
+                                                <a class="btn btn-warning" href="{{route('product.product-attribute.edit', $item->id)}}">Edit</a>
+                                                <form action="{{route('product-attribute.destroy', $item->id)}}" method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button class="btn btn-danger rounded-0" type="submit" onclick="return confirm('Do you want remove this product attribute?')">Delete</button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

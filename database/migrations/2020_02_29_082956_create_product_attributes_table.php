@@ -20,6 +20,7 @@ class CreateProductAttributesTable extends Migration
             $table->integer('size');
             $table->integer('color');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

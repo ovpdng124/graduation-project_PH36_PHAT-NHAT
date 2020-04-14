@@ -120,6 +120,7 @@ class OrderService
     public function getOrderDetail($productAttributes, $id)
     {
         $order             = $productAttributes->first()->order_products->where('order_id', $id)->first()->order;
+
         $productAttributes = $this->getProductAttributes($productAttributes, $id);
 
         return [

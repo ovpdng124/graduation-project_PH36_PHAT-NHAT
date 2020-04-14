@@ -46,11 +46,11 @@
                                         <td>
                                             <div class="btn-group">
                                                 <a class="btn btn-info" href="{{route('order.detail', $item->id)}}">Detail</a>
-                                                <a class="btn btn-info" href="{{route('order.edit', $item->id)}}">Edit</a>
+                                                <a class="btn btn-warning" href="{{route('order.edit', $item->id)}}">Edit</a>
                                                 <form action="{{route('order.delete', $item->id)}}" method="post">
                                                     @csrf
                                                     @method('delete')
-                                                    <button class="btn btn-info rounded-0" type="submit" onclick="confirm('Are you sure?')">Delete</button>
+                                                    <button class="btn btn-danger rounded-0" type="submit" onclick="return confirm('Are you sure?')">Delete</button>
                                                 </form>
                                             </div>
                                         </td>

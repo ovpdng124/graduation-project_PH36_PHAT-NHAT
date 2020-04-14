@@ -98,7 +98,13 @@ class ProductController extends Controller
 
     public function destroy($id)
     {
-        Product::find($id)->delete();
+        $product = Product::with('product_attributes')->find($id);
+
+        foreach ($product->product_attributes as $product_attribute) {
+            $product_attribute->delete();
+        }
+
+        $product->delete();
 
         return redirect()->back()->with($this->messages['delete_success']);
     }

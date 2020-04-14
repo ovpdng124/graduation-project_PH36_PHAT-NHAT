@@ -53,8 +53,8 @@
                                     <th>Name</th>
                                     <th>Price</th>
                                     <th>Size</th>
-                                    <th>Color</th>
-                                    <th class="text-center" colspan="2">Action</th>
+                                    <th class="text-center">Color</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                                 @foreach($productAttributes as $key => $item)
                                     <tr>
@@ -62,16 +62,16 @@
                                         <td width="40%">{{$item->sub_name}}</td>
                                         <td width="20%">$ {{number_format($item->sub_price)}}</td>
                                         <td width="10%">{{$item->size}}</td>
-                                        <td width="5%" style="width: 30px; background-color: {{$item->color}}"></td>
-                                        <td width="5%">
-                                            <a href="{{route('product-attribute.edit', $item->id)}}"><button class="btn-link">Edit</button></a>
-                                        </td>
-                                        <td width="5%">
-                                            <form action="{{route('product-attribute.destroy', $item->id)}}" method="post">
-                                                @method('delete')
-                                                @csrf
-                                                <button onclick="return confirm('Do you want remove this product attribute?')" class="btn-link" type="submit">Delete</button>
-                                            </form>
+                                        <td width="5%" style="border-radius: 50px; background-color: {{$item->color}}"></td>
+                                        <td width="23%" class="text-center">
+                                            <div class="btn-group">
+                                                <a class="btn btn-warning" href="{{route('product-attribute.edit', $item->id)}}">Edit</a>
+                                                <form action="{{route('product-attribute.destroy', $item->id)}}" method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button class="btn btn-danger rounded-0" type="submit" onclick="return confirm('Do you want remove this product attribute?')">Delete</button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
