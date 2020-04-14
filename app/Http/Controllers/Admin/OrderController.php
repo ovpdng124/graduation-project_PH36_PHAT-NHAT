@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Entities\Order;
 use App\Entities\ProductAttribute;
+use App\Helpers\GlobalHelper;
 use App\Http\Controllers\Controller;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
@@ -33,8 +34,8 @@ class OrderController extends Controller
 
     public function detail($id)
     {
-        $productAttributes = ProductAttribute::with('product_images', 'order_products')->whereHas('order_products', function ($query) use ($id){
-           $query->where('order_id', $id);
+        $productAttributes = ProductAttribute::with('product_images', 'order_products')->whereHas('order_products', function ($query) use ($id) {
+            $query->where('order_id', $id);
         })->get();
 
         $orderDetail = $this->orderService->getOrderDetail($productAttributes, $id);
@@ -49,5 +50,28 @@ class OrderController extends Controller
         Order::find($id)->update($status);
 
         return redirect()->route('order.detail', $id);
+    }
+
+    public function edit($id)
+    {
+        $order = Order::find($id);
+
+        return view('admin.orders.edit', compact('order'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $params = $request->except('_token', 'voucher');
+
+        Order::find($id)->update($params);
+
+        return redirect(route('order.list'))->with(GlobalHelper::$messages['update_success']);
+    }
+
+    public function delete($id)
+    {
+        Order::find($id)->delete();
+
+        return redirect()->back()->with(GlobalHelper::$messages['delete_success']);
     }
 }
