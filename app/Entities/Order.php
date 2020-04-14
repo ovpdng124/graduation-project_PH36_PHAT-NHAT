@@ -13,10 +13,9 @@ class Order extends Model
         'Shipping' => 1,
         'Paid'     => 2,
         'Complete' => 3,
-        'Cancel'   => 4,
     ];
 
-    public static $statusColor = ['warning', 'secondary', 'success', 'primary', 'danger'];
+    public static $statusColor = ['warning', 'secondary', 'success', 'primary'];
 
     public function user()
     {

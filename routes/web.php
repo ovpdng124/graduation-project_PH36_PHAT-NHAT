@@ -84,6 +84,9 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
             Route::get('/', 'OrderController@showListOrder')->name('order.list');
             Route::get('/detail/{id}', 'OrderController@detail')->name('order.detail');
             Route::put('updateStatus/{id}', 'OrderController@updateStatus')->name('order.updateStatus');
+            Route::get('/edit/{id}', 'OrderController@edit')->name('order.edit');
+            Route::put('/update/{id}', 'OrderController@update')->name('order.update');
+            Route::delete('/delete/{id}', 'OrderController@delete')->name('order.delete');
         });
     });
 

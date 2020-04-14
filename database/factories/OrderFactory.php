@@ -19,7 +19,7 @@ $factory->define(Order::class, function (Faker $faker) {
         'total_price' => $faker->randomFloat(null, 0, 100000),
         'quantity'    => $faker->numberBetween(1, 10),
         'method_type' => $faker->numberBetween(1, 2),
-        'status'      => $faker->numberBetween(0, 4),
+        'status'      => $faker->numberBetween(0, 3),
         'is_sale'     => $isSale,
         'sale_price'  => $salePrice,
         'order_label' => $order_label,
