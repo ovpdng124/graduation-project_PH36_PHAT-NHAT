@@ -6,15 +6,15 @@ class GetProduct {
 
     getProducts() {
         let getProducts = this
-        let cart     = localStorage.getItem('cart')
-        let your_url = "/product-cart"
+        let cart        = localStorage.getItem('cart')
+        let url         = "/product-cart"
 
         $.ajax({
             type: "GET",
-            url : your_url,
+            url : url,
             data: JSON.parse(cart)
         }).then(function (res) {
-            if($.isEmptyObject(res)){
+            if ($.isEmptyObject(res)) {
                 localStorage.removeItem('cart')
                 getProducts.getProducts()
             }

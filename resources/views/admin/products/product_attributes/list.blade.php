@@ -27,10 +27,6 @@
                                     <input type="radio" name="searchBy" id="price" value="sub_price" {{request()->query('searchBy') == 'sub_price' ? 'checked' : ''}}>
                                     <label for="price">Price</label>
                                 </div>
-                                <div class="col-5">
-                                    <input type="radio" name="searchBy" id="color" value="color" {{request()->query('searchBy') == 'color' ? 'checked' : ''}}>
-                                    <label for="color">Color</label>
-                                </div>
                             </div>
                         </form>
                     </div>

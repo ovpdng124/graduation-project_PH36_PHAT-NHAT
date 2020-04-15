@@ -51,7 +51,6 @@
                                 @if(count($orders) == 0)
                                     <div class="text-center container-fluid">
                                         <p><i>There are no orders to list</i></p>
-                                        <a class="btn btn-link" href="{{url()->previous()}}">Back</a>
                                     </div>
                                 @endif
                             </div>

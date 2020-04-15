@@ -33,16 +33,16 @@
                 </ul>
             </div>
             <div class="col-lg-8 footer-right">
-                <div class="w3layouts-news-letter">
-                    <h3 class="footer-title text-uppercase text-wh mb-lg-4 mb-3">Newsletter</h3>
+{{--                <div class="w3layouts-news-letter">--}}
+{{--                    <h3 class="footer-title text-uppercase text-wh mb-lg-4 mb-3">Newsletter</h3>--}}
 
-                    <p>By subscribing to our mailing list you will always get latest news and updates from us.</p>
-                    <form action="#" method="post" class="w3layouts-newsletter">
-                        <input type="email" name="Email" placeholder="Enter your email..." required="">
-                        <button class="btn1"><span class="fa fa-paper-plane-o" aria-hidden="true"></span></button>
+{{--                    <p>By subscribing to our mailing list you will always get latest news and updates from us.</p>--}}
+{{--                    <form action="#" method="post" class="w3layouts-newsletter">--}}
+{{--                        <input type="email" name="Email" placeholder="Enter your email..." required="">--}}
+{{--                        <button class="btn1"><span class="fa fa-paper-plane-o" aria-hidden="true"></span></button>--}}
 
-                    </form>
-                </div>
+{{--                    </form>--}}
+{{--                </div>--}}
                 <div class="row mt-lg-4 bottom-w3layouts-sec-nav mx-0">
                     <div class="col-md-4 footer-grid_section_w3layouts">
                         <h3 class="footer-title text-uppercase text-wh mb-lg-4 mb-3">Information</h3>

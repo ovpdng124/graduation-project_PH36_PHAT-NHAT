@@ -61,7 +61,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-lg btn-primary btn-block col-md-5 container">Xác nhận</button>
+                                        <button type="submit" class="btn btn-lg btn-primary btn-block col-md-5 container">Confirm</button>
                                     </form>
                                 </div>
                             </div>

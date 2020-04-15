@@ -1,6 +1,11 @@
 @extends('user.layouts.master')
 @section('title','Product')
 
+@section('custom_import')
+    <link type="text/css" rel="stylesheet" href="{{asset("/template/css/lightslider.css") }}"/>
+    <script src="{{mix("/js/slider/lightslider.js")}}"></script>
+@endsection
+
 @section('content')
     <div class="main-banner inner" style="background: url({{asset('template/images/banner.jpg')}})no-repeat center;" id="home"></div>
     <ol class="breadcrumb">
@@ -15,193 +20,19 @@
         <div class="container py-md-3">
             <!-- top Products -->
             <div class="row">
-                <!-- product left -->
-                <div class="side-bar col-lg-4">
-                    <div class="search-bar w3layouts-newsletter">
-                        <h3 class="sear-head">Search Here..</h3>
-                        <form action="#" method="post" class="d-flex">
-                            <input type="search" placeholder="Product name..." name="search" class="form-control" required="">
-                            <button class="btn1"><span class="fa fa-search" aria-hidden="true"></span></button>
-                        </form>
-                    </div>
-                    <!--preference -->
-                    <div class="left-side my-4">
-                        <h3 class="sear-head">Occasion</h3>
-                        <ul class="w3layouts-box-list">
-                            <li>
-                                <input type="checkbox" class="checked">
-                                <span class="span">Casuals</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" class="checked">
-                                <span class="span">Party</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" class="checked">
-                                <span class="span">Wedding</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" class="checked">
-                                <span class="span">Ethnic</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- // preference -->
-                    <!-- discounts -->
-                    <div class="left-side">
-                        <h3 class="sear-head">Discount</h3>
-                        <ul class="w3layouts-box-list">
-                            <li>
-                                <input type="checkbox" class="checked">
-                                <span class="span">5% or More</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" class="checked">
-                                <span class="span">10% or More</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" class="checked">
-                                <span class="span">20% or More</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" class="checked">
-                                <span class="span">30% or More</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" class="checked">
-                                <span class="span">50% or More</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" class="checked">
-                                <span class="span">60% or More</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- //discounts -->
-                    <!-- reviews -->
-                    <div class="customer-rev left-side my-4">
-                        <h3 class="sear-head">Customer Review</h3>
-                        <ul class="w3layouts-box-list">
-                            <li>
-                                <a href="#">
-                                    <span class="fa fa-star" aria-hidden="true"></span>
-                                    <span class="fa fa-star" aria-hidden="true"></span>
-                                    <span class="fa fa-star" aria-hidden="true"></span>
-                                    <span class="fa fa-star" aria-hidden="true"></span>
-                                    <span class="fa fa-star" aria-hidden="true"></span>
-                                    <span>5.0</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="fa fa-star" aria-hidden="true"></span>
-                                    <span class="fa fa-star" aria-hidden="true"></span>
-                                    <span class="fa fa-star" aria-hidden="true"></span>
-                                    <span class="fa fa-star" aria-hidden="true"></span>
-                                    <span class="fa fa-star-o" aria-hidden="true"></span>
-                                    <span>4.0</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="fa fa-star" aria-hidden="true"></span>
-                                    <span class="fa fa-star" aria-hidden="true"></span>
-                                    <span class="fa fa-star" aria-hidden="true"></span>
-                                    <span class="fa fa-star-half-o" aria-hidden="true"></span>
-                                    <span class="fa fa-star-o" aria-hidden="true"></span>
-                                    <span>3.5</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="fa fa-star" aria-hidden="true"></span>
-                                    <span class="fa fa-star" aria-hidden="true"></span>
-                                    <span class="fa fa-star" aria-hidden="true"></span>
-                                    <span class="fa fa-star-o" aria-hidden="true"></span>
-                                    <span class="fa fa-star-o" aria-hidden="true"></span>
-                                    <span>3.0</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="fa fa-star" aria-hidden="true"></span>
-                                    <span class="fa fa-star" aria-hidden="true"></span>
-                                    <span class="fa fa-star-half-o" aria-hidden="true"></span>
-                                    <span class="fa fa-star-o" aria-hidden="true"></span>
-                                    <span class="fa fa-star-o" aria-hidden="true"></span>
-                                    <span>2.5</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- //reviews -->
-                    <!-- deals -->
-                    <div class="deal-leftmk left-side">
-                        <h3 class="sear-head">Special Deals</h3>
-                        <div class="special-sec1 row mb-3">
-                            <div class="img-deals col-md-4">
-                                <img src="images/s4.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="img-deal1 col-md-4">
-                                <h3>Shuberry Heels</h3>
-                                <a href="shop-single.html">$180.00</a>
-                            </div>
-                        </div>
-                        <div class="special-sec1 row">
-                            <div class="img-deals col-md-4">
-                                <img src="images/s2.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="img-deal1 col-md-8">
-                                <h3>Chikku Loafers</h3>
-                                <a href="shop-single.html">$99.00</a>
-                            </div>
-                        </div>
-                        <div class="special-sec1 row my-3">
-                            <div class="img-deals col-md-4">
-                                <img src="images/s1.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="img-deal1 col-md-8">
-                                <h3>Bella Toes</h3>
-                                <a href="shop-single.html">$165.00</a>
-                            </div>
-                        </div>
-                        <div class="special-sec1 row">
-                            <div class="img-deals col-md-4">
-                                <img src="images/s5.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="img-deal1 col-md-8">
-                                <h3>Red Bellies</h3>
-                                <a href="shop-single.html">$225.00</a>
-                            </div>
-                        </div>
-                        <div class="special-sec1 row mt-3">
-                            <div class="img-deals col-md-4">
-                                <img src="images/s3.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="img-deal1 col-md-8">
-                                <h3>(SRV) Sneakers</h3>
-                                <a href="shop-single.html">$169.00</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- //deals -->
-
-                </div>
-                <!-- //product left -->
-                <!-- product right -->
-                <div class="left-ads-display col-lg-8">
+                <div class="col-lg-12">
                     <div class="row">
                         <div class="desc1-left col-md-6">
                             <ul id="lightSlider" class="ulSlider">
                                 @foreach($product->product_images as $item)
                                     <li class="liSlider" data-thumb="{{ asset($item->image_path)}}">
-                                        <img src="{{ asset($item->image_path)}}"/>
+                                        <img style="block-size: 500px" src="{{ asset($item->image_path)}}" alt="No image"/>
                                     </li>
                                 @endforeach
                             </ul>
                         </div>
                         <div class="desc1-right col-md-6 pl-lg-4">
-                            <h3 id="sub_name">{{$product->name}}</h3>
+                            <h1 id="sub_name">{{$product->name}}</h1>
                             <h5 id="sub_price">${{number_format($product->price)}}</h5>
                             <div class="available mt-3">
                                 @if(count($product->product_attributes) != 0)
@@ -251,9 +82,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row sub-para-w3layouts mt-5">
+                    <div class="sub-para-w3layouts mt-5">
                         <h3 class="shop-sing">{{$product->name}}</h3>
-                        <p class="mt-3">{{$product->description}}</p>
+                        <p class="">{{$product->description}}</p>
                     </div>
                     <h3 class="shop-sing">Featured Products</h3>
                     <div class="row m-0">
@@ -261,7 +92,7 @@
                             <div class="col-md-4 product-men">
                                 <div class="product-shoe-info shoe text-center">
                                     <div class="men-thumb-item">
-                                        <a href="{{route('product-detail', $featuredProduct->id)}}"><img src="{{asset($featuredProduct->product_images->first()->image_path)}}" class="img-fluid"
+                                        <a href="{{route('product-detail', $featuredProduct->id)}}"><img style="block-size: 300px" src="{{asset($featuredProduct->product_images->first()->image_path)}}" class="img-fluid"
                                                                                                          alt=""></a>
                                     </div>
                                     <div class="item-info-product">
@@ -284,12 +115,6 @@
     </section>
 @endsection
 
-@section('custom_import')
-    <link type="text/css" rel="stylesheet" href="{{asset("/template/css/lightslider.css") }}"/>
-    <script src="{{mix("/js/slider/lightslider.js")}}"></script>
-@endsection
-
 @section('custom_footer_script')
     <script src="{{mix("/js/detail_product/detail_product.js")}}"></script>
 @endsection
-

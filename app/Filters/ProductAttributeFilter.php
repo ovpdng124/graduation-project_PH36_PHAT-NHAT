@@ -18,9 +18,4 @@ class ProductAttributeFilter
     {
         return $query->where("size", "like", "%$search%");
     }
-
-    public function searchByColor($query, $search)
-    {
-        return $query->where("color", "like", "%$search%");
-    }
 }
