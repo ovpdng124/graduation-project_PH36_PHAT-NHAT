@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Entities\Category;
 use App\Entities\Product;
 use App\Entities\ProductAttribute;
 use App\Entities\ProductImage;
@@ -83,6 +84,13 @@ class ProductService
     {
         $chunk = $products->splice(0, 9);
 
+        $newProducts = $this->checkNewProducts($products);
+
+        return $chunk->merge($newProducts)->forPage(1, 9);
+    }
+
+    public function checkNewProducts($products)
+    {
         foreach ($products as $product) {
             $product->is_new = true;
 
@@ -91,7 +99,7 @@ class ProductService
             }
         }
 
-        return $chunk->merge($products)->forPage(1, 9);
+        return $products;
     }
 
     public function getPopularProducts($productAttributes)
@@ -160,5 +168,26 @@ class ProductService
         }
 
         return $productAttributes;
+    }
+
+    public function getShoppingProducts($category)
+    {
+        $categories = Category::all();
+        $query      = Product::query();
+
+        if (!empty($category)) {
+            $query = $query->whereHas('category', function ($query) use ($category) {
+                $query->where('name', $category);
+            });
+        }
+
+        $products = $query->with('product_images')->orderByDesc('updated_at')->paginate(9);
+
+        $products = $this->checkNewProducts($products);
+
+        return [
+            'categories' => $categories,
+            'products'   => $products,
+        ];
     }
 }

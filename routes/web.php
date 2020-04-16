@@ -35,6 +35,7 @@ Route::group(['namespace' => 'User'], function () {
     Route::get('product/{id}', 'ProductController@showDetailProduct')->name('product-detail');
     Route::get('list-cart', 'ProductController@showListCart')->name('list.cart');
     Route::get('product-cart', 'ProductController@showProductCart');
+    Route::get('shop', 'ProductController@getShoppingProducts')->name('shopping');
 });
 
 Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {

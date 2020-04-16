@@ -16,6 +16,7 @@
                     @endif
                 @endauth
                 <li class="active"><a href="{{route('index')}}">Home</a></li>
+                <li><a href="{{route('shopping')}}">Shopping</a></li>
                 <li><a href="{{route('list.cart')}}">Cart</a><br></li>
                 @auth
                     <li>

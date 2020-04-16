@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    /**
+     * @var ProductService
+     */
     protected $productService;
 
     public function __construct()
@@ -40,10 +43,19 @@ class ProductController extends Controller
 
         $data = $this->productService->getCartProducts($params);
 
-        if (count($data['products']) == 0){
+        if (count($data['products']) == 0) {
             return response()->json(null);
         }
 
         return response()->json(view('user.carts.product_cart', $data)->render());
+    }
+
+    public function getShoppingProducts(Request $request)
+    {
+        $category = $request->get('category');
+
+        $data = $this->productService->getShoppingProducts($category);
+
+        return view('user.products.shop', $data);
     }
 }
