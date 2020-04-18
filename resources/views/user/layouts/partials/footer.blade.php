@@ -6,8 +6,7 @@
                 <h2 class="logo-2 mb-lg-4 mb-3">
                     <a href="#"><span class="fa fa-bold" aria-hidden="true"></span>ootie</a>
                 </h2>
-                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat.</p>
+                <p>The only way of staying alive in the shoe market is to establish a presence in niche markets.</p>
                 <h4 class="sub-con-fo ad-info my-4">Catch on Social</h4>
                 <ul class="w3layouts_social_list list-unstyled">
                     <li>
@@ -48,61 +47,31 @@
                         <h3 class="footer-title text-uppercase text-wh mb-lg-4 mb-3">Information</h3>
                         <ul class="list-unstyled w3layouts-icons">
                             <li>
-                                <a href="#">Home</a>
+                                <a href="{{route('index')}}">Home</a>
                             </li>
                             <li class="mt-3">
-                                <a href="#">About Us</a>
+                                <a href="{{route('shopping')}}">Shopping</a>
                             </li>
                             <li class="mt-3">
-                                <a href="#">Gallery</a>
-                            </li>
-                            <li class="mt-3">
-                                <a href="#">Services</a>
-                            </li>
-                            <li class="mt-3">
-                                <a href="#">Contact Us</a>
+                                <a href="{{route('list.cart')}}">Shopping Cart</a>
                             </li>
                         </ul>
                     </div>
-                    <div class="col-md-4 footer-grid_section_w3layouts">
-                        <!-- social icons -->
-                        <div class="agileinfo_social_icons">
-                            <h3 class="footer-title text-uppercase text-wh mb-lg-4 mb-3">Customer Service</h3>
-                            <ul class="list-unstyled w3layouts-icons">
 
-                                <li>
-                                    <a href="#">About Us</a>
-                                </li>
-                                <li class="mt-3">
-                                    <a href="#">Delivery & Returns</a>
-                                </li>
-                                <li class="mt-3">
-                                    <a href="#">Waranty</a>
-                                </li>
-                                <li class="mt-3">
-                                    <a href="#">Terms & Condition</a>
-                                </li>
-                                <li class="mt-3">
-                                    <a href="#">Privacy Plolicy</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- social icons -->
-                    </div>
                     <div class="col-md-4 footer-grid_section_w3layouts my-md-0 my-5">
                         <h3 class="footer-title text-uppercase text-wh mb-lg-4 mb-3">Contact Info</h3>
                         <div class="contact-info">
                             <div class="footer-address-inf">
                                 <h4 class="ad-info mb-2">Phone</h4>
-                                <p>+121 098 8907 9987</p>
+                                <p>+84 905 671 240</p>
                             </div>
                             <div class="footer-address-inf my-4">
                                 <h4 class="ad-info mb-2">Email </h4>
-                                <p><a href="mailto:info@example.com">info@example.com</a></p>
+                                <p><a href="mailto:info@example.com">admin@gmail.com</a></p>
                             </div>
                             <div class="footer-address-inf">
                                 <h4 class="ad-info mb-2">Location</h4>
-                                <p>Honey Avenue, New York City</p>
+                                <p>Da Nang, VietNam</p>
                             </div>
                         </div>
                     </div>

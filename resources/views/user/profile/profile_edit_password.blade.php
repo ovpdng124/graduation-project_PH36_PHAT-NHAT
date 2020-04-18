@@ -6,9 +6,12 @@
          id="home"></div>
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{{route('index')}}">Home</a>
+            <a href="{{route('profile')}}">Profile</a>
         </li>
-        <li class="breadcrumb-item active">Profile</li>
+        <li class="breadcrumb-item">
+            <a href="{{route('edit', Auth::id())}}">Edit</a>
+        </li>
+        <li class="breadcrumb-item active">Change Password</li>
     </ol>
     <div class="container-fluid">
         <div class="row">

@@ -94,7 +94,7 @@
                     </div>
                 </div>
             </div>
-            <button type="button" class="float-right btn btn-primary submit-order">Confirm Order</button>
+            <button type="button" class="float-right btn btn-primary submit-order">Submit</button>
         </form>
     </div>
 </div>

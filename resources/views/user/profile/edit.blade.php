@@ -8,7 +8,10 @@
         <li class="breadcrumb-item">
             <a href="{{route('index')}}">Home</a>
         </li>
-        <li class="breadcrumb-item active">Profile</li>
+        <li class="breadcrumb-item">
+            <a href="{{route('profile')}}">Profile</a>
+        </li>
+        <li class="breadcrumb-item active">Edit</li>
     </ol>
     <div class="container">
         @if(Session::has('success'))
