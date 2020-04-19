@@ -18,7 +18,7 @@
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
                                 <p class="text-bold d-inline">Category:</p>
-                                <p class="d-inline"><b><a class="text-info text-decoration-none" href="{{route('category.index')}}">{{($product->category) ? $product->category->name : 'Has been deleted'}}</a></b></p>
+                                <p class="d-inline"><b><a class="text-info text-decoration-none" href="{{route('category.index')}}">{{($product->category) ? $product->category->name : 'None'}}</a></b></p>
                             </div>
                         </div>
                         <div class="row">
