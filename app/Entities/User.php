@@ -9,7 +9,17 @@ class User extends Authenticatable
 {
     use SoftDeletes;
 
-    protected $guarded = [];
+    protected $fillable = [
+        "full_name",
+        "username",
+        "password",
+        "email",
+        "address",
+        "phone_number",
+        "verify_token",
+        "verify_at",
+        "role_id",
+    ];
 
     public function role()
     {

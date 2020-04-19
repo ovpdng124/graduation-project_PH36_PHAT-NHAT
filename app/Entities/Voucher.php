@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Voucher extends Model
 {
-    protected $guarded = [];
+    protected $fillable = [
+        "code",
+        "value",
+        "unit",
+    ];
 
     use SoftDeletes;
 

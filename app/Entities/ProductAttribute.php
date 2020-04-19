@@ -7,7 +7,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductAttribute extends Model
 {
-    protected $guarded = [];
+    protected $fillable = [
+        "sub_name",
+        "sub_price",
+        "size",
+        "color",
+        "product_id",
+    ];
 
     use SoftDeletes;
 

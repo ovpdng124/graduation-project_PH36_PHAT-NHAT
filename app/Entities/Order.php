@@ -6,7 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $guarded = [];
+    protected $fillable = [
+        "user_id",
+        "voucher_id",
+        "quantity",
+        "total_price",
+        "method_type",
+        "status",
+        "is_sale",
+        "sale_price",
+        "order_label",
+    ];
 
     public static $status = [
         'Pending'  => 0,
