@@ -75,7 +75,6 @@
                             @if(count($productAttributes) == 0)
                                 <div class="text-center container-fluid">
                                     <p><i>There are no products to list</i></p>
-                                    <a href="{{url()->previous()}}">Back</a>
                                 </div>
                             @endif
                         </div>

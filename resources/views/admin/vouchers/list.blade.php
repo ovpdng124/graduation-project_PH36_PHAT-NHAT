@@ -73,7 +73,6 @@
                             @if(count($vouchers) == 0)
                                 <div class="text-center container-fluid">
                                     <p><i>No vouchers</i></p>
-                                    <a href="{{url()->previous()}}">Back</a>
                                 </div>
                             @endif
                         </div>
