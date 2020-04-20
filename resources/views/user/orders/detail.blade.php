@@ -21,45 +21,34 @@
                         <div class="m-4">
                             <h1 class="text-center">Detail Order</h1>
                         </div>
-                        <div class="row  font-weight-bold">
-                            <div class="col-6">
-                                <div class="row">
-                                    <label for="" class="col-2 float-right">Name</label>
-                                    <span>: {{Auth::user()->full_name}}</span>
+                        <div class="row font-weight-bold">
+                            <div class="col-lg-6">
+                                <div>
+                                    <label for="">Name : {{Auth::user()->full_name}}</label>
                                 </div>
-                                <div class="row">
-                                    <label for="" class="col-2">Address</label>
-                                    <span>: {{Auth::user()->address}}</span>
+                                <div>
+                                    <label for="">Address : {{Auth::user()->address}}</label>
                                 </div>
+                                <div>
+                                    <label for="">Phone : {{Auth::user()->phone_number}}</label>
+                                </div>
+                                <div>
+                                    <label for="">Email : {{Auth::user()->email}}</label>
+                                </div>
+                                <hr class="d-lg-none">
                             </div>
-                            <div class="col-6">
-                                <div class="row">
-                                    <label for="" class="col-3">Status</label>
-                                    <span>: {{$order->name_status}}</span>
+                            <div class="col-lg-6">
+                                <div>
+                                    <label for="">Status : {{$order->name_status}}</label>
                                 </div>
-                                <div class="row">
-                                    <label for="" class="col-3">Discount</label>
-                                    <span>: {{($order->is_sale) ? 'Yes' : 'No'}}</span>
+                                <div>
+                                    <label for="">Discount : {{($order->is_sale) ? 'Yes' : 'No'}}</label>
                                 </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="row">
-                                    <label for="" class="col-2">Phone</label>
-                                    <span>: {{Auth::user()->phone_number}}</span>
+                                <div>
+                                    <label for="">Discount Price : {{($order->is_sale) ? '$ '.number_format($order->sale_price) : '-'}}</label>
                                 </div>
-                                <div class="row">
-                                    <label for="" class="col-2">Email</label>
-                                    <span>: {{Auth::user()->email}}</span>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="row">
-                                    <label for="" class="col-3">Discount Price</label>
-                                    <span>: {{($order->is_sale) ? '$ '.number_format($order->sale_price) : '-'}}</span>
-                                </div>
-                                <div class="row">
-                                    <label for="" class="col-3">Total Price</label>
-                                    <span>: {{'$ '.number_format($order->total_price)}}</span>
+                                <div>
+                                    <label for="">Total Price : {{'$ '.number_format($order->total_price)}}</label>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +57,7 @@
                     <div class="card-body">
                         <div class="container">
                             <div class="row">
-                                <table class="table table-striped text-center">
+                                <table class="table table-striped text-center table-responsive-sm">
                                     <thead>
                                     <tr>
                                         <th width="2%">#</th>

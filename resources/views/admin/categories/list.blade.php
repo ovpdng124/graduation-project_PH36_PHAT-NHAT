@@ -29,7 +29,7 @@
                     <div class="container-fluid">
                         <h1 class="text-center">List Categories</h1>
                         <div class="row">
-                            <table class="table-striped table">
+                            <table class="table-striped table table-responsive">
                                 <tr>
                                     <th>#</th>
                                     <th>Name</th>

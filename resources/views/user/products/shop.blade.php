@@ -22,7 +22,7 @@
                     <!--preference -->
                     <div class="left-side my-4">
                         <button type="button" style="width: 100%" class="btn btn-link" data-toggle="collapse" data-target="#categories"><h3 class="float-left sear-head">CATEGORY</h3></button>
-                        <div id="categories" class="collapse show">
+                        <div id="categories" class="collapse d-lg-block">
                             <ul class="list-group list-group-flush">
                                 <a class="list-group-item" href="{{route('shopping')}}">
                                     <li>
@@ -36,10 +36,11 @@
                                         </li>
                                     </a>
                                 @endforeach
-
                             </ul>
                         </div>
+                        <hr>
                     </div>
+
                     <!-- // preference -->
                 </div>
                 <!-- //product left -->

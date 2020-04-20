@@ -87,7 +87,6 @@
                                     <a type="button" class="btn btn-info" href="{{route('edit',$user->id)}}">Edit Info</a>
                                 </div>
                                 <div class="col-7">
-                                    <a type="button" class="btn btn-success mr-3" href="{{route('list.cart')}}">Shop Cart</a>
                                     <a type="button" class="btn btn-success" href="{{route('order.info')}}">My Order</a>
                                 </div>
                             </div>

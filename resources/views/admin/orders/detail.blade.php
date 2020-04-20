@@ -12,13 +12,13 @@
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
                                 <p class="text-bold d-inline">Name:</p>
-                                <p class="d-inline">{{$order->user->full_name}}</p>
+                                <p class="d-inline">{{Auth::user()->full_name}}</p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
                                 <p class="text-bold d-inline">Phone:</p>
-                                <p class="d-inline">{{$order->user->phone_number}}</p>
+                                <p class="d-inline">{{Auth::user()->phone_number}}</p>
                             </div>
                         </div>
                         <div class="row">

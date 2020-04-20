@@ -20,7 +20,7 @@
                     <div class="container-fluid">
                         <h1 class="text-center">Your Cart</h1>
                         <div class="row">
-                            <table class="table-striped table table-cart">
+                            <table class="table-striped table table-cart table-responsive-sm">
                                 <tr>
                                     <th>#</th>
                                     <th>Product</th>

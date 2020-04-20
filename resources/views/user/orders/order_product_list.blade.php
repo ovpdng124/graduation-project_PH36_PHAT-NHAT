@@ -1,25 +1,21 @@
 <div class="container-fluid">
     <hr>
     <h4 class="">Information: </h4><br>
-    <div class="row  font-weight-bold">
-        <div class="col-6">
-            <div class="row">
-                <label for="" class="col-2 float-right">Name</label>
-                <span>: {{$user->full_name}}</span>
+    <div class="row font-weight-bold">
+        <div class="col-lg-6">
+            <div>
+                <label for="">Name : {{$user->full_name}}</label>
             </div>
-            <div class="row">
-                <label for="" class="col-2">Address</label>
-                <span>: {{$user->address}}</span>
+            <div>
+                <label for="">Address : {{$user->address}}</label>
             </div>
         </div>
-        <div class="col-6">
-            <div class="row">
-                <label for="" class="col-2">Phone</label>
-                <span>: {{$user->phone_number}}</span>
+        <div class="col-lg-6">
+            <div>
+                <label for="">Phone : {{$user->phone_number}}</label>
             </div>
-            <div class="row">
-                <label for="" class="col-2">Email</label>
-                <span>: {{$user->email}}</span>
+            <div>
+                <label for="">Email : {{$user->email}}</label>
             </div>
         </div>
     </div>
@@ -27,7 +23,7 @@
 
     <h4 class="">Products: </h4><br>
     <div class="row">
-        <table class="table table-striped">
+        <table class="table table-striped table-responsive-sm">
             <tr>
                 <th>#</th>
                 <th>Product</th>

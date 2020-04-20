@@ -9,7 +9,7 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-        <li class="nav-item d-none d-sm-inline-block">
+        <li class="nav-item d-sm-inline-block">
             <a href="{{route('index')}}" class="btn btn-info"><i class="fa fa-sign-out-alt"></i> Homepage</a>
         </li>
     </ul>

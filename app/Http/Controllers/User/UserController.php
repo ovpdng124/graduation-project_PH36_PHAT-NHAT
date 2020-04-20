@@ -31,7 +31,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $products          = Product::with('product_images')->orderByDesc('updated_at')->get();
+        $products          = Product::with('product_images')->orderByDesc('updated_at')->paginate(9);
         $productAttributes = ProductAttribute::with('order_products', 'product_images')->withCount('order_products')->orderByDesc('updated_at')->get();
 
         $newArrivals     = $this->productService->getNewArrivals(clone($products));
